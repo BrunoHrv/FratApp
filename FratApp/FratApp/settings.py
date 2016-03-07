@@ -53,10 +53,29 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'FratApp.urls'
+
+
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
+FRAT_ROOT = os.path.join(PROJECT_PATH ,'templates/')	
+'''
+TEMPLATE_DIRS = (
+    FRAT_ROOT,
+)
+print(TEMPLATE_DIRS)
+'''
+'''
+SITE_ROOT_tmp = dirname(dirname(abspath(__file__)))
+SITE_ROOT = normpath(join(SITE_ROOT_tmp, 'FratApp'))
+TEMPLATE_DIRS = (
+    normpath(join(SITE_ROOT, 'templates')),
+)
+'''
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [FRAT_ROOT,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,22 +87,6 @@ TEMPLATES = [
         },
     },
 ]
-
-PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-
-FRAT_ROOT = os.path.join(PROJECT_PATH ,'templates')	
-
-TEMPLATE_DIRS = (
-    FRAT_ROOT,
-)
-print(TEMPLATE_DIRS)
-'''
-SITE_ROOT_tmp = dirname(dirname(abspath(__file__)))
-SITE_ROOT = normpath(join(SITE_ROOT_tmp, 'FratApp'))
-TEMPLATE_DIRS = (
-    normpath(join(SITE_ROOT, 'templates')),
-)
-'''
 WSGI_APPLICATION = 'FratApp.wsgi.application'
 
 
@@ -122,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 

@@ -1,5 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
 
 import os
 from os.path import abspath, dirname, join, normpath
@@ -14,4 +15,5 @@ TEMPLATE_DIR = normpath('Dropbox/SoftDevD/FratApp/FratApp/FratApp/FratApp/templa
 def index(request):
     ind = normpath(join(TEMPLATE_DIR, 'index.html'))
     return render(request, 'index.html', {})
+    #return render(request, 'index.html', {})
 #HttpResponse("Hello, world. You're at the main index.")
