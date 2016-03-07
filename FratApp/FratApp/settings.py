@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from os.path import abspath, dirname, join, normpath
+from sys import path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,7 +53,6 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'FratApp.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -68,6 +69,21 @@ TEMPLATES = [
     },
 ]
 
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
+FRAT_ROOT = os.path.join(PROJECT_PATH ,'templates')	
+
+TEMPLATE_DIRS = (
+    FRAT_ROOT,
+)
+print(TEMPLATE_DIRS)
+'''
+SITE_ROOT_tmp = dirname(dirname(abspath(__file__)))
+SITE_ROOT = normpath(join(SITE_ROOT_tmp, 'FratApp'))
+TEMPLATE_DIRS = (
+    normpath(join(SITE_ROOT, 'templates')),
+)
+'''
 WSGI_APPLICATION = 'FratApp.wsgi.application'
 
 
