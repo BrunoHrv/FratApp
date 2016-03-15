@@ -18,5 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'FratApp.views.index'),
+    url(r'^AttendanceLists/', include('attendancelists.urls')),
+    url(r'^Calendar/', include('calendarbulletin.urls')),
+    url(r'^Directory/', include('directory.urls')),
+    url(r'^Tasks/', include('tasks.urls')),
     url(r'^admin/', admin.site.urls),
 ]
