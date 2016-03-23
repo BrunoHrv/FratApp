@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>Frat App</TITLE>
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
+<div align="left">
+<nav>
+    <div align="left">
+      <a href="/" >Frat App</a>
+      <a href="/Calendar/">Calendar/Bulletin Board</a>
+      <a href="/Tasks/">Tasks</a>
+      <a href="/Directory/">User Directory</a>
+      <a href="/AttendanceLists/">Attendance Lists</a>
+      <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <a href="#" onclick="signOut();">Sign out</a>!-->
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+    </div>
+</nav>
+</div>
+ABOUT US
+</BODY>
+</HTML>
+
+
