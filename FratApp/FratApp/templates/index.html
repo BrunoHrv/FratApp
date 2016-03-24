@@ -6,10 +6,26 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
 <div align="left">
-<a href="/LandingPage">sign in</a>
+<section class="loginform cf">
+<form name="login" action="/" method="POST" accept-charset="utf-8">
+{% csrf_token %}
+    <ul>
+        <li><label for="usermail">Email</label>
+        <input type="username" name="username" placeholder="your username" required></li>
+        <li><label for="password">Password</label>
+        <input type="password" name="password" placeholder="password" required></li>
+        <li>
+        <input type="submit" value="Login"></li>
+    </ul>
+</form>
+</section>
 </div>
 </nav>
 </div>
 ABOUT US
 </BODY>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
 </HTML>
