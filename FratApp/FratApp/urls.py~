@@ -17,11 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^$', 'FratApp.views.index'),
-    url(r'^AttendanceLists/', include('attendancelists.urls')),
-    url(r'^LandingPage/', include('landing.urls')),
-    url(r'^Calendar/', include('calendarbulletin.urls')),
-    url(r'^Directory/', include('directory.urls')),
-    url(r'^Tasks/', include('tasks.urls')),
+    url(r'^$', 'FratApp.views.index', name='home'),
+    url(r'^AttendanceLists/', include('attendancelists.urls'), name='attendance'),
+    url(r'^LandingPage/', include('landing.urls'), name='landing'),
+    url(r'^Calendar/', include('calendarbulletin.urls'), name='calendar'),
+    url(r'^Directory/', include('directory.urls'), name='directory'),
+    url(r'^Tasks/', include('tasks.urls'), name='tasks'),
     url(r'^admin/', admin.site.urls),
 ]

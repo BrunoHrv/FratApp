@@ -30,9 +30,8 @@ def index(request, redirected=False):
 	context={
 		'redirected':redirected,
 	}
+	print redirected
 	if request.method == 'GET':
-		if 'redirected' in request.GET:
-			context['redirected']=request.GET['redirected']
 		context['loginfailed']=False
 		context['accountdisabled']=False
     		return render(request, 'index.html', context)

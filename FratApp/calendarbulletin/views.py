@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.template import loader
 from django.shortcuts import redirect
 
@@ -10,4 +11,4 @@ def index(request):
 		context={}
 		return render(request, 'Calendar/index.html', context)
 	else:
-		return redirect('/', redirected=True)
+		return redirect('/?redirected=True')
