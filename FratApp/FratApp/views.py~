@@ -49,11 +49,23 @@ def index(request, redirected=False):
 	passwordconfirm=request.POST['passwordconfirmation']
 	firstname=request.POST['firstname']
 	lastname=request.POST['lastname']
+	user_created=True
 	if password != passwordconfirm:
 		context['mismatchedpassword']=True
+		user_created=False
 	if len(username) < 6:
 		context['invalidusername']=True
-	if len(username) < 6:#change
-		context['usernameused']=True
+		user_created=False
+	for entry in User.objects.all():
+		if entry.username == username:
+			context['usernameused']=True
+			user_created=False
 	if len(password) < 8:
 		context['invalidpassword']=True
+		user_created=False
+	if user_created:
+		user = User.objects.create_user(username, None, password)
+		user.first_name=firstname
+		user.last_name=lastname
+	context['usercreated']=True
+	return render(request, 'index.html', context)

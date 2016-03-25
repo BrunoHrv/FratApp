@@ -37,7 +37,7 @@ Your account has been disabled.
         <li><label for="passwordsubmit">Password</label>
         <input type="password" name="passwordsubmit" placeholder="password" required></li>
         <li><label for="passwordconfirmation">Confirm Password</label>
-        <input type="password" name="password" placeholder="password" required></li>
+        <input type="password" name="passwordconfirmation" placeholder="password" required></li>
         <li><label for="firstname">Your First Name</label>
         <input type="firstname" name="firstname" placeholder="First Name" required></li>
         <li><label for="lastname">Your Last Name</label>
@@ -53,10 +53,13 @@ Invalid username. Your username must be at least 6 characters long.
 That username is already in use.
 {% endif %}
 {% if invalidpassword %}
-Invalid password.
+Invalid password. Your password must be at least 8 characters long.
 {% endif %}
 {% if mismatchedpassword %}
-Your passwords need to match!.
+Your passwords need to match!
+{% endif %}
+{% if usercreated %}
+Congratulation! You have successfully created a user account. You can now log in.
 {% endif %}
 </section>
 </div>
@@ -68,5 +71,5 @@ We are a Frat. We do Frat things. We like our Frat. Join us!
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 </HTML>
