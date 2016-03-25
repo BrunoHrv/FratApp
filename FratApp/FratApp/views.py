@@ -13,16 +13,6 @@ SITE_ROOT_tmp = dirname(dirname(abspath(__file__)))
 SITE_ROOT = SITE_ROOT_tmp[1:]
 
 TEMPLATE_DIR = normpath('Dropbox/SoftDevD/FratApp/FratApp/FratApp/FratApp/templates')
-#TEMPLATE_DIR = normpath('C:/Users/jacobn2/Dropbox/SoftDevD/FratApp/FratApp/FratApp/FratApp/templates')#normpath(join(SITE_ROOT, 'FratApp/templates'))
-
-def index2(request, redirected=False):
-	if request.user.is_authenticated():
-		return redirect('/LandingPage')
-    	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
-    	return render(request, 'index.html', {})
-    	#return render(request, 'index.html', {})
-#HttpResponse("Hello, world. You're at the main index.")
-
 
 def index(request, redirected=False):
     	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
@@ -40,15 +30,30 @@ def index(request, redirected=False):
     		username = request.POST['username']
     		password = request.POST['password']
     		user = authenticate(username=username, password=password)
-    	if user is not None:
-    		if user.is_active:
-            		login(request, user)
-			return redirect('/LandingPage')
-        	else:
-			context['loginfailed']=False
-			context['accountdisabled']=True
+    		if user is not None:
+    			if user.is_active:
+            			login(request, user)
+				return redirect('/LandingPage')
+        		else:
+				context['loginfailed']=False
+				context['accountdisabled']=True
+    				return render(request, 'index.html', context)
+    		else:
+			context['loginfailed']=True
+			context['accountdisabled']=False
     			return render(request, 'index.html', context)
-    	else:
-		context['loginfailed']=True
-		context['accountdisabled']=False
-    		return render(request, 'index.html', context)
+	context['loginfailed']=False
+	context['accountdisabled']=False
+	username=request.POST['usernamesubmit']
+	password=request.POST['passwordsubmit']
+	passwordconfirm=request.POST['passwordconfirmation']
+	firstname=request.POST['firstname']
+	lastname=request.POST['lastname']
+	if password != passwordconfirm:
+		context['mismatchedpassword']=True
+	if len(username) < 6:
+		context['invalidusername']=True
+	if len(username) < 6:#change
+		context['usernameused']=True
+	if len(password) < 8:
+		context['invalidpassword']=True

@@ -10,7 +10,7 @@
 <form name="login" action="/" method="POST" accept-charset="utf-8">
 {% csrf_token %}
     <ul>
-        <li><label for="usermail">Email</label>
+        <li><label for="username">Username</label>
         <input type="username" name="username" placeholder="your username" required></li>
         <li><label for="password">Password</label>
         <input type="password" name="password" placeholder="password" required></li>
@@ -26,6 +26,37 @@ Invalid username or password. Please try again.
 {% endif %}
 {% if accountdisabled %}
 Your account has been disabled.
+{% endif %}
+</section>
+<section class="signupform cf">
+<form name="signup" action="/" method="POST" accept-charset="utf-8">
+{% csrf_token %}
+    <ul>
+        <li><label for="usernamesubmit">Username</label>
+        <input type="username" name="usernamesubmit" placeholder="your username" required></li>
+        <li><label for="passwordsubmit">Password</label>
+        <input type="password" name="passwordsubmit" placeholder="password" required></li>
+        <li><label for="passwordconfirmation">Confirm Password</label>
+        <input type="password" name="password" placeholder="password" required></li>
+        <li><label for="firstname">Your First Name</label>
+        <input type="firstname" name="firstname" placeholder="First Name" required></li>
+        <li><label for="lastname">Your Last Name</label>
+        <input type="lastname" name="lastname" placeholder="Last Name" required></li>
+        <li>
+        <input type="submit" value="Sign Up"></li>
+    </ul>
+</form>
+{% if invalidusername %}
+Invalid username. Your username must be at least 6 characters long.
+{% endif %}
+{% if usernameused %}
+That username is already in use.
+{% endif %}
+{% if invalidpassword %}
+Invalid password. Your password must be at least 8 characters long.
+{% endif %}
+{% if mismatchedpassword %}
+Your passwords need to match!.
 {% endif %}
 </section>
 </div>
