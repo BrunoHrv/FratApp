@@ -15,6 +15,8 @@ SITE_ROOT = SITE_ROOT_tmp[1:]
 TEMPLATE_DIR = normpath('Dropbox/SoftDevD/FratApp/FratApp/FratApp/FratApp/templates')
 
 def index(request, redirected=False):
+	if request.user.is_authenticated():
+		return redirect('/LandingPage')
     	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
 	user = None
 	context={
@@ -67,5 +69,6 @@ def index(request, redirected=False):
 		user = User.objects.create_user(username, None, password)
 		user.first_name=firstname
 		user.last_name=lastname
+		user.save()
 	context['usercreated']=user_created
 	return render(request, 'index.html', context)

@@ -14,7 +14,7 @@
       <a href="/Directory/">User Directory</a>
       <a href="/AttendanceLists/">Attendance Lists</a>
       Welcome, {{firstname}}!
-<form name="Logout" method="POST">
+<form name="Logout" action="/" method="POST">
 {% csrf_token %}
       <li><input type="submit" value="Logout" name="logout"></li>
 </form>
@@ -31,11 +31,8 @@
     </div>
 </nav>
 </div>
-Personal Tasks:
-
-General Tasks:
-
-Supplies Needed:
-UNDER CONSTRUCTION
+ABOUT US
 </BODY>
 </HTML>
+
+

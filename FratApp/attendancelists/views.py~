@@ -20,6 +20,6 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
-		return render(request, 'Directory/index.html', context)
+		return render(request, 'AttendanceLists/index.html', context)
 	else:
-		return redirect('/?redirected=True')
+		return redirect('/', redirected=True)

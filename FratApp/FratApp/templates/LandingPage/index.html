@@ -13,6 +13,11 @@
       <a href="/Tasks/">Tasks</a>
       <a href="/Directory/">User Directory</a>
       <a href="/AttendanceLists/">Attendance Lists</a>
+      Welcome, {{firstname}}!
+<form name="Logout" method="POST">
+{% csrf_token %}
+      <li><input type="submit" value="Logout" name="logout"></li>
+</form>
       <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
       <a href="#" onclick="signOut();">Sign out</a>!-->
 <script>

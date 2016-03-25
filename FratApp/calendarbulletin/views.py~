@@ -8,7 +8,17 @@ from django.shortcuts import redirect
 
 def index(request):
 	if request.user.is_authenticated():
-		context={}
+		user = request.user
+		print user
+		context={
+			'username':user.username,
+			'firstname':user.first_name,
+			'lastname':user.last_name,
+		}
+		print context
+		if request.method== 'POST' and 'logout' in request.POST:
+			logout(request)
+			return redirect('/')
 		return render(request, 'Calendar/index.html', context)
 	else:
-		return redirect(url)
+		return redirect('/?redirected=True')
