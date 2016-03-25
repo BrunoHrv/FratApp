@@ -1,75 +1,88 @@
 <HTML>
 <HEAD>
 <TITLE>Frat App</TITLE>
-</HEAD>
-<BODY BGCOLOR="FFFFFF">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-<div align="left">
-<section class="loginform cf">
-<form name="login" action="/" method="POST" accept-charset="utf-8">
-{% csrf_token %}
-    <ul>
-        <li><label for="username">Username</label>
-        <input type="username" name="username" placeholder="your username" required></li>
-        <li><label for="password">Password</label>
-        <input type="password" name="password" placeholder="password" required></li>
-        <li>
-        <input type="submit" value="Login"></li>
-    </ul>
-</form>
-{% if redirected %}
-You must login first!
-{% endif %}
-{% if loginfailed %}
-Invalid username or password. Please try again.
-{% endif %}
-{% if accountdisabled %}
-Your account has been disabled.
-{% endif %}
-</section>
-<section class="signupform cf">
-<form name="signup" action="/" method="POST" accept-charset="utf-8">
-{% csrf_token %}
-    <ul>
-        <li><label for="usernamesubmit">Username</label>
-        <input type="username" name="usernamesubmit" placeholder="your username" required></li>
-        <li><label for="passwordsubmit">Password</label>
-        <input type="password" name="passwordsubmit" placeholder="password" required></li>
-        <li><label for="passwordconfirmation">Confirm Password</label>
-        <input type="password" name="passwordconfirmation" placeholder="password" required></li>
-        <li><label for="firstname">Your First Name</label>
-        <input type="firstname" name="firstname" placeholder="First Name" required></li>
-        <li><label for="lastname">Your Last Name</label>
-        <input type="lastname" name="lastname" placeholder="Last Name" required></li>
-        <li>
-        <input type="submit" value="Sign Up"></li>
-    </ul>
-</form>
-{% if invalidusername %}
-Invalid username. Your username must be at least 6 characters long.
-{% endif %}
-{% if usernameused %}
-That username is already in use.
-{% endif %}
-{% if invalidpassword %}
-Invalid password. Your password must be at least 8 characters long.
-{% endif %}
-{% if mismatchedpassword %}
-Your passwords need to match!
-{% endif %}
-{% if usercreated %}
-Congratulation! You have successfully created a user account. You can now log in.
-{% endif %}
-</section>
-</div>
-</nav>
-</div>
-ABOUT US
-We are a Frat. We do Frat things. We like our Frat. Join us!
+   </HEAD>
+      <BODY BGCOLOR="FFFFFF">
+         <script src="https://apis.google.com/js/platform.js" async defer></script>
+         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
+         <!<div align="left">
+         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+               <section class="loginform cf">
+                  <form name="login" action="/" method="POST" accept-charset="utf-8">
+                     {% csrf_token %}
+                     <ul>
+                        <li><label for="username">Username</label>
+                           <input type="username" name="username" placeholder="your username" required></li>
+                        <li><label for="password">Password</label>
+                           <input type="password" name="password" placeholder="password" required></li>
+                        <li>
+                           <input type="submit" value="Login"></li>
+                     </ul>
+                  </form>
+                  {% if redirected %}
+                     <p>You must login first!</p>
+                  {% endif %}
+                  {% if loginfailed %}
+                     <p>Invalid username or password. Please try again.</p>
+                  {% endif %}
+                  {% if accountdisabled %}
+                     <p>Your account has been disabled.</p>
+                  {% endif %}
+               </section>
+               <section class="signupform cf">
+                  <form name="signup" action="/" method="POST" accept-charset="utf-8">
+                     {% csrf_token %}
+                     <ul>
+                        <li><label for="usernamesubmit">Username</label>
+                           <input type="username" name="usernamesubmit" placeholder="your username" required></li>
+                        <li><label for="passwordsubmit">Password</label>
+                           <input type="password" name="passwordsubmit" placeholder="password" required></li>
+                        <li><label for="passwordconfirmation">Confirm Password</label>
+                            <input type="password" name="passwordconfirmation" placeholder="password" required></li>
+                        <li><label for="firstname">Your First Name</label>
+                            <input type="firstname" name="firstname" placeholder="First Name" required></li>
+                        <li><label for="lastname">Your Last Name</label>
+                           <input type="lastname" name="lastname" placeholder="Last Name" required></li>
+                        <li>
+                           <input type="submit" value="Sign Up"></li>
+                        </ul>
+                  </form>
+                  {% if invalidusername %}
+                     <p>Invalid username. Your username must be at least 6 characters long.</p>
+                  {% endif %}
+                  {% if usernameused %}
+                     <p>That username is already in use.</p>
+                  {% endif %}
+                  {% if invalidpassword %}
+                     <p>Invalid password. Your password must be at least 8 characters long.</p>
+                  {% endif %}
+                  {% if mismatchedpassword %}
+                     <p>Your passwords need to match!</p>
+                  {% endif %}
+                  {% if usercreated %}
+                     <p>Congratulation! You have successfully created a user account. You can now log in.</p>
+                  {% endif %}
+               </section>
+            </div>
+         </div>
+      </div>
+   </div> 
+<div class="blog-header">
+        <h1 class="blog-title">ABOUT US</h1>
+</div><div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+          <div class="blog-post">
+            <hr>
+
+            <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
+            STUFF
+          </div>
 </BODY>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 </HTML>
