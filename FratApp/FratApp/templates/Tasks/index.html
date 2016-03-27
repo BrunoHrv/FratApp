@@ -1,41 +1,68 @@
 <HTML>
 <HEAD>
 <TITLE>Frat App</TITLE>
-</HEAD>
-<BODY BGCOLOR="FFFFFF">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-<div align="left">
-<nav>
-    <div align="left">
-      <a href="/" >Frat App</a>
-      <a href="/Calendar/">Calendar/Bulletin Board</a>
-      <a href="/Tasks/">Tasks</a>
-      <a href="/Directory/">User Directory</a>
-      <a href="/AttendanceLists/">Attendance Lists</a>
-      Welcome, {{firstname}}!
-<form name="Logout" method="POST">
-{% csrf_token %}
-      <li><input type="submit" value="Logout" name="logout"></li>
-</form>
-      <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
-      <a href="#" onclick="signOut();">Sign out</a>!-->
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
-    </div>
-</nav>
-</div>
-Personal Tasks:
-
-General Tasks:
-
-Supplies Needed:
-UNDER CONSTRUCTION
-</BODY>
+   </HEAD>
+      <BODY BGCOLOR="FFFFFF">
+         <script src="https://apis.google.com/js/platform.js" async defer></script>
+         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
+         <div class="container">
+            <div class="row">
+               <div class="blog-header">
+                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">Task Lists</h1>
+               </div>
+            </div>
+         </div>
+         <div class="container">
+            <div class="row">
+                     <hr>
+               <div class="col-sm-7 blog-main">
+                  <div class="blog-post">
+                     <p>General Tasks</p>
+                     <p>UNDER CONSTRUCTION</p>
+                     <hr>
+                     <p>Personal Tasks</p>
+                     <p>UNDER CONSTRUCTION</p>
+                     <hr>
+                     <p>Supplies Needed</p>
+                     <p>UNDER CONSTRUCTION</p>
+                  </div>
+               </div>
+               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
+                  <div class="sidebar-module sidebar-module-inset">
+                     <ol class="list-unstyled">
+                        Welcome, {{firstname}}!
+                        <li><a href="/" >Frat App</a></li>
+                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
+                        <li><a href="/Tasks/">Tasks</a></li>
+                        <li><a href="/Directory/">User Directory</a></li>
+                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
+                        <form name="Logout" method="POST">
+                           {% csrf_token %}
+                           <input type="submit" value="Logout" name="logout">
+                        </form>
+                     <ol>
+                     <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
+                     <a href="#" onclick="signOut();">Sign out</a>!
+                     <script>
+                        function signOut() {
+                           var auth2 = gapi.auth2.getAuthInstance();
+                           auth2.signOut().then(function () {
+                              console.log('User signed out.');
+                           });
+                        }
+                     </script>-->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </BODY>
+   </HEAD>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </HTML>
+
+
