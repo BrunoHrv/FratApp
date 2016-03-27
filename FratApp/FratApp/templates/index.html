@@ -5,83 +5,103 @@
       <BODY BGCOLOR="FFFFFF">
          <script src="https://apis.google.com/js/platform.js" async defer></script>
          <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-         <!<div align="left">
-         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-               <section class="loginform cf">
-                  <form name="login" action="/" method="POST" accept-charset="utf-8">
-                     {% csrf_token %}
-                     <ul>
-                        <li><label for="username">Username</label>
-                           <input type="username" name="username" placeholder="your username" required></li>
-                        <li><label for="password">Password</label>
-                           <input type="password" name="password" placeholder="password" required></li>
-                        <li>
-                           <input type="submit" value="Login"></li>
-                     </ul>
-                  </form>
-                  {% if redirected %}
-                     <p>You must login first!</p>
-                  {% endif %}
-                  {% if loginfailed %}
-                     <p>Invalid username or password. Please try again.</p>
-                  {% endif %}
-                  {% if accountdisabled %}
-                     <p>Your account has been disabled.</p>
-                  {% endif %}
-               </section>
-               <section class="signupform cf">
-                  <form name="signup" action="/" method="POST" accept-charset="utf-8">
-                     {% csrf_token %}
-                     <ul>
-                        <li><label for="usernamesubmit">Username</label>
-                           <input type="username" name="usernamesubmit" placeholder="your username" required></li>
-                        <li><label for="passwordsubmit">Password</label>
-                           <input type="password" name="passwordsubmit" placeholder="password" required></li>
-                        <li><label for="passwordconfirmation">Confirm Password</label>
-                            <input type="password" name="passwordconfirmation" placeholder="password" required></li>
-                        <li><label for="firstname">Your First Name</label>
-                            <input type="firstname" name="firstname" placeholder="First Name" required></li>
-                        <li><label for="lastname">Your Last Name</label>
-                           <input type="lastname" name="lastname" placeholder="Last Name" required></li>
-                        <li>
-                           <input type="submit" value="Sign Up"></li>
-                        </ul>
-                  </form>
-                  {% if invalidusername %}
-                     <p>Invalid username. Your username must be at least 6 characters long.</p>
-                  {% endif %}
-                  {% if usernameused %}
-                     <p>That username is already in use.</p>
-                  {% endif %}
-                  {% if invalidpassword %}
-                     <p>Invalid password. Your password must be at least 8 characters long.</p>
-                  {% endif %}
-                  {% if mismatchedpassword %}
-                     <p>Your passwords need to match!</p>
-                  {% endif %}
-                  {% if usercreated %}
-                     <p>Congratulation! You have successfully created a user account. You can now log in.</p>
-                  {% endif %}
-               </section>
+         <div class="container">
+            <div class="row">
+               <div class="blog-header">
+                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">ABOUT US</h1>
+               </div>
             </div>
          </div>
-         <div class="blog-header">
-            <h1 class="blog-title">ABOUT US</h1>
-         </div>
-         <div class="row">
-            <div class="col-sm-8 blog-main">
-               <div class="blog-post">
-                  <hr>
-                  <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
-                  <p>STUFF</p>
+         <div class="container">
+            <div class="row">
+                     <hr>
+               <div class="col-sm-7 blog-main">
+                  <div class="blog-post">
+                     <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
+                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis venenatis mi. Morbi ut quam tempus, accumsan metus eget, imperdiet sem. Nullam dolor justo, dictum quis laoreet a, maximus id purus. Maecenas nunc lorem, tincidunt fringilla metus vitae, porta vehicula quam. Vestibulum elementum ante dapibus dolor ultricies euismod. Praesent ullamcorper erat lacus, nec malesuada lorem suscipit non. Nam blandit felis sit amet consequat efficitur. Vestibulum non erat id nulla pharetra auctor. Quisque viverra elementum dui, sit amet porta dui laoreet nec. Quisque ullamcorper dolor quis vehicula pharetra. Proin tempus elit eu ipsum eleifend, sed efficitur turpis finibus.</p>
+
+                     <p>Donec sit amet vehicula neque. Praesent orci diam, sollicitudin sed sollicitudin eu, mollis eu massa. Vivamus at luctus sem, non iaculis tortor. Nulla facilisi. Donec nibh tortor, fringilla nec aliquet vel, lobortis ac eros. Vivamus convallis diam ornare nunc pulvinar facilisis. Quisque eget tortor ac magna porttitor pretium et gravida massa. Nam aliquam eget erat eu dictum. Sed tristique non turpis eu egestas. Donec pharetra ligula nec sagittis suscipit. Fusce egestas, nisl id vulputate convallis, magna augue tristique mauris, eget porttitor turpis nibh sed libero. Morbi eget pulvinar lorem, non gravida ligula. Fusce convallis, urna consectetur rutrum finibus, purus nisi vestibulum ligula, at maximus metus dolor sit amet lacus. Phasellus porttitor tempus leo in imperdiet. Etiam velit leo, sollicitudin mollis sollicitudin quis, blandit nec dui.</p>
+
+                     <p>Cras tristique, ante ac porta euismod, dolor risus pharetra erat, blandit fermentum nisi sapien vitae ante. In eget rutrum purus. Nam lacus orci, rhoncus non ullamcorper eget, luctus at tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus condimentum lacus eu libero aliquet maximus. Sed tortor arcu, dapibus eu tortor et, tempus dictum sapien. In luctus ex sit amet iaculis fringilla. Suspendisse a lectus ac libero dignissim porta a vel ante. Integer in orci magna. Nunc molestie diam nisl, vitae vehicula sem varius sit amet. Duis in leo vel nisl laoreet feugiat sit amet a nisi. Quisque vel nibh odio. Quisque rhoncus ornare commodo. Phasellus imperdiet interdum neque, et volutpat massa fermentum eget. Donec elementum ultrices urna, quis dapibus ante pulvinar quis.</p>
+
+                     <p>Sed at commodo lectus, eu interdum diam. Proin vulputate quis sapien quis semper. Curabitur ultricies dolor sed odio malesuada laoreet. Praesent at scelerisque diam, eu aliquam dolor. Suspendisse molestie felis at erat elementum pulvinar. Fusce sed gravida risus, quis egestas urna. Vivamus blandit ac lacus at tempus. In iaculis magna nec urna vulputate mattis. Mauris varius lacus id odio luctus, ac placerat nisi hendrerit.</p>
+                  </div>
+               </div>
+               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
+                  <div class="sidebar-module sidebar-module-inset">
+                     <section class="loginform cf">
+                        <form name="login" action="/" method="POST" accept-charset="utf-8">
+                           {% csrf_token %}
+                           <ol class="list-unstyled">
+                              <li><label for="username">Username</label>
+                                 <input type="username" name="username" placeholder="your username" required>
+                              </li>
+                              <li><label for="password">Password</label>
+                                 <input type="password" name="password" placeholder="password" required>
+                              </li>
+                              <input type="submit" value="Login">
+                           </ol>
+                        </form>
+                     </section>
+                  </div>
+                  <div class="sidebar-module">
+                     <section class="signupform cf">
+                        <form name="signup" action="/" method="POST" accept-charset="utf-8">
+                           {% csrf_token %}
+                           <ol class="list-unstyled">
+                              <li><label for="usernamesubmit">Username</label>
+                                 <input type="username" name="usernamesubmit" placeholder="your username" required>
+                              </li>
+                              <li><label for="passwordsubmit">Password</label>
+                                 <input type="password" name="passwordsubmit" placeholder="password" required>
+                              </li>
+                              <li><label for="passwordconfirmation">Confirm Password</label>
+                                 <input type="password" name="passwordconfirmation" placeholder="password" required>
+                              </li>
+                              <li><label for="firstname">Your First Name</label>
+                                 <input type="firstname" name="firstname" placeholder="First Name" required>
+                              </li>
+                              <li><label for="lastname">Your Last Name</label>
+                                 <input type="lastname" name="lastname" placeholder="Last Name" required>
+                              </li>
+                              <input type="submit" value="Sign Up">
+                           </ol>
+                        </form>
+                        {% if redirected %}
+                           <p>You must login first!</p>
+                        {% endif %}
+                        {% if loginfailed %}
+                           <p>Invalid username or password. Please try again.</p>
+                        {% endif %}
+                        {% if accountdisabled %}
+                           <p>Your account has been disabled.</p>
+                        {% endif %}
+                        {% if invalidusername %}
+                           <p>Invalid username. Your username must be at least 6 characters long.</p>
+                        {% endif %}
+                        {% if usernameused %}
+                           <p>That username is already in use.</p>
+                        {% endif %}
+                        {% if invalidpassword %}
+                           <p>Invalid password. Your password must be at least 8 characters long.</p>
+                        {% endif %}
+                        {% if mismatchedpassword %}
+                           <p>Your passwords need to match!</p>
+                        {% endif %}
+                        {% if usercreated %}
+                           <p>Congratulation! You have successfully created a user account. You can now log in.</p>
+                        {% endif %}
+                     </section>
+                  </div>
                </div>
             </div>
          </div>
       </BODY>
    </HEAD>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="/static/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </HTML>

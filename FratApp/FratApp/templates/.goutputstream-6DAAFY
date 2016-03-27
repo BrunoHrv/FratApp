@@ -5,7 +5,6 @@
       <BODY BGCOLOR="FFFFFF">
          <script src="https://apis.google.com/js/platform.js" async defer></script>
          <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-         <!<div align="left">
          <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
                <section class="loginform cf">
@@ -66,23 +65,36 @@
                </section>
             </div>
          </div>
-      </div>
-   </div> 
-<div class="blog-header">
-        <h1 class="blog-title">ABOUT US</h1>
-</div><div class="row">
+         <div class="blog-header">
+            <h1 class="blog-title">ABOUT US</h1>
+         </div>
+         <div class="row">
+            <div class="col-sm-8 blog-main">
+               <div class="blog-post">
+                  <hr>
+                  <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis venenatis mi. Morbi ut quam tempus, accumsan metus eget, imperdiet sem. Nullam dolor justo, dictum quis 				laoreet a, maximus id purus. Maecenas nunc lorem, tincidunt fringilla metus vitae, porta vehicula quam. Vestibulum elementum ante dapibus dolor ultricies euismod. Praesent ullamcorper erat lacus, nec malesuada lorem suscipit non. Nam blandit felis sit amet consequat efficitur. Vestibulum non erat id nulla pharetra auctor. Quisque viverra elementum dui, sit amet porta dui laoreet nec. Quisque ullamcorper dolor quis vehicula pharetra. Proin tempus elit eu ipsum eleifend, sed efficitur turpis finibus.</p>
 
-        <div class="col-sm-8 blog-main">
+                  <p>Donec sit amet vehicula neque. Praesent orci diam, sollicitudin sed sollicitudin eu, mollis eu massa. Vivamus at luctus sem, non iaculis tortor. Nulla facilisi. Donec nibh tortor, fringilla nec aliquet vel, lobortis ac eros. Vivamus convallis diam ornare nunc pulvinar facilisis. Quisque eget tortor ac magna porttitor pretium et gravida massa. Nam aliquam eget erat eu dictum. Sed tristique non turpis eu egestas. Donec pharetra ligula nec sagittis suscipit. Fusce egestas, nisl id vulputate convallis, magna augue tristique mauris, eget porttitor turpis nibh sed libero. Morbi eget pulvinar lorem, non gravida ligula. Fusce convallis, urna consectetur rutrum finibus, purus nisi vestibulum ligula, at maximus metus dolor sit amet lacus. Phasellus porttitor tempus leo in imperdiet. Etiam velit leo, sollicitudin mollis sollicitudin quis, blandit nec dui.</p>
 
-          <div class="blog-post">
-            <hr>
+                  <p>Cras tristique, ante ac porta euismod, dolor risus pharetra erat, blandit fermentum nisi sapien vitae ante. In eget rutrum purus. Nam lacus orci, rhoncus non ullamcorper eget, luctus at tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus condimentum lacus eu libero aliquet maximus. Sed tortor arcu, dapibus eu tortor et, tempus dictum sapien. In luctus ex sit amet iaculis fringilla. Suspendisse a lectus ac libero dignissim porta a vel ante. Integer in orci magna. Nunc molestie diam nisl, vitae vehicula sem varius sit amet. Duis in leo vel nisl laoreet feugiat sit amet a nisi. Quisque vel nibh odio. Quisque rhoncus ornare commodo. Phasellus imperdiet interdum neque, et volutpat massa fermentum eget. Donec elementum ultrices urna, quis dapibus ante pulvinar quis.</p>
 
-            <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
-            STUFF
-          </div>
-</BODY>
+                  <p>Sed at commodo lectus, eu interdum diam. Proin vulputate quis sapien quis semper. Curabitur ultricies dolor sed odio malesuada laoreet. Praesent at scelerisque diam, eu aliquam dolor. Suspendisse molestie felis at erat elementum pulvinar. Fusce sed gravida risus, quis egestas urna. Vivamus blandit ac lacus at tempus. In iaculis magna nec urna vulputate mattis. Mauris varius lacus id odio luctus, ac placerat nisi hendrerit.</p>
+               </div>
+            </div>
+         </div>
+      </BODY>
+   </HEAD>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="/static/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="/static/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 </HTML>
