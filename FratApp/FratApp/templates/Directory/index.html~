@@ -1,3 +1,4 @@
+
 <HTML>
 <HEAD>
 <TITLE>Frat App</TITLE>
@@ -17,8 +18,9 @@
                      <hr>
                <div class="col-sm-7 blog-main">
                   <div class="blog-post">
+                     <p>UNDER CONSTRUCTION</p>
                      {% for user in userlist %}
-                        <li><a href="/Directory/?user={{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</a></li>
+                        <li><a href="/Directory/?user={{user.username}}/">{{user.first_name}} {{user.last_name}} ({{user.username}})</a></li>
                      {% endfor %}
                   </div>
                </div>
