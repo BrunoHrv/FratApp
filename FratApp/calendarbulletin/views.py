@@ -10,7 +10,6 @@ from django.contrib.auth import logout
 def index(request):
 	if request.user.is_authenticated():
 		user = request.user
-		print user
 		context={
 			'username':user.username,
 			'firstname':user.first_name,

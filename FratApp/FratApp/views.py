@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 
@@ -52,16 +52,23 @@ def index(request, redirected=False):
 	firstname=request.POST['firstname']
 	lastname=request.POST['lastname']
 	user_created=True
+	allgroups= Group.objects.filter(name="All")
+	allexists=allgroups.exists()
+	allgroup=None
+	if allexists:
+		allgroup=allgroups[0]
+	if not allexists:
+		allgroup=Group.objects.create(name="All")
+		allgroup.save()
 	if password != passwordconfirm:
 		context['mismatchedpassword']=True
 		user_created=False
 	if len(username) < 6:
 		context['invalidusername']=True
 		user_created=False
-	for entry in User.objects.all():
-		if entry.username == username:
-			context['usernameused']=True
-			user_created=False
+	if User.objects.filter(username=username).exists():
+		context['usernameused']=True
+		user_created=False
 	if len(password) < 8:
 		context['invalidpassword']=True
 		user_created=False
@@ -69,6 +76,7 @@ def index(request, redirected=False):
 		user = User.objects.create_user(username, None, password)
 		user.first_name=firstname
 		user.last_name=lastname
+		user.groups=[allgroup]
 		user.save()
 	context['usercreated']=user_created
 	return render(request, 'index.html', context)
