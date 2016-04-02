@@ -1,7 +1,8 @@
+{% load staticfiles %}
 <HTML>
 <HEAD>
-<TITLE>Frat App</TITLE>
-   </HEAD>
+   <TITLE>Frat App</TITLE>
+</HEAD>
       <BODY BGCOLOR="FFFFFF">
          <script src="https://apis.google.com/js/platform.js" async defer></script>
          <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
@@ -16,12 +17,30 @@
             <div class="row">
                      <hr>
                <div class="col-sm-7 blog-main">
+                  <ul class="bulletins">
+                     {% for bulletin in bulletin_list%}
+                     <li>{{bulletin.creator}} {{bulletin.title}} {{bulletin.text}} {{bulletin.postDate}}</li>
+                     {% endfor %}
+                  </ul>
                   <div class="blog-post">
                      <iframe src="https://calendar.google.com/calendar/embed?src=fratapprpi%40gmail.com&ctz=America/New_York" style="border: 0" width="750" height="600" frameborder="0" scrolling="no"></iframe>
                   </div>
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
+                     <h2>Create an Announcement</h2>
+                     <form name="addbulletin" action="/Calendar/" method="POST" accept-charset="utf-8">
+                        {% csrf_token %}
+                        <p>
+                           <label for="title">Task</label>
+                           <input type="text" name="title" placeholder="Name of Announcement" required>
+                        </p>
+                        <p>
+                           <label for="description">Description</label>
+                           <input type="text" name="description" placeholder="Description of Announcement" required>
+                        </p>
+                        <input type="submit" value="Add Bulletin" name="addbulletin">
+                     </form>
                      <ol class="list-unstyled">
                         Welcome, {{firstname}}!
                         <li><a href="/" >Frat App</a></li>
@@ -54,8 +73,12 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!--JQuery UI-->
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{% static 'javascript/bulletin.js' %}"></script>
 </HTML>
 
 

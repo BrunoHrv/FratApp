@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'calendarbulletin',
+    'attendancelists',
+    'FratApp',
+    'landing',
+    'directory',
 ]
 
 MIDDLEWARE_CLASSES = [

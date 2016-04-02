@@ -4,6 +4,7 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from .models import Bulletin
 import httplib2
 import os
 import apiclient
@@ -35,6 +36,13 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
+		if request.method == 'POST' and 'addbulletin' in request.POST:
+			Creator = user.first_name + ' ' + user.last_name
+			Title = request.POST['title']
+			Description = request.POST['description']
+			announcement = Bulletin.objects.create(creator=Creator, title = Title, text = Description)
+		context['bulletin_list'] = Bulletin.objects.all()
+
 		return render(request, 'Calendar/index.html', context)
 	else:
 		return redirect('/?redirected=True')
