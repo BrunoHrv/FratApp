@@ -102,7 +102,7 @@ DATABASES = {
 }
 
 #set user model to custom FratAppUser
-AUTH_USER_MODEL = 'appname.CustomModel'
+AUTH_USER_MODEL = 'FratApp.FratAppUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
