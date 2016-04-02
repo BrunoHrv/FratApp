@@ -30,6 +30,8 @@ class FratAppUser(AbstractBaseUser, PerrmissionsMixin):
     phoneNumber = models.CharField(_('phone number'), max_length = 15, blank = True)
     isOfficer = models.BooleanField(default=False)
     isAdmin = models.BooleanField(default=False)
+    
+    objects = CustomUserManager()
   
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['firstName','lastName']
