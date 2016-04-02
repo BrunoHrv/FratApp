@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from .models import Bulletin
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import httplib2
 import os
 import apiclient
@@ -41,8 +42,18 @@ def index(request):
 			Title = request.POST['title']
 			Description = request.POST['description']
 			announcement = Bulletin.objects.create(creator=Creator, title = Title, text = Description)
-		context['bulletin_list'] = Bulletin.objects.all()
-
-		return render(request, 'Calendar/index.html', context)
-	else:
-		return redirect('/?redirected=True')
+		bulletin_list = Bulletin.objects.all()
+		paginator = Paginator(bulletin_list, 10)
+		page = request.GET.get('page')
+    	try:
+    	    bulletins = paginator.page(page)
+    	except PageNotAnInteger:
+    	    # If page is not an integer, deliver first page.
+    	    bulletins = paginator.page(1)
+    	except EmptyPage:
+    	    # If page is out of range (e.g. 9999), deliver last page of results.
+    	    bulletins = paginator.page(paginator.num_pages)
+    	context['bulletins'] = bulletins
+    	return render(request, 'Calendar/index.html', context)
+	#else:
+	#	return redirect('/?redirected=True')

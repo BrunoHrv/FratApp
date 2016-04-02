@@ -18,10 +18,25 @@
                      <hr>
                <div class="col-sm-7 blog-main">
                   <ul class="bulletins">
-                     {% for bulletin in bulletin_list%}
+                     {% for bulletin in bulletins%}
                      <li>{{bulletin.creator}} {{bulletin.title}} {{bulletin.text}} {{bulletin.postDate}}</li>
                      {% endfor %}
                   </ul>
+                  <div class="pagination">
+                      <span class="step-links">
+                          {% if bulletins.has_previous %}
+                              <a href="?page={{ bulletins.previous_page_number }}">previous</a>
+                          {% endif %}
+                  
+                          <span class="current">
+                              Page {{ bulletins.number }} of {{ bulletins.paginator.num_pages }}.
+                          </span>
+                  
+                          {% if bulletins.has_next %}
+                              <a href="?page={{ bulletins.next_page_number }}">next</a>
+                          {% endif %}
+                      </span>
+                  </div>
                   <div class="blog-post">
                      <iframe src="https://calendar.google.com/calendar/embed?src=fratapprpi%40gmail.com&ctz=America/New_York" style="border: 0" width="750" height="600" frameborder="0" scrolling="no"></iframe>
                   </div>
