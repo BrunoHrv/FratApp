@@ -15,7 +15,7 @@ def index(request):
 		personaltasks=[]
 		for task in Task.objects.all():
 			if user in task.users.all():
-				personaltasks.append(task.text)
+				personaltasks.append(task)
 			else:
 				done = False
 				i = 0
@@ -23,7 +23,7 @@ def index(request):
 				while not done and i < ngroups:
 					group = task.userlists.all()[i]
 					if group in user.groups.all():
-						gentasks.append(task.text)
+						gentasks.append(task)
 						done = True
 					i =i+1
 		context={
@@ -38,6 +38,9 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
+		if request.method=='POST' and 'deletetask' in request.POST:
+			Task.objects.filter(id=int(request.POST['task_id'])).delete()
+			return redirect('/Tasks/')
 		if request.method=='POST' and 'submittask' in request.POST:
 			tasktext=request.POST['task']
 			usergroups=request.POST.getlist('usergroups')
