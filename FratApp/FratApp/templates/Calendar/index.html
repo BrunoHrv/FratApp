@@ -17,11 +17,16 @@
             <div class="row">
                      <hr>
                <div class="col-sm-7 blog-main">
-                  <ul class="bulletins">
+                  <div class="bulletins">
                      {% for bulletin in bulletins%}
-                     <li>{{bulletin.creator}} {{bulletin.title}} {{bulletin.text}} {{bulletin.postDate}}</li>
+                        <p>{{bulletin.title}}</p>
+                        <hr>
+                        <p>{{bulletin.creator}} posted at {{bulletin.postDate}}</p>
+                        <p>{{bulletin.text}}</p>
+                        <p>Expires on {{bulletin.expiration_date}}</p>
+                        <hr>
                      {% endfor %}
-                  </ul>
+                  </div>
                   <div class="pagination">
                       <span class="step-links">
                           {% if bulletins.has_previous %}
@@ -53,6 +58,10 @@
                         <p>
                            <label for="description">Description</label>
                            <input type="text" name="description" placeholder="Description of Announcement" required>
+                        </p>
+                        <p>
+                           <label for="expiration">Expiration Date</label>
+                           <input type="date" name="expiration">
                         </p>
                         <input type="submit" value="Add Bulletin" name="addbulletin">
                      </form>

@@ -4,7 +4,7 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from .models import Bulletin
+from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import httplib2
 import os
@@ -16,6 +16,8 @@ from oauth2client import tools
 from oauth2client.service_account import ServiceAccountCredentials
 from httplib2 import Http
 from apiclient.discovery import build
+import datetime 
+from django.utils import timezone
 
 #scopes = ['https://www.googleapis.com/auth/sqlservice.admin', 'https://www.googleapis.com/auth/calendar']
 #credentials = ServiceAccountCredentials.from_json_keyfile_name('FratApp-3a6a3a856702.json', scopes=scopes)
@@ -33,15 +35,25 @@ def index(request):
 			'firstname':user.first_name,
 			'lastname':user.last_name,
 		}
-		print context
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
 		if request.method == 'POST' and 'addbulletin' in request.POST:
-			Creator = user.first_name + ' ' + user.last_name
+			Creator = user.username
 			Title = request.POST['title']
 			Description = request.POST['description']
-			announcement = Bulletin.objects.create(creator=Creator, title = Title, text = Description)
+			expiration= request.POST['expiration']
+			announcement = Bulletin.objects.create(creator=Creator, title = Title, text = Description, expiration_date = expiration)
+		checks = BulletinClearer.objects.all()
+		bc = None
+		if len(checks) == 0:
+			bc = BulletinClearer.objects.create()
+		else:
+			bc = checks[len(checks)-1]
+			for c in checks:
+				if c != bc:
+					c.delete()
+		bc.Clear_Events()
 		bulletin_list = Bulletin.objects.all()
 		paginator = Paginator(bulletin_list, 10)
 		page = request.GET.get('page')
