@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
 
+from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.contrib.auth.models import baseUserManager
+from django.contrib.auth.models import BaseUserManager
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
-from django.db import models
-from django.contrib.auth.models import User
 from oauth2client.django_orm import FlowField
 from oauth2client.django_orm import Storage
 from your_project.your_app.models import CredentialsModel
