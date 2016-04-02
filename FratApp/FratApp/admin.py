@@ -14,7 +14,7 @@ class UserCreationForm(forms.ModelForm):
     
     class Meta:
         model = FratAppUser
-        fields = ('email, 'firstName', 'lastName')
+        fields = ('email', 'firstName', 'lastName')
     
     def clean_password2(self):
         # Check that the two password entries match
