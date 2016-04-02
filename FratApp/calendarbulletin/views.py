@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 import httplib2
 import os
+import apiclient
 from apiclient import discovery
 import oauth2client
 from oauth2client import client

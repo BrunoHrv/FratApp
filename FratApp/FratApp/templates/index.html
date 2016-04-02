@@ -1,14 +1,16 @@
+{%load staticfiles %}
 <HTML>
 <HEAD>
-<TITLE>Frat App</TITLE>
-   </HEAD>
+   <TITLE>Frat App</TITLE>
+   <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</HEAD>
       <BODY BGCOLOR="FFFFFF">
          <script src="https://apis.google.com/js/platform.js" async defer></script>
          <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
          <div class="container">
             <div class="row">
                <div class="blog-header">
-                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">ABOUT US</h1>
+                  <h1 id="title" class="col-sm-5 col-sm-offset-1 blog-title">ABOUT US</h1>
                </div>
             </div>
          </div>
