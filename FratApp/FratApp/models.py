@@ -7,7 +7,7 @@ from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 
 
-class FratAppUser(AbstractBaseUser, PerrmissionsMixin):
+class FratAppUser(AbstractBaseUser, PermissionsMixin):
   
     email - models.EmailField(_('email address'), max_length = 254, unique = True)
     firstName = models.CharField(_('first name'), max_length = 25)
