@@ -5,18 +5,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
-from oauth2client.django_orm import FlowField
-from oauth2client.django_orm import Storage
-from your_project.your_app.models import CredentialsModel
 
-class FlowModel(models.Model):
-  id = models.ForeignKey(User, primary_key=True)
-  flow = FlowField()
 
-class CredentialsModel(models.Model):
-  id = models.ForeignKey(User, primary_key=True)
-  credential = CredentialsField()
-  
 class FratAppUser(AbstractBaseUser, PerrmissionsMixin):
   
     email - models.EmailField(_('email address'), max_length = 254, unique = True)
