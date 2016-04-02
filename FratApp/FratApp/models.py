@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import baseUserManager
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
@@ -18,7 +18,7 @@ class CredentialsModel(models.Model):
   id = models.ForeignKey(User, primary_key=True)
   credential = CredentialsField()
   
-class FratAppUser(AbstractBaseUser):
+class FratAppUser(AbstractBaseUser, PerrmissionsMixin):
   
     email - models.EmailField(_('email address'), max_length = 254, unique = True)
     firstName = models.CharField(_('first name'), max_length = 25)
