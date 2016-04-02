@@ -28,7 +28,7 @@ class FratAppUser(AbstractBaseUser):
     major = models.Charfield(_('major'), max_length = 25, blank = True)
     rollNumber = models.IntegerField(blank = True)
     graduationYear = models.IntegerField(blank = True)
-    phone number = models.CharField(_('phone number'), max_length = 15, blank = True)
+    phoneNumber = models.CharField(_('phone number'), max_length = 15, blank = True)
     isOfficer = models.BooleanField(default=False)
     isAdmin = models.BooleanField(default=False)
   
