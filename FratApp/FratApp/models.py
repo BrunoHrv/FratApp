@@ -13,7 +13,7 @@ class FratAppUser(AbstractBaseUser, PerrmissionsMixin):
     firstName = models.CharField(_('first name'), max_length = 25)
     lastName = models.CharField(_('last name'), max_length = 25)
     title = models.CharField(_('title'), max_length = 25, blank = True)
-    hometown = models.Charfield(_('title'), max_length = 50, blank = True)
+    hometown = models.Charfield(_('hometown'), max_length = 50, blank = True)
     major = models.Charfield(_('major'), max_length = 25, blank = True)
     rollNumber = models.IntegerField(blank = True)
     graduationYear = models.IntegerField(blank = True)
