@@ -13,7 +13,7 @@ class Announcement(models.model):
   
   #Orders all queries with the most recently created first
   class Meta:
-    ordering = ('-datetime')
+    ordering = ('-postDate')
   
   #Recommended Unicode method
   def __unicode__(self):
