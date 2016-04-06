@@ -19,12 +19,13 @@
                <div class="col-sm-7 blog-main">
                   <div class="bulletins">
                      {% for bulletin in bulletins%}
-                        <p>{{bulletin.title}}</p>
-                        <hr>
+                     <section class="bulletin_post">
+                        <h4>{{bulletin.title}}</h4>
                         <p>{{bulletin.creator}} posted at {{bulletin.postDate}}</p>
                         <p>{{bulletin.text}}</p>
                         <p>Expires on {{bulletin.expiration_date}}</p>
                         <hr>
+                     </section>
                      {% endfor %}
                   </div>
                   <div class="pagination">
