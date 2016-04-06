@@ -17,11 +17,56 @@
                      <hr>
                <div class="col-sm-7 blog-main">
                   <div class="blog-post">
-                     <p>UNDER CONSTRUCTION</p>
+                     {% if event == None %}
+                     {% for e in event_list %}
+                     <p class="event_block">
+                        <h3> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
+                        <p> Created by {{e.creator}} </p>
+                        <p> Description: {{e.text}} </p>
+
+                     </p>
+                     {% endfor %}
+                     {% else %}
+                     <h2> {{event.title}} </h2>
+                     <p> Created by {{event.creator}} </p>
+                     <p> Description: {{event.text}} </p>
+                     <h3> Registered Attendees </h3>
+                     <ul>
+                     {% for attendee in attendee_list %}
+                        <li> {{attendee.name}} </li>
+                     {% endfor %}
+                     </ul>
+                     {% endif %}
                   </div>
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
+                     <section class="attendence_submission">
+                        {% if event == None %}
+                        <form name="create_event" action="/AttendanceLists/" method="POST" accept-charset="utf-8">
+                           {% csrf_token %}
+                           <p>
+                              <label for="title">Task</label>
+                              <input type="text" name="title" placeholder="Name of Event" required>
+                           </p>
+                           <p>
+                              <label for="description">Description</label>
+                              <input type="text" name="text" placeholder="Description of Event" required>
+                           </p>
+                           <input type="submit" value="Add Event" name="create_event">
+                        </form>
+                        {% else %}
+                        <form name="add_attendee" method="POST">
+                           {% csrf_token %}
+                           <input type="hidden" name="event_id" value="{{event.id}}">
+                           <p>
+                              <label for="title">Task</label>
+                              <input type="text" name="name" placeholder="Attendee Name" required>
+                           </p>
+                           <input type="submit" value="Add Attendee" name="add_attendee">
+                        </form>
+                        {% endif %}
+                     </section>
                      <ol class="list-unstyled">
                         Welcome, {{firstname}}!
                         <li><a href="/" >Frat App</a></li>
