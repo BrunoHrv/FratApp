@@ -17,16 +17,34 @@
                      <hr>
                <div class="col-sm-7 blog-main">
                   <div class="blog-post">
-                     <p>General Tasks</p>
-                     {% for task in gentasks %}
-                        <p>{{task}}<p>
-                     {% endfor %}
-                     <hr>
-                     <p>Personal Tasks</p>
-                     {% for task in personaltasks %}
-                        <p>{{task}}<p>
-                     {% endfor %}
-                     <hr>
+                     <ul>
+                        <p>General Tasks</p>
+                        {% for task in gentasks %}
+                           <li>{{task.text}}</li>
+                           {% if task.creator == username %}
+                              <form name="deletetask" method="POST">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="task_id" value="{{task.id}}">
+                                 <input type="submit" value="Delete" name="deletetask">
+                              </form>
+                              {% endif %}
+                        {% endfor %}
+                     </ul>
+                     <ul>
+                        <p>Personal Tasks</p>
+                        {% for task in personaltasks %}
+                           <li>
+                              {{task.text}}
+                              {% if task.creator == username %}
+                              <form name="deletetask" method="POST">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="task_id" value="{{task.id}}">
+                                 <input type="submit" value="Delete" name="deletetask">
+                              </form>
+                              {% endif %}
+                           </li>
+                        {% endfor %}
+                     </ul>
                      <p>Supplies Needed</p>
                      <p>UNDER CONSTRUCTION</p>
                      <hr>
