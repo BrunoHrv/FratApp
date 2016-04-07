@@ -53,7 +53,7 @@ def index(request):
 			for c in checks:
 				if c != bc:
 					c.delete()
-		bc.Clear_Events()
+		bc.Clear_Bulletins()
 		bulletin_list = Bulletin.objects.all()
 		paginator = Paginator(bulletin_list, 10)
 		page = request.GET.get('page')

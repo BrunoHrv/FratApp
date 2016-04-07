@@ -28,7 +28,7 @@ class Bulletin(models.Model):
 
 class BulletinClearer(models.Model):
 	last_check = models.DateField(default = timezone.make_aware(datetime.datetime.now() - datetime.timedelta(days=10)).date())
-	def Clear_Events(self):
+	def Clear_Bulletins(self):
 		announcements = Bulletin.objects.all()
 		if self.last_check < timezone.now().date() - datetime.timedelta(days=1):
 			for a in announcements:
