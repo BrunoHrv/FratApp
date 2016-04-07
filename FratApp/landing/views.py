@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 # Create your views here.
 
 def index(request):
-	if request.user.is_authenticated():
+	if request.user.is_authenticated():#load page if user is logged in, redirect to external landing page if not
 		user = request.user
 		context={
 			'username':user.username,
