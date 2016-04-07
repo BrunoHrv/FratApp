@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 # Create your views here.
 
 def index(request):
+	#Checks to see if logged. Sends back to index page if not logged in
 	if request.user.is_authenticated():
 		user = request.user
 		context={
@@ -15,12 +16,14 @@ def index(request):
 			'firstname':user.first_name,
 			'lastname':user.last_name,
 		}
-		if request.method == 'GET':
+		#Recieve information from hypertext protocool
+		if request.method == 'GET':#get specific user
 			if 'user' in request.GET:
 				userquery=User.objects.get(username=request.GET['user'])
 				context['userquery']=userquery
 				return render(request, 'Directory/user.html', context)
-		context['userlist']=User.objects.all()
+		context['userlist']=User.objects.all()#get list of all users
+		#Logs out if requested, directs to main page if 'POST'
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
