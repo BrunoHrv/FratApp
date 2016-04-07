@@ -31,8 +31,20 @@
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
+                     <ol class="list-unstyled">
+                        <h2>Welcome, {{firstname}}!</h2> 
+                        <li><a href="/" >Frat App</a></li>
+                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
+                        <li><a href="/Tasks/">Tasks</a></li>
+                        <li><a href="/Directory/">User Directory</a></li>
+                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
+                        <form name="Logout" method="POST">
+                           {% csrf_token %}
+                           <input type="submit" value="Logout" name="logout">
+                        </form>
+                     </ol>
                   <section class="signupform cf">
-                     <h2>Create New User</h2>
+                     <h4>Create New User</h4>
                         <form name="signup" action="/LandingPage/" method="POST" accept-charset="utf-8">
                            {% csrf_token %}
                            <ol class="list-unstyled">
@@ -89,18 +101,6 @@
                         {% endif %}
                      </section>
 
-                     <ol class="list-unstyled">
-                        Welcome, {{firstname}}!
-                        <li><a href="/" >Frat App</a></li>
-                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                        <li><a href="/Tasks/">Tasks</a></li>
-                        <li><a href="/Directory/">User Directory</a></li>
-                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                        <form name="Logout" method="POST">
-                           {% csrf_token %}
-                           <input type="submit" value="Logout" name="logout">
-                        </form>
-                     <ol>
                      <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
                      <a href="#" onclick="signOut();">Sign out</a>!
                      <script>
