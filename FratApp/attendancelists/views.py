@@ -32,11 +32,14 @@ def index(request):
 			event.save()
 			return redirect('/AttendanceLists/')
 
+		if request.method == 'POST' and 'delete_event' in request.POST:
+			Event.objects.filter(id=int(request.POST['event_id'])).delete()
+			return redirect('/AttendanceLists/')
+
 		if request.method == 'GET' and request.GET.get('event_id'):
 			event_id = request.GET.get('event_id')
 			elist = Event.objects.filter(id = event_id)
 			if elist.exists():
-				print "-----------------------"
 				context['event'] = Event.objects.get(id=event_id)
 				context['attendee_list'] = Attendee.objects.filter(event = context['event'])
 				context['event_list'] = None

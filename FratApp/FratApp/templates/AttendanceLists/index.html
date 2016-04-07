@@ -23,7 +23,11 @@
                         <h3> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
                         <p> Created by {{e.creator}} </p>
                         <p> Description: {{e.text}} </p>
-
+                        <form name="delete_event" method="POST">
+                           {% csrf_token %}
+                           <input type="hidden" name="event_id" value="{{e.id}}">
+                           <input type="submit" value="Delete" name="delete_event">
+                        </form>
                      </p>
                      {% endfor %}
                      {% else %}
