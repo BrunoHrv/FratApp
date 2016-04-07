@@ -27,7 +27,7 @@
                                  <form name="deletetask" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="task_id" value="{{task.id}}">
-                                    <input type="submit" value="Delete" name="deletetask">
+                                    <input type="submit" value="Mark Complete" name="deletetask">
                                  </form>
                                  {% endif %}
                            </li>
@@ -38,14 +38,12 @@
                         {% for task in personaltasks %}
                            <li>
                               {{task.text}}
-                              {% if task.creator == username %}
-                              {#Form for deleting tasks#}
+
                               <form name="deletetask" method="POST">
                                  {% csrf_token %}
                                  <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Delete" name="deletetask">
+                                 <input type="submit" value="Mark Complete" name="deletetask">
                               </form>
-                              {% endif %}
                            </li>
                         {% endfor %}
                      </ul>
