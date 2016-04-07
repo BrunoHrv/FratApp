@@ -22,7 +22,8 @@ def index(request):
 				userquery=User.objects.get(username=request.GET['user'])
 				context['userquery']=userquery
 				return render(request, 'Directory/user.html', context)
-		context['userlist']=User.objects.all()#get list of all users
+		#get list of all users
+		context['userlist']=User.objects.all().order_by('first_name')
 		#Logs out if requested, directs to main page if 'POST'
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)

@@ -15,68 +15,76 @@ SITE_ROOT = SITE_ROOT_tmp[1:]
 TEMPLATE_DIR = normpath('Dropbox/SoftDevD/FratApp/FratApp/FratApp/FratApp/templates')
 
 def index(request, redirected=False):
+	print request.POST
+	print '--------------'
 	if request.user.is_authenticated():#redirect user to internal landing page if they're already logged in
 		return redirect('/LandingPage')
-    	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
+		ind = normpath(join(TEMPLATE_DIR, 'index.html'))
 	user = None
 	context={
 		'redirected':redirected,
 	}
-	if request.method == 'GET':
+	if request.method == 'GET' and request.GET.get('redirected'):
 		if 'redirected' in request.GET:
 			context['redirected']=request.GET['redirected']#see if user was redirected here for not being logged in
-		context['loginfailed']=False
-		context['accountdisabled']=False
-    		return render(request, 'index.html', context)
-	if  'username' in request.POST and 'password' in request.POST:#user trying to log in
-    		username = request.POST['username']
-    		password = request.POST['password']
-    		user = authenticate(username=username, password=password)
-    		if user is not None:
-    			if user.is_active:#log them in
-            			login(request, user)
+			context['loginfailed']=False
+			context['accountdisabled']=False
+			return render(request, 'index.html', context)
+	if  request.method == 'POST' and 'login' in request.POST:#user trying to log in
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			#log them in
+			if user.is_active:
+				login(request, user)
 				return redirect('/LandingPage')
-        		else:#account disabled
+			#account disabled
+			else:
 				context['loginfailed']=False
 				context['accountdisabled']=True
-    				return render(request, 'index.html', context)
-    		else:#bad credentials
-                context['loginfailed']=True
-                context['accountdisabled']=False
-    			return render(request, 'index.html', context)
+				return render(request, 'index.html', context)
+		#bad credentials
+		else:
+			context['loginfailed']=True
+			context['accountdisabled']=False
+			return render(request, 'index.html', context)
 	context['loginfailed']=False
 	context['accountdisabled']=False
-	username=request.POST['usernamesubmit']
-	password=request.POST['passwordsubmit']
-	passwordconfirm=request.POST['passwordconfirmation']
-	firstname=request.POST['firstname']
-	lastname=request.POST['lastname']
-	user_created=True
-	allgroups= Group.objects.filter(name="All")
-	allexists=allgroups.exists()
-	allgroup=None
-	if allexists:
-		allgroup=allgroups[0]
-	if not allexists:#create group containing all users
-		allgroup=Group.objects.create(name="All")
-		allgroup.save()
-	if password != passwordconfirm:
-		context['mismatchedpassword']=True
-		user_created=False
-	if len(username) < 6:
-		context['invalidusername']=True
-		user_created=False
-	if User.objects.filter(username=username).exists():#check if user already exists
-		context['usernameused']=True
-		user_created=False
-	if len(password) < 8:
-		context['invalidpassword']=True
-		user_created=False
-	if user_created:
-		user = User.objects.create_user(username, None, password)
-		user.first_name=firstname
-		user.last_name=lastname
-		user.groups=[allgroup]
-		user.save()#save user to database
-	context['usercreated']=user_created
+	if request.method == 'POST' and 'signup' in request.POST:
+		print request
+		username=request.POST['usernamesubmit']
+		password=request.POST['passwordsubmit']
+		email = request.POST['email']
+		passwordconfirm=request.POST['passwordconfirmation']
+		firstname=request.POST['firstname']
+		lastname=request.POST['lastname']
+		user_created=True
+		allgroups= Group.objects.filter(name="All")
+		allexists=allgroups.exists()
+		allgroup=None
+		if allexists:
+			allgroup=allgroups[0]
+		if not allexists:#create group containing all users
+			allgroup=Group.objects.create(name="All")
+			allgroup.save()
+		if password != passwordconfirm:
+			context['mismatchedpassword']=True
+			user_created=False
+		if len(username) < 6:
+			context['invalidusername']=True
+			user_created=False
+		if User.objects.filter(username=username).exists():#check if user already exists
+			context['usernameused']=True
+			user_created=False
+		if len(password) < 8:
+			context['invalidpassword']=True
+			user_created=False
+		if user_created:
+			user = User.objects.create_user(username, email, password)
+			user.first_name=firstname
+			user.last_name=lastname
+			user.groups=[allgroup]
+			user.save()#save user to database
+		context['usercreated']=user_created
 	return render(request, 'index.html', context)

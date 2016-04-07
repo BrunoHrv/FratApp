@@ -38,9 +38,11 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
+
 		if request.method=='POST' and 'deletetask' in request.POST:
 			Task.objects.filter(id=int(request.POST['task_id'])).delete()
 			return redirect('/Tasks/')
+			
 		if request.method=='POST' and 'submittask' in request.POST:
 			tasktext=request.POST['task']
 			usergroups=request.POST.getlist('usergroups')
