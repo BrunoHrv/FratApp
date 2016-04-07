@@ -9,14 +9,14 @@ from models import *
 # Create your views here.
 
 def index(request):
-	if request.user.is_authenticated():
+	if request.user.is_authenticated():#check if user is logged in and redirect them to index if they're not
 		user = request.user
 		gentasks = []
 		personaltasks=[]
-		for task in Task.objects.all():
-			if user in task.users.all():
+		for task in Task.objects.all():#check each task
+			if user in task.users.all():#if the user is mentioned by name, it is a personal task
 				personaltasks.append(task)
-			else:
+			else:#if the user is in a group that was assigned the task, it is a general task
 				done = False
 				i = 0
 				ngroups = len(task.userlists.all())
@@ -48,7 +48,7 @@ def index(request):
 			task = None
 			tlist = Task.objects.filter(text=tasktext)
 			taskexists = tlist.exists()
-			if taskexists:
+			if taskexists:#if the task already exists,simply update the existing one
 				task = tlist[0]
 				grouplist = [g.name for g in task.userlists.all()]
 				userlist = [u.username for u in task.users.all()]
@@ -64,7 +64,7 @@ def index(request):
 						u = User.objects.get(username=user)
 						task.users.add(u)
 						task.save()
-			else:
+			else:#create task if it doesn't already exist
 				task = Task.objects.create(creator=user.username, text=tasktext)
 				task.save()
 				for group in usergroups:
@@ -73,7 +73,7 @@ def index(request):
 				for user in usernames:
 					u = User.objects.get(username=user)
 					task.users.add(u)
-			task.save()
+			task.save()#save task
 			return redirect('/Tasks/')
 		return render(request, 'Tasks/index.html', context)
 	else:
