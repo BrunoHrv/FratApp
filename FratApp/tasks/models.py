@@ -8,9 +8,9 @@ from django.db import models
 
 class Task(models.Model):
 	id=models.AutoField(primary_key=True)
-	creator=models.CharField(max_length=200)
-	text=models.CharField(max_length=200)
-	userlists=models.ManyToManyField(Group)
-	users=models.ManyToManyField(User)
+	creator=models.CharField(max_length=200)#username of the user who made the task
+	text=models.CharField(max_length=200)#task description
+	userlists=models.ManyToManyField(Group)#groups to assign task to
+	users=models.ManyToManyField(User)#individual users for whom the task is set as a personal task
 	def __str__(self):
 		return self.text
