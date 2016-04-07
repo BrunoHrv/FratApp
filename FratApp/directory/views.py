@@ -17,12 +17,12 @@ def index(request):
 			'lastname':user.last_name,
 		}
 		#Recieve information from hypertext protocool
-		if request.method == 'GET':
+		if request.method == 'GET':#get specific user
 			if 'user' in request.GET:
 				userquery=User.objects.get(username=request.GET['user'])
 				context['userquery']=userquery
 				return render(request, 'Directory/user.html', context)
-		context['userlist']=User.objects.all()
+		context['userlist']=User.objects.all()#get list of all users
 		#Logs out if requested, directs to main page if 'POST'
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
