@@ -17,12 +17,14 @@
                      <hr>
                <div class="col-sm-7 blog-main">
                   <div class="blog-post">
+                     {#Displays all events if the event value is not set#}
                      {% if event == None %}
                      {% for e in event_list %}
                      <p class="event_block">
                         <h3> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
                         <p> Created by {{e.creator}} </p>
                         <p> Description: {{e.text}} </p>
+                        {#Form for deleting an event#}
                         <form name="delete_event" method="POST">
                            {% csrf_token %}
                            <input type="hidden" name="event_id" value="{{e.id}}">
@@ -31,6 +33,7 @@
                      </p>
                      {% endfor %}
                      {% else %}
+                     {#If the event value is set, display that specific event and all its attendees#}
                      <h2> {{event.title}} </h2>
                      <p> Created by {{event.creator}} </p>
                      <p> Description: {{event.text}} </p>
@@ -46,6 +49,7 @@
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
                      <section class="attendence_submission">
+                        {#If the user is on the Event directory page, allow for creation of events#}
                         {% if event == None %}
                         <form name="create_event" action="/AttendanceLists/" method="POST" accept-charset="utf-8">
                            {% csrf_token %}
@@ -60,6 +64,7 @@
                            <input type="submit" value="Add Event" name="create_event">
                         </form>
                         {% else %}
+                        {#Else, allow user to create attendees for a specific event#}
                         <form name="add_attendee" method="POST">
                            {% csrf_token %}
                            <input type="hidden" name="event_id" value="{{event.id}}">

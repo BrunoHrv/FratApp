@@ -30,6 +30,7 @@
                   </div>
                   <div class="pagination">
                       <span class="step-links">
+                      {#Form for the built-in Django paging#}
                           {% if bulletins.has_previous %}
                               <a href="?page={{ bulletins.previous_page_number }}">previous</a>
                           {% endif %}

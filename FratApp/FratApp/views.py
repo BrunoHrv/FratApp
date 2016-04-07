@@ -41,8 +41,8 @@ def index(request, redirected=False):
 				context['accountdisabled']=True
     				return render(request, 'index.html', context)
     		else:#bad credentials
-			context['loginfailed']=True
-			context['accountdisabled']=False
+                context['loginfailed']=True
+                context['accountdisabled']=False
     			return render(request, 'index.html', context)
 	context['loginfailed']=False
 	context['accountdisabled']=False

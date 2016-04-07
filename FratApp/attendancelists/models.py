@@ -23,6 +23,7 @@ class Event(models.Model):
 		return self.title
 
 class Attendee(models.Model):
+	#references a specific event and when that event is deleted, deletes itself
 	event = models.ForeignKey(Event, on_delete=models.CASCADE)
 	name = models.CharField(max_length = 200)
 

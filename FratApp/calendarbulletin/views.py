@@ -38,6 +38,7 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
+		#Creation of a bulletin via a POST request
 		if request.method == 'POST' and 'addbulletin' in request.POST:
 			Creator = user.username
 			Title = request.POST['title']
@@ -46,6 +47,7 @@ def index(request):
 			announcement = Bulletin.objects.create(creator=Creator, title = Title, text = Description, expiration_date = expiration)
 		checks = BulletinClearer.objects.all()
 		bc = None
+		#Code to make certain that there is only one BulletinClearer in the database at once
 		if len(checks) == 0:
 			bc = BulletinClearer.objects.create()
 		else:
@@ -53,6 +55,7 @@ def index(request):
 			for c in checks:
 				if c != bc:
 					c.delete()
+		#BulletinClearer checks to see if any bulletins need to be cleared
 		bc.Clear_Bulletins()
 		bulletin_list = Bulletin.objects.all()
 		paginator = Paginator(bulletin_list, 10)

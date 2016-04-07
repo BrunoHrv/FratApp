@@ -19,11 +19,11 @@ def index(request):
 			'event_list':Event.objects.all(),
 			'attendee_list':None,
 		}
-		print context
+		
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
-
+		#Creating an event via POST HTTP request
 		if request.method == 'POST' and 'create_event' in request.POST:
 			event_title = request.POST['title']
 			event_text = request.POST['text']
@@ -31,11 +31,11 @@ def index(request):
 			event = Event.objects.create(creator=event_creator, title=event_title, text=event_text)
 			event.save()
 			return redirect('/AttendanceLists/')
-
+		#deleting an event via POST data
 		if request.method == 'POST' and 'delete_event' in request.POST:
 			Event.objects.filter(id=int(request.POST['event_id'])).delete()
 			return redirect('/AttendanceLists/')
-
+		#Rendering a specific Event and it's attendees via POST data
 		if request.method == 'GET' and request.GET.get('event_id'):
 			event_id = request.GET.get('event_id')
 			elist = Event.objects.filter(id = event_id)
@@ -43,6 +43,7 @@ def index(request):
 				context['event'] = Event.objects.get(id=event_id)
 				context['attendee_list'] = Attendee.objects.filter(event = context['event'])
 				context['event_list'] = None
+		#Adding an attendee to an Event via POST Data, then redirecting into a GET Request with the event id
 		if request.method == 'POST' and 'add_attendee' in request.POST:
 			event_id = request.POST['event_id']
 			elist = Event.objects.filter(id = event_id)

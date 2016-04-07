@@ -20,14 +20,17 @@
                      <ul>
                         <p>General Tasks</p>
                         {% for task in gentasks %}
-                           <li>{{task.text}}</li>
-                           {% if task.creator == username %}
-                              <form name="deletetask" method="POST">
-                                 {% csrf_token %}
-                                 <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Delete" name="deletetask">
-                              </form>
-                              {% endif %}
+                           <li>
+                              {{task.text}}
+                              {#Form for deleting tasks#}
+                              {% if task.creator == username %}
+                                 <form name="deletetask" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="task_id" value="{{task.id}}">
+                                    <input type="submit" value="Delete" name="deletetask">
+                                 </form>
+                                 {% endif %}
+                           </li>
                         {% endfor %}
                      </ul>
                      <ul>
@@ -36,6 +39,7 @@
                            <li>
                               {{task.text}}
                               {% if task.creator == username %}
+                              {#Form for deleting tasks#}
                               <form name="deletetask" method="POST">
                                  {% csrf_token %}
                                  <input type="hidden" name="task_id" value="{{task.id}}">
