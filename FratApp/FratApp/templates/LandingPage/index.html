@@ -31,6 +31,64 @@
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
+                  <section class="signupform cf">
+                     <h2>Create New User</h2>
+                        <form name="signup" action="/LandingPage/" method="POST" accept-charset="utf-8">
+                           {% csrf_token %}
+                           <ol class="list-unstyled">
+                              <li>
+                                 <label for="usernamesubmit">Username</label>
+                                 <input type="text" name="usernamesubmit" placeholder="Username" required>
+                              </li>
+                              <li>
+                                 <label for="passwordsubmit">Password</label>
+                                 <input type="text" name="passwordsubmit" placeholder="Password" required>
+                              </li>
+                              <li>
+                                 <label for="passwordconfirmation">Confirm Password</label>
+                                 <input type="text" name="passwordconfirmation" placeholder="Password" required>
+                              </li>
+                              <li>
+                                 <label for="firstname">Your First Name</label>
+                                 <input type="text" name="firstname" placeholder="First Name" required>
+                              </li>
+                              <li>
+                                 <label for="lastname">Your Last Name</label>
+                                 <input type="text" name="lastname" placeholder="Last Name" required>
+                              </li>
+                              <li>
+                                 <label for="email">Your Email</label>
+                                 <input type="text" name="email" placeholder="Email" required>
+                              </li>
+                              <input type="submit" name="signup">
+                           </ol>
+                        </form>
+                        {% if redirected %}
+                           <p>You must login first!</p>
+                        {% endif %}
+                        {% if loginfailed %}
+                           <p>Invalid username or password. Please try again.</p>
+                        {% endif %}
+                        {% if accountdisabled %}
+                           <p>Your account has been disabled.</p>
+                        {% endif %}
+                        {% if invalidusername %}
+                           <p>Invalid username. Your username must be at least 6 characters long.</p>
+                        {% endif %}
+                        {% if usernameused %}
+                           <p>That username is already in use.</p>
+                        {% endif %}
+                        {% if invalidpassword %}
+                           <p>Invalid password. Your password must be at least 8 characters long.</p>
+                        {% endif %}
+                        {% if mismatchedpassword %}
+                           <p>Your passwords need to match!</p>
+                        {% endif %}
+                        {% if usercreated %}
+                           <p>Congratulation! You have successfully created a user account. You can now log in.</p>
+                        {% endif %}
+                     </section>
+
                      <ol class="list-unstyled">
                         Welcome, {{firstname}}!
                         <li><a href="/" >Frat App</a></li>
