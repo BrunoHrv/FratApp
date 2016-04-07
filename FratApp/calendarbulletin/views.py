@@ -8,14 +8,14 @@ from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 #import httplib2
 import os
-import apiclient
-from apiclient import discovery
-import oauth2client
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.service_account import ServiceAccountCredentials
+#import apiclient
+#from apiclient import discovery
+#import oauth2client
+#from oauth2client import client
+#from oauth2client import tools
+#from oauth2client.service_account import ServiceAccountCredentials
 #from httplib2 import Http
-from apiclient.discovery import build
+#from apiclient.discovery import build
 import datetime 
 from django.utils import timezone
 
