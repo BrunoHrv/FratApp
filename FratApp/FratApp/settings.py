@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'attendancelists',
     'directory',
     'landing',
+    'FratApp',
 ]
 
 MIDDLEWARE_CLASSES = [

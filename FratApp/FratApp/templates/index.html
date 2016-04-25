@@ -10,7 +10,7 @@
          <div class="container">
             <div class="row">
                <div class="blog-header">
-                  <h1 id="title" class="col-sm-5 col-sm-offset-1 blog-title">FRAT APP</h1>
+                  <h1 id="title" class="col-sm-5 col-sm-offset-1 blog-title">ABOUT US</h1>
                </div>
             </div>
          </div>
@@ -36,12 +36,12 @@
                            {% csrf_token %}
                            <ol class="list-unstyled">
                               <li><label for="username">Username</label>
-                                 <input type="username" name="username" placeholder="Your username" required>
+                                 <input type="username" name="username" placeholder="your username" required>
                               </li>
                               <li><label for="password">Password</label>
-                                 <input type="password" name="password" placeholder="Password" required>
+                                 <input type="password" name="password" placeholder="password" required>
                               </li>
-                              <input type="submit" name="login">
+                              <input type="submit" value="Login">
                            </ol>
                         </form>
                      </section>
@@ -51,31 +51,57 @@
                         <form name="signup" action="/" method="POST" accept-charset="utf-8">
                            {% csrf_token %}
                            <ol class="list-unstyled">
-                              <li>
-                                 <label for="usernamesubmit">Username</label>
-                                 <input type="text" name="usernamesubmit" placeholder="Username" required>
+                              <li><label for="usernamesubmit">Username</label>
+                                 <input type="username" name="usernamesubmit" placeholder="your username" required>
+                              </li>
+                              <li><label for="passwordsubmit">Password</label>
+                                 <input type="password" name="passwordsubmit" placeholder="password" required>
+                              </li>
+                              <li><label for="passwordconfirmation">Confirm Password</label>
+                                 <input type="password" name="passwordconfirmation" placeholder="password" required>
+                              </li>
+                              <li><label for="firstname">Your First Name</label>
+                                 <input type="firstname" name="firstname" placeholder="First Name" required>
+                              </li>
+                              <li><label for="lastname">Your Last Name</label>
+                                 <input type="lastname" name="lastname" placeholder="Last Name" required>
+                              </li>
+                              <li><label for="primarymajor">Your Primary Major</label>
+                                 <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
+                              </li>
+                              <li><label for="secondarymajor">Your Secondary Major</label>
+                                 <input type="secondarymajor" name="secondarymajor" placeholder="Secondary Major">
+                              </li>
+                              <li><label for="primaryminor">Your Primary Minor</label>
+                                 <input type="primaryminor" name="primaryminor" placeholder="Primary Minor">
+                              </li>
+                              <li><label for="secondaryminor">Your Secondary Minor</label>
+                                 <input type="secondaryminor" name="secondaryminor" placeholder="Secondary Minor">
                               </li>
                               <li>
-                                 <label for="passwordsubmit">Password</label>
-                                 <input type="text" name="passwordsubmit" placeholder="Password" required>
+                                 <label for="graddate">Expected Graduation Date</label>
+                                 <input type="date" name="graddate" required>
                               </li>
-                              <li>
-                                 <label for="passwordconfirmation">Confirm Password</label>
-                                 <input type="text" name="passwordconfirmation" placeholder="Password" required>
+                              <li><label for="hometown">Your Hometown</label>
+                                 <input type="hometown" name="hometown" placeholder="New York, NY">
                               </li>
-                              <li>
-                                 <label for="firstname">Your First Name</label>
-                                 <input type="text" name="firstname" placeholder="First Name" required>
+                              <li><label for="phone">Your Phone Number</label>
+                                 <input type="phone" name="phone" placeholder="1 (234)567-8910">
                               </li>
-                              <li>
-                                 <label for="lastname">Your Last Name</label>
-                                 <input type="text" name="lastname" placeholder="Last Name" required>
+                              <li><label for="roll">Your Roll Number</label>
+                                 <input type="number" name="roll" placeholder="0" required>
                               </li>
-                              <li>
-                                 <label for="email">Your Email</label>
-                                 <input type="text" name="email" placeholder="Email" required>
+                              <li><label for="rank">Your Rank</label>
+                                 <select name="rank">
+                                    {% for r in ranks %}
+                                       <option value="{{r}}" required>{{r}}</option>
+                                    {% endfor %}
+                                 </select>
                               </li>
-                              <input type="submit" name="signup">
+                              <li><label for="other">Your Rank (if unlisted)</label>
+                                 <input type="other" name="other" placeholder="">
+                              </li>
+                              <input type="submit" value="Sign Up">
                            </ol>
                         </form>
                         {% if redirected %}
@@ -100,7 +126,7 @@
                            <p>Your passwords need to match!</p>
                         {% endif %}
                         {% if usercreated %}
-                           <p>Congratulation! You have successfully created a user account.</p>
+                           <p>Congratulation! You have successfully created a user account. You can now log in.</p>
                         {% endif %}
                      </section>
                   </div>
