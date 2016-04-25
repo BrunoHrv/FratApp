@@ -63,11 +63,6 @@ def index(request, redirected=False):
 	secondarymajor=request.POST['secondarymajor']
 	primaryminor=request.POST['primaryminor']
 	secondaryminor=request.POST['secondaryminor']
-	if primaryminor == "" and secondaryminor != "":
-		primaryminor = secondaryminor
-		secondaryminor=""
-	if primaryminor =="":
-		primaryminor="None"
 	graddate=request.POST['graddate']
 	phonenumber=request.POST['phone']
 	roll=request.POST['roll']

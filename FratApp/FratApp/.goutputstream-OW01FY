@@ -20,11 +20,8 @@ def index(request, redirected=False):
 		return redirect('/LandingPage')
     	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
 	user = None
-	allranks = Rank.objects.all()
-	allranks=set([x.rank for x in allranks])	
-	noranks = set(["none","NONE","None"])
-	if allranks - noranks == allranks:
-		allranks.add("None")	
+	allranks = [__str__(x) for x in Rank.objects.all()]
+	allranks = set()	
 	context={
 		'redirected':redirected,
 		'ranks':allranks
@@ -63,11 +60,6 @@ def index(request, redirected=False):
 	secondarymajor=request.POST['secondarymajor']
 	primaryminor=request.POST['primaryminor']
 	secondaryminor=request.POST['secondaryminor']
-	if primaryminor == "" and secondaryminor != "":
-		primaryminor = secondaryminor
-		secondaryminor=""
-	if primaryminor =="":
-		primaryminor="None"
 	graddate=request.POST['graddate']
 	phonenumber=request.POST['phone']
 	roll=request.POST['roll']
