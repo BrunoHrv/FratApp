@@ -33,6 +33,8 @@ def index(request):
 		ownedtasks=[]
 		personaltasks=[]
 		for task in Task.objects.all():#check each task
+			if task.incomplete == False and task.creator==user.username:
+				ownedtasks.append(task)
 			if user in task.users.all():#if the user is mentioned by name, it is a personal task
 				personaltasks.append(task)
 			else:#if the user is in a group that was assigned the task, it is a general task
