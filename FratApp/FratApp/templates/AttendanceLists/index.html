@@ -46,7 +46,7 @@
                         <form name="create_event" action="/AttendanceLists/" method="POST" accept-charset="utf-8">
                            {% csrf_token %}
                            <p>
-                              <label for="title">Task</label>
+                              <label for="title">Event</label>
                               <input type="text" name="title" placeholder="Name of Event" required>
                            </p>
                            <p>
@@ -60,7 +60,7 @@
                            {% csrf_token %}
                            <input type="hidden" name="event_id" value="{{event.id}}">
                            <p>
-                              <label for="title">Task</label>
+                              <label for="title">Attendee Name</label>
                               <input type="text" name="name" placeholder="Attendee Name" required>
                            </p>
                            <input type="submit" value="Add Attendee" name="add_attendee">

@@ -21,11 +21,11 @@
                         <p>General Tasks</p>
                         {% for task in gentasks %}
                            <li>{{task.text}}</li>
-                           {% if task.creator == username %}
+                           {% if task.incomplete %}
                               <form name="deletetask" method="POST">
                                  {% csrf_token %}
                                  <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Delete" name="deletetask">
+                                 <input type="submit" value="Mark Complete" name="deletetask">
                               </form>
                               {% endif %}
                         {% endfor %}
@@ -35,7 +35,28 @@
                         {% for task in personaltasks %}
                            <li>
                               {{task.text}}
-                              {% if task.creator == username %}
+                              {% if task.incomplete%}
+                              <form name="deletetask" method="POST">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="task_id" value="{{task.id}}">
+                                 <input type="submit" value="Mark Complete" name="deletetask">
+                              </form>
+                              {% endif %}
+                           </li>
+                        {% endfor %}
+                     </ul>
+                     <ul>
+                        <p>Tasks You Assigned to Other Users</p>
+                        {% for task in ownedtasks %}
+                           <li>
+                              {{task.text}}
+                              {% if task.incomplete%}
+                              <form name="deletetask" method="POST">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="task_id" value="{{task.id}}">
+                                 <input type="submit" value="Cancel Task" name="deletetask">
+                              </form>
+                              {%else%}
                               <form name="deletetask" method="POST">
                                  {% csrf_token %}
                                  <input type="hidden" name="task_id" value="{{task.id}}">
@@ -72,7 +93,7 @@
                               <li><label for="usernames">Individual Users</label>
                                  <select name="usernames" multiple>
                                     {% for user in userlist %}
-                                       <option value="{{user.username}}">{{user.first_name}} {{user.last_name}}</option>
+                                       <option value="{{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</option>
                                     {% endfor %}
                                  </select>
                               </li>
