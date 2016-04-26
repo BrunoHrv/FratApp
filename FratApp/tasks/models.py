@@ -14,3 +14,10 @@ class Task(models.Model):
 	users=models.ManyToManyField(User)#individual users for whom the task is set as a personal task
 	def __str__(self):
 		return self.text
+
+class Supply(models.Model):
+	id=models.AutoField(primary_key=True)
+	name=models.CharField(max_length=200)#name of the item
+	quantity=models.IntegerField(default=1)#quantity needed
+	def __str__(self):
+		return self.quantity+" of "+self.name

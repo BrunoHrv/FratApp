@@ -47,8 +47,14 @@
                            </li>
                         {% endfor %}
                      </ul>
-                     <p>Supplies Needed</p>
-                     <p>UNDER CONSTRUCTION</p>
+                     <ul>
+                        <p>Supplies Needed</p>
+                        {% for supply in supplylist %}
+                           <li>
+                              {{supply.name}}:{{supply.quantity}}
+                           </li>
+                        {% endfor %}
+                     </ul>
                      <hr>
                      <p>Add a task</p>
                      <section class="addtaskform">
@@ -76,6 +82,47 @@
                            </ol>
                         </form>
                      </section>
+                     <p>Add to supply list</p>
+                     <section class="addsupplyform">
+                        <form name="addsupply" action="/Tasks/" method="POST" accept-charset="utf-8">
+                           {% csrf_token %}
+                           <ol class="list-unstyled">
+                              <li><label for="supply">Supply</label>
+                                 <input type="supply" name="supply" placeholder="Supply Needed" required>
+                              </li>
+                              <li><label for="quantity">Quantity Needed</label>
+                                 <input type="number" name="quantity" placeholder="1" required>
+                              </li>
+                              <input type="submit" name="submitsupply" value="Submit">
+                           </ol>
+                        </form>
+                     </section>
+                     {% if canEdit %}
+                        <p>Remove from the supply list</p>
+                        <section class="removesupplyform">
+                           <form name="removesupply" action="/Tasks/" method="POST" accept-charset="utf-8">
+                              {% csrf_token %}
+                              <ol class="list-unstyled">
+                                 <li><label for="supply">Supply</label>
+                                    <input type="supply" name="supply" placeholder="Supply Needed" required>
+                                 </li>
+                                 <li><label for="quantity">Quantity Needed</label>
+                                    <input type="number" name="quantity" placeholder="1" required>
+                                 </li>
+                                 <input type="submit" name="removesupply" value="Submit">
+                              </ol>
+                           </form>
+                        </section>
+                     {% endif %}
+                     {% if invalidtaskassignment%}
+                        {{invalidtaskassignment}}
+                     {% endif %}
+                     {% if invalidsup%}
+                        {{invalidsup}}
+                     {% endif %}
+                     {% if invalidsupplyname%}
+                        {{invalidsupplyname}}
+                     {% endif %}
                   </div>
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
