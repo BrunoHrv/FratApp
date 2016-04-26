@@ -12,6 +12,7 @@ class Task(models.Model):
 	text=models.CharField(max_length=200)#task description
 	userlists=models.ManyToManyField(Group)#groups to assign task to
 	users=models.ManyToManyField(User)#individual users for whom the task is set as a personal task
+	incomplete = models.BooleanField(default=True)
 	def __str__(self):
 		return self.text
 

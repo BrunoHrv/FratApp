@@ -30,6 +30,7 @@ def index(request):
 	if request.user.is_authenticated():#check if user is logged in and redirect them to index if they're not
 		user = request.user
 		gentasks = []
+		ownedtasks=[]
 		personaltasks=[]
 		for task in Task.objects.all():#check each task
 			if user in task.users.all():#if the user is mentioned by name, it is a personal task
@@ -44,6 +45,8 @@ def index(request):
 						gentasks.append(task)
 						done = True
 					i =i+1
+				if done == False and task.creator==user.username:
+					ownedtasks.append(task)
 		context={
 			'username':user.username,
 			'firstname':user.first_name,
@@ -52,6 +55,7 @@ def index(request):
 			'usergroups':Group.objects.all(),
 			'gentasks':gentasks,
 			'personaltasks':personaltasks,
+			'ownedtasks':ownedtasks,
 			'supplylist':Supply.objects.all(),
 			'canEdit':isOwner(user.username)
 		}
@@ -66,7 +70,12 @@ def index(request):
 			return redirect('/')
 
 		if request.method=='POST' and 'deletetask' in request.POST:
-			Task.objects.filter(id=int(request.POST['task_id'])).delete()
+			task = Task.objects.filter(id=int(request.POST['task_id']))[0]
+			if task.creator == user.username:
+				task.delete()
+			else:
+				task.incomplete=False
+				task.save()
 			return redirect('/Tasks/')
 			
 		if request.method=='POST' and 'submittask' in request.POST:

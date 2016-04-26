@@ -69,7 +69,7 @@
                            {% csrf_token %}
                            <input type="hidden" name="event_id" value="{{event.id}}">
                            <p>
-                              <label for="title">Task</label>
+                              <label for="title">Attendee Name</label>
                               <input type="text" name="name" placeholder="Attendee Name" required>
                            </p>
                            <input type="submit" value="Add Attendee" name="add_attendee">
