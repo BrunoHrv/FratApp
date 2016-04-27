@@ -27,10 +27,21 @@ def index(request):
 		if request.method == 'POST' and 'create_event' in request.POST:
 			event_title = request.POST['title']
 			event_text = request.POST['text']
+			event_date = request.POST['eventdate']
+			event_location = request.POST['location']
 			event_creator = user.username
-			event = Event.objects.create(creator=event_creator, title=event_title, text=event_text)
+			if event_date:
+				event = Event.objects.create(creator=event_creator, title=event_title, text=event_text,location=event_location,eventDate=event_date)
+			else:
+				event = Event.objects.create(creator=event_creator, title=event_title, text=event_text,location=event_location)
 			event.save()
 			return redirect('/AttendanceLists/')
+		#deleting an attendee via POST data
+		if request.method == 'POST' and 'delete_attendee' in request.POST:
+			Attendee.objects.filter(id=int(request.POST['delete_attendee'])).delete()
+			event_id=request.POST["event_id"]
+			redirecturl = '/AttendanceLists/?event_id='+event_id
+			return redirect(redirecturl)
 		#deleting an event via POST data
 		if request.method == 'POST' and 'delete_event' in request.POST:
 			Event.objects.filter(id=int(request.POST['event_id'])).delete()

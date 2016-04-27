@@ -10,6 +10,8 @@ class Event(models.Model):
   	title = models.CharField(max_length = 200)
   	text = models.TextField(max_length = 200)
   	postDate = models.DateField (auto_now_add=True, editable = False)
+	eventDate= models.DateField (null=True,editable = True)
+  	location = models.CharField(default="", max_length = 200)
 
   	#Orders all queries with the most recently created first
   	class Meta:
@@ -24,6 +26,7 @@ class Event(models.Model):
 
 class Attendee(models.Model):
 	#references a specific event and when that event is deleted, deletes itself
+	id = models.AutoField(primary_key=True)
 	event = models.ForeignKey(Event, on_delete=models.CASCADE)
 	name = models.CharField(max_length = 200)
 

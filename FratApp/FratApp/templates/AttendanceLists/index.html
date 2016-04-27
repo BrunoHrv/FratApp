@@ -24,6 +24,12 @@
                         <h3> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
                         <p> Created by {{e.creator}} </p>
                         <p> Description: {{e.text}} </p>
+                        {% if e.location %}
+                           <p> Location: {{e.location}} </p>
+                        {% endif %}
+                        {% if e.eventDate %}
+                           <p> Date: {{e.eventDate}} </p>
+                        {% endif %}
                         {#Form for deleting an event#}
                         <form name="delete_event" method="POST">
                            {% csrf_token %}
@@ -37,12 +43,23 @@
                      <h2> {{event.title}} </h2>
                      <p> Created by {{event.creator}} </p>
                      <p> Description: {{event.text}} </p>
+                     {% if event.location %}
+                        <p> Location: {{event.location}} </p>
+                     {% endif %}
+                     {% if event.eventDate %}
+                        <p> Date: {{event.eventDate}} </p>
+                     {% endif %}
                      <h3> Registered Attendees </h3>
                      <ul>
-                     {% for attendee in attendee_list %}
-                        <li> {{attendee.name}} </li>
-                     {% endfor %}
+                     <form name="delete_event" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{event.id}}">
+                        {% for attendee in attendee_list %}
+                           <li> {{attendee.name}} </li>
+                           <button name="delete_attendee" value="{{attendee.id}}" type="submit">Delete</button>
+                        {% endfor %}
                      </ul>
+                     </form>
                      {% endif %}
                   </div>
                </div>
@@ -60,6 +77,14 @@
                            <p>
                               <label for="description">Description</label>
                               <input type="text" name="text" placeholder="Description of Event" required>
+                           </p>
+                           <p>
+                              <label for="location">Location</label>
+                              <input type="text" name="location" placeholder="Where the Event Took Place">
+                           </p>
+                           <p>
+                              <label for="eventdate">Event Date</label>
+                              <input type="date" name="eventdate">
                            </p>
                            <input type="submit" value="Add Event" name="create_event">
                         </form>
