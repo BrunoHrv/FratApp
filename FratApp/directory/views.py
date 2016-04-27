@@ -25,12 +25,23 @@ def index(request):
 				context['majors']=userquery.extrauserfields.getMajorsString()
 				context['minors']=userquery.extrauserfields.getMinorsString()
 				return render(request, 'Directory/user.html', context)
-		#get list of all users
-		context['userlist']=User.objects.all().order_by('first_name')
 		#Logs out if requested, directs to main page if 'POST'
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
+		#get list of all users
+		if request.method == 'POST' and 'Search' in request.POST:
+			searchterms = [x.strip() for x in str(request.POST['searchterm']).split(" ")]
+			userlist=[]
+			for term in searchterms:
+				userlist.extend(User.objects.filter(username=term))
+				userlist.extend(User.objects.filter(first_name=term))
+				userlist.extend(User.objects.filter(last_name=term))
+			userlist=set(userlist)
+			userlist=list(userlist)
+			context['userlist']=sorted(userlist, key=lambda user: user.first_name)#userlist.order_by('first_name')
+		else:
+			context['userlist']=User.objects.all().order_by('first_name')
 		return render(request, 'Directory/index.html', context)
 	else:
 		return redirect('/?redirected=True')

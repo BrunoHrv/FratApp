@@ -16,9 +16,21 @@
             <div class="row">
                      <hr>
                <div class="col-sm-7 blog-main">
+                  <form name="Search" method="POST">
+                     {% csrf_token %}
+                     <input type="text" name="searchterm" placeholder="Name or Username" required>
+                     <input type="submit" value="Search" name="Search">
+                  </form>
+                  <hr>
                   <div class="blog-post">
                      {% for user in userlist %}
-                        <li><a href="/Directory/?user={{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</a></li>
+                        {% if user.first_name %}
+                           {% if user.last_name %}
+                              {% if user.username %}
+                                 <li><a href="/Directory/?user={{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</a></li>
+                              {% endif %}
+                           {% endif %}
+                        {% endif %}
                      {% endfor %}
                   </div>
                </div>
