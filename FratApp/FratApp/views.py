@@ -20,8 +20,7 @@ def index(request, redirected=False):
 		return redirect('/LandingPage')
     	ind = normpath(join(TEMPLATE_DIR, 'index.html'))
 	user = None
-	allranks = Rank.objects.all()
-	allranks=set([x.rank for x in allranks])	
+	allranks = set([x.rank for x in ExtraUserFields.objects.all()])
 	noranks = set(["none","NONE","None"])
 	if allranks - noranks == allranks:
 		allranks.add("None")	
@@ -102,19 +101,7 @@ def index(request, redirected=False):
 		user.last_name=lastname
 		user.groups=[allgroup]
 		user.save()#save user to database
-		ht = Hometown.objects.create(brother=user, hometown=hometown)
-		majr = Major.objects.create(brother=user, primary=primarymajor, secondary=secondarymajor)
-		minr = Minor.objects.create(brother=user, primary=primaryminor, secondary=secondaryminor)
-		gd = GradDate.objects.create(brother=user, graduation_date=graddate)
-		pn = PhoneNumber.objects.create(brother=user,number=phonenumber)
-		rollnumber=RollNumber.objects.create(brother=user, number=roll)
-		brotherrank=Rank.objects.create(brother=user, rank=rank)
-		ht.save()
-		majr.save()
-		minr.save()
-		gd.save()
-		pn.save()
-		rollnumber.save()
-		brotherrank.save()
+		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
+		userextras.save()
 	context['usercreated']=user_created
 	return render(request, 'index.html', context)

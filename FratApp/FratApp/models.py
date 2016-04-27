@@ -7,74 +7,28 @@ from django.utils import timezone
 
 
 # Create your models here.
-
-#Class for storing big brother information
-class BigBrother(models.Model):
-	bigbrother = models.CharField(max_length = 200)#username of big brother
-	littlebrother = models.OneToOneField(User,on_delete=models.CASCADE)
-
-#Class for storing each brother's rank
-class Rank(models.Model):
+class ExtraUserFields(models.Model):
 	brother = models.OneToOneField(User,on_delete=models.CASCADE)
 	rank = models.CharField(max_length = 200)
-	
-	def __str__(self):
-		return self.rank
-
-#Class for storing each brother's hometown
-class Hometown(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	hometown = models.CharField(max_length = 200)
-	
-	def __str__(self):
-		return self.hometown
-
-#Class for storing each brother's major
-class Major(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	primary = models.CharField(max_length = 200)
-	secondary = models.CharField(max_length = 200, default="")
+	graduation_date = models.DateTimeField()
+	rollnumber = models.IntegerField()
+	bigbrother = models.CharField(default="None/Unknown", max_length = 200)#optional
+	hometown = models.CharField(default="Unknown", max_length = 200)#optional
+	primarymajor = models.CharField(max_length = 200)#required
+	secondarymajor = models.CharField(max_length = 200, default="")#optional
+	primaryminor = models.CharField(max_length = 200,default="None")#optional
+	secondaryminor=models.CharField(max_length = 200, default="")#optional
+	phonenumber = models.CharField(max_length = 200, default="")#optional
 
 	def getMajors(self):
-		return [self.primary, self.secondary]
-	def __str__(self):
-		if self.secondary not in [None, "None", "none", "NONE", ""]:
-			return self.primary+", "+self.secondary
-		return self.primary
-
-#Class for storing each brother's minor
-class Minor(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	primary = models.CharField(max_length = 200)
-	secondary = models.CharField(max_length = 200, default="")
-
+		return [self.primarymajor, self.secondarymajor]
+	def getMajorsString(self):
+		if self.secondarymajor not in [None, "None", "none", "NONE", ""]:
+			return self.primarymajor+", "+self.secondarymajor
+		return self.primarymajor
 	def getMinors(self):
-		return [self.primary, self.secondary]
-	def __str__(self):
-		if self.secondary not in [None, "None", "none", "NONE", ""]:
-			return self.primary+", "+self.secondary
-		return self.primary
-
-#Class for storing each brother's graduation date
-class GradDate(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	graduation_date = models.DateTimeField()
-	
-	def __str__(self):
-		return __str__(self.graduation_date)
-
-#Class for storing each brother's phone number
-class PhoneNumber(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	number = models.CharField(max_length = 200)
-	
-	def __str__(self):
-		return self.number
-
-#Class for storing each brother's roll number
-class RollNumber(models.Model):
-	brother = models.OneToOneField(User,on_delete=models.CASCADE)
-	number = models.IntegerField()
-	
-	def __str__(self):
-		return __str__(self.number)
+		return [self.primaryminor, self.secondaryminor]
+	def getMinorsString(self):
+		if self.secondaryminor not in [None, "None", "none", "NONE", ""]:
+			return self.primaryminor+", "+self.secondaryminor
+		return self.primaryminor

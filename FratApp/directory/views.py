@@ -22,16 +22,8 @@ def index(request):
 			if 'user' in request.GET:
 				userquery=User.objects.get(username=request.GET['user'])
 				context['userquery']=userquery
-				context['majors']=str(userquery.major)
-				context['minors']=str(userquery.minor)
-				try:
-					try :
-						bigbrother=User.objects.get(username=userquery.bigbrother.bigbrother)
-						context['bigbrother']=bigbrother.first_name+" "+bigbrother.last_name+" ("+bigbrother.username+")"
-					except User.DoesNotExist:
-						context['bigbrother']="None/unknown"
-				except BigBrother.DoesNotExist:
-					context['bigbrother']="None/unknown"
+				context['majors']=userquery.extrauserfields.getMajorsString()
+				context['minors']=userquery.extrauserfields.getMinorsString()
 				return render(request, 'Directory/user.html', context)
 		#get list of all users
 		context['userlist']=User.objects.all().order_by('first_name')
