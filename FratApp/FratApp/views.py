@@ -55,6 +55,7 @@ def index(request, redirected=False):
 	username=request.POST['usernamesubmit']
 	password=request.POST['passwordsubmit']
 	passwordconfirm=request.POST['passwordconfirmation']
+	email = request.POST['email']
 	firstname=request.POST['firstname']
 	lastname=request.POST['lastname']
 	hometown=request.POST['hometown']
@@ -97,7 +98,7 @@ def index(request, redirected=False):
 		user_created=False
 	if user_created:
 		user = User.objects.create_user(username, None, password)
-		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
+		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,email=email,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
 		user.first_name=firstname
 		user.last_name=lastname
 		user.groups=[allgroup]
