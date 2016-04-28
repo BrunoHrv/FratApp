@@ -17,9 +17,9 @@ def index(request):
             'firstname':user.first_name,
             'lastname':user.last_name,
         }
-        #Recieve information from hypertext protocool
-	if request.method == 'GET':
-			if 'user' in request.GET:#get specific user
+        #Recieve information from hypertext protocol
+        if request.method == 'GET':
+            if 'user' in request.GET:#get specific user
                 userquery = User.objects.get(username=request.GET['user'])
                 context['userquery'] = userquery
                 context['majors'] = userquery.extrauserfields.getMajorsString()
@@ -29,7 +29,7 @@ def index(request):
         if request.method == 'POST' and 'logout' in request.POST:
             logout(request)
             return redirect('/')
-		#get sorted list of all users
+        #get sorted list of all users matching the searchterms
         if request.method == 'POST' and 'Search' in request.POST:
             searchterms = [x.strip() for x in str(request.POST['searchterm']).split(" ")]
             userlist = []
@@ -41,7 +41,7 @@ def index(request):
             userlist = list(userset)
             context['userlist'] = sorted(
                 userlist, 
-                key=lambda user: user.first_name)#userlist.order_by('first_name')
+                key=lambda user: user.first_name)
         else:
             context['userlist'] = User.objects.all().order_by('first_name')
         return render(request, 'Directory/index.html', context)

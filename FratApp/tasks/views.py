@@ -157,7 +157,7 @@ def index(request):
         if request.method == 'POST' and 'removesupply' in request.POST:
             supplyname = request.POST['supply']
             quantity = request.POST['quantity']
-            if quantity <= 0:
+            if int(quantity) <= 0:
                 return redirect('/Tasks/?invalidDec=True')
             supply = None
             slist = Supply.objects.filter(name=supplyname)
