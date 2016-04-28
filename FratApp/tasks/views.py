@@ -4,6 +4,7 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
+from django.core.mail import send_mail
 from models import *	
 
 # Create your views here.
@@ -102,8 +103,10 @@ def index(request):
 				for user in usernames:
 					if user not in userlist:
 						userlist.append(user)
-						u = User.objects.get(username=user)
-						task.users.add(u)
+						user_model = User.objects.get(username=user)
+						send_mail('TEST', 'Here is the message.', 'acacia@gmail.com',
+							[user_model.email], fail_silently=False)
+						task.users.add(user_model)
 						task.save()
 			else:#create task if it doesn't already exist
 				task = Task.objects.create(creator=user.username, text=tasktext)
