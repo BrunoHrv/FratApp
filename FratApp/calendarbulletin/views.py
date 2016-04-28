@@ -56,7 +56,7 @@ def index(request):
 				if c != bc:
 					c.delete()
 		#BulletinClearer checks to see if any bulletins need to be cleared
-		bc.Clear_Bulletins()
+		bc.clear_bulletins()
 		bulletin_list = Bulletin.objects.all()
 		paginator = Paginator(bulletin_list, 10)
 		page = request.GET.get('page')
