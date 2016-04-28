@@ -9,17 +9,17 @@ from models import *
 
 # Create your views here.
 
-ownergroups=[]
-ownerusers=["kn2ply"]
+admingroups=["All"]
+adminusers=[]
 
 def isOwner(username):
 	user = User.objects.filter(username=username)
 	if not user.exists():
 		return False
 	user=user[0]
-	if username in ownerusers:
+	if username in adminusers:
 		return True
-	for group in ownergroups:
+	for group in admingroups:
 		g = Group.objects.filter(name=group)
 		if g.exists():
 			g=g[0]
@@ -50,11 +50,12 @@ def index(request):
 					i =i+1
 				if done == False and task.creator==user.username:
 					ownedtasks.append(task)
+		userlist=[x for x in User.objects.all() if x.first_name != "" and x.last_name != ""]
 		context={
 			'username':user.username,
 			'firstname':user.first_name,
 			'lastname':user.last_name,
-			'userlist':User.objects.all(),
+			'userlist':userlist,
 			'usergroups':Group.objects.all(),
 			'gentasks':gentasks,
 			'personaltasks':personaltasks,
