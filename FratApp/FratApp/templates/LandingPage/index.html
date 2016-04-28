@@ -63,6 +63,19 @@
                               <li><label for="lastname">Their Last Name</label>
                                  <input type="lastname" name="lastname" placeholder="Last Name" required>
                               </li>
+                              <li><label for="email">Email</label>
+                                 <input type="text" name="email" placeholder="Their Email" required>
+                              </li>
+                              <li><label for="bigbrother">Their Big Brother</label>
+                                 <select name="bigbrother">
+                                    {% for brother in brotherlist %}
+                                       <option value="{{brother}}">{{brother}}</option>
+                                    {% endfor %}
+                                 </select>
+                              </li>
+                              <li><label for="bigbrotherother">Their Big Brother (if unlisted)</label>
+                                 <input type="bigbrotherother" name="bigbrotherother" placeholder="Name and/or Username">
+                              </li>
                               <li><label for="primarymajor">Their Primary Major</label>
                                  <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
                               </li>

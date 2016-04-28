@@ -47,91 +47,108 @@
                      </section>
                   </div>
                   <div class="sidebar-module">
-                     <section class="signupform cf">
-                        <form name="signup" action="/" method="POST" accept-charset="utf-8">
-                           {% csrf_token %}
-                           <ol class="list-unstyled">
-                              <li><label for="usernamesubmit">Username</label>
-                                 <input type="username" name="usernamesubmit" placeholder="your username" required>
-                              </li>
-                              <li><label for="passwordsubmit">Password</label>
-                                 <input type="password" name="passwordsubmit" placeholder="password" required>
-                              </li>
-                              <li><label for="passwordconfirmation">Confirm Password</label>
-                                 <input type="password" name="passwordconfirmation" placeholder="password" required>
-                              </li>
-                              <li><label for="lastname">Email</label>
-                                 <input type="text" name="email" placeholder="Your Email" required>
-                              </li>
-                              <li><label for="firstname">Your First Name</label>
-                                 <input type="firstname" name="firstname" placeholder="First Name" required>
-                              </li>
-                              <li><label for="lastname">Your Last Name</label>
-                                 <input type="lastname" name="lastname" placeholder="Last Name" required>
-                              </li>
-                              <li><label for="primarymajor">Your Primary Major</label>
-                                 <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
-                              </li>
-                              <li><label for="secondarymajor">Your Secondary Major</label>
-                                 <input type="secondarymajor" name="secondarymajor" placeholder="Secondary Major">
-                              </li>
-                              <li><label for="primaryminor">Your Primary Minor</label>
-                                 <input type="primaryminor" name="primaryminor" placeholder="Primary Minor">
-                              </li>
-                              <li><label for="secondaryminor">Your Secondary Minor</label>
-                                 <input type="secondaryminor" name="secondaryminor" placeholder="Secondary Minor">
-                              </li>
-                              <li>
-                                 <label for="graddate">Expected Graduation Date</label>
-                                 <input type="date" name="graddate" required>
-                              </li>
-                              <li><label for="hometown">Your Hometown</label>
-                                 <input type="hometown" name="hometown" placeholder="New York, NY">
-                              </li>
-                              <li><label for="phone">Your Phone Number</label>
-                                 <input type="phone" name="phone" placeholder="1 (234)567-8910">
-                              </li>
-                              <li><label for="roll">Your Roll Number</label>
-                                 <input type="number" name="roll" placeholder="0" required>
-                              </li>
-                              <li><label for="rank">Your Rank</label>
-                                 <select name="rank">
-                                    {% for r in ranks %}
-                                       <option value="{{r}}" required>{{r}}</option>
-                                    {% endfor %}
-                                 </select>
-                              </li>
-                              <li><label for="other">Your Rank (if unlisted)</label>
-                                 <input type="other" name="other" placeholder="">
-                              </li>
-                              <input type="submit" value="Sign Up">
-                           </ol>
-                        </form>
-                        {% if redirected %}
-                           <p>You must login first!</p>
-                        {% endif %}
-                        {% if loginfailed %}
-                           <p>Invalid username or password. Please try again.</p>
-                        {% endif %}
-                        {% if accountdisabled %}
-                           <p>Your account has been disabled.</p>
-                        {% endif %}
-                        {% if invalidusername %}
-                           <p>Invalid username. Your username must be at least 6 characters long.</p>
-                        {% endif %}
-                        {% if usernameused %}
-                           <p>That username is already in use.</p>
-                        {% endif %}
-                        {% if invalidpassword %}
-                           <p>Invalid password. Your password must be at least 8 characters long.</p>
-                        {% endif %}
-                        {% if mismatchedpassword %}
-                           <p>Your passwords need to match!</p>
-                        {% endif %}
-                        {% if usercreated %}
-                           <p>Congratulation! You have successfully created a user account. You can now log in.</p>
-                        {% endif %}
-                     </section>
+                     {% if publicusercreation %}
+                        <section class="signupform cf">
+                           <form name="signup" action="/" method="POST" accept-charset="utf-8">
+                              {% csrf_token %}
+                              <ol class="list-unstyled">
+                                 <li><label for="usernamesubmit">Username</label>
+                                    <input type="username" name="usernamesubmit" placeholder="your username" required>
+                                 </li>
+                                 <li><label for="passwordsubmit">Password</label>
+                                    <input type="password" name="passwordsubmit" placeholder="password" required>
+                                 </li>
+                                 <li><label for="passwordconfirmation">Confirm Password</label>
+                                    <input type="password" name="passwordconfirmation" placeholder="password" required>
+                                 </li>
+                                 <li><label for="firstname">Your First Name</label>
+                                    <input type="firstname" name="firstname" placeholder="First Name" required>
+                                 </li>
+                                 <li><label for="lastname">Your Last Name</label>
+                                    <input type="lastname" name="lastname" placeholder="Last Name" required>
+                                 </li>
+                                 <li><label for="email">Email</label>
+                                    <input type="text" name="email" placeholder="Your Email" required>
+                                 </li>
+                                 {% if publicbrotherlist %}
+                                    <li><label for="bigbrother">Your Big Brother</label>
+                                       <select name="bigbrother">
+                                          {% for brother in brotherlist %}
+                                             <option value="{{brother}}">{{brother}}</option>
+                                          {% endfor %}
+                                       </select>
+                                       <li><label for="bigbrotherother">Your Big Brother (if unlisted)</label>
+                                          <input type="bigbrotherother" name="bigbrotherother" placeholder="Name and/or Username">
+                                       </li>
+                                 {% else %}
+                                    <li><label for="bigbrother">Your Big Brother</label>
+                                       <input type="bigbrother" name="bigbrother" placeholder="Name and/or Username">
+                                    </li>
+                                 {% endif %}
+                                 <li><label for="primarymajor">Your Primary Major</label>
+                                    <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
+                                 </li>
+                                 <li><label for="secondarymajor">Your Secondary Major</label>
+                                    <input type="secondarymajor" name="secondarymajor" placeholder="Secondary Major">
+                                 </li>
+                                 <li><label for="primaryminor">Your Primary Minor</label>
+                                    <input type="primaryminor" name="primaryminor" placeholder="Primary Minor">
+                                 </li>
+                                 <li><label for="secondaryminor">Your Secondary Minor</label>
+                                    <input type="secondaryminor" name="secondaryminor" placeholder="Secondary Minor">
+                                 </li>
+                                 <li>
+                                    <label for="graddate">Expected Graduation Date</label>
+                                       <input type="date" name="graddate" required>
+                                 </li>
+                                 <li><label for="hometown">Your Hometown</label>
+                                       <input type="hometown" name="hometown" placeholder="New York, NY">
+                                 </li>
+                                 <li><label for="phone">Your Phone Number</label>
+                                    <input type="phone" name="phone" placeholder="1 (234)567-8910">
+                                    </li>
+                                 <li><label for="roll">Your Roll Number</label>
+                                    <input type="number" name="roll" placeholder="0" required>
+                                    </li>
+                                 <li><label for="rank">Your Rank</label>
+                                    <select name="rank">
+                                       {% for r in ranks %}
+                                          <option value="{{r}}" required>{{r}}</option>
+                                       {% endfor %}
+                                    </select>
+                                 </li>
+                                 <li><label for="other">Your Rank (if unlisted)</label>
+                                    <input type="other" name="other" placeholder="">
+                                 </li>
+                                    <input type="submit" value="Sign Up">
+                              </ol>
+                           </form>
+                        </section>
+                     {% endif %}
+                     {% if redirected %}
+                        <p>You must login first!</p>
+                     {% endif %}
+                     {% if loginfailed %}
+                        <p>Invalid username or password. Please try again.</p>
+                     {% endif %}
+                     {% if accountdisabled %}
+                        <p>Your account has been disabled.</p>
+                     {% endif %}
+                     {% if invalidusername %}
+                        <p>Invalid username. Your username must be at least 6 characters long.</p>
+                     {% endif %}
+                     {% if usernameused %}
+                        <p>That username is already in use.</p>
+                     {% endif %}
+                     {% if invalidpassword %}
+                        <p>Invalid password. Your password must be at least 8 characters long.</p>
+                     {% endif %}
+                     {% if mismatchedpassword %}
+                        <p>Your passwords need to match!</p>
+                     {% endif %}
+                     {% if usercreated %}
+                        <p>Congratulation! You have successfully created a user account. You can now log in.</p>
+                     {% endif %}
                   </div>
                </div>
             </div>

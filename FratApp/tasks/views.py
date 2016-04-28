@@ -12,7 +12,7 @@ from models import *
 admingroups=["All"]
 adminusers=[]
 
-def isOwner(username):
+def isOwner(username):#optional; allows users to limit who can remove supplies from the supply list
 	user = User.objects.filter(username=username)
 	if not user.exists():
 		return False
@@ -64,7 +64,7 @@ def index(request):
 			'canEdit':isOwner(user.username)
 		}
 		if request.method == 'GET' and ('invalidInc' in request.GET or 'invalidDec' in request.GET):
-			context['invalidsup']="Quantity needs to be a nonnegative number."
+			context['invalidsup']="Quantity needs to be a positive number."
 		if request.method == 'GET' and 'InvalidSupplyName' in request.GET:
 			context['invalidsupplyname']="Supply not in the supply list"
 		if request.method == 'GET' and 'noUserTask' in request.GET:
@@ -123,7 +123,7 @@ def index(request):
 		if request.method=='POST' and 'submitsupply' in request.POST:
 			supplyname=request.POST['supply']
 			quantity=request.POST['quantity']
-			if int(quantity) < 0:
+			if int(quantity) <= 0:
 				return redirect('/Tasks/?invalidInc=True')
 			supply = None
 			slist = Supply.objects.filter(name=supplyname)
@@ -140,7 +140,7 @@ def index(request):
 		if request.method=='POST' and 'removesupply' in request.POST:
 			supplyname=request.POST['supply']
 			quantity=request.POST['quantity']
-			if quantity < 0:
+			if quantity <= 0:
 				return redirect('/Tasks/?invalidDec=True')
 			supply = None
 			slist = Supply.objects.filter(name=supplyname)
@@ -152,7 +152,7 @@ def index(request):
 					supply.delete()
 					return redirect('/Tasks/')
 				supply.save()
-			else:#create supply if it doesn't already exist
+			else:#display error if the supply does not exist
 				return redirect('/Tasks/?InvalidSupplyName=True')
 			supply.save()#save supply
 			return redirect('/Tasks/')

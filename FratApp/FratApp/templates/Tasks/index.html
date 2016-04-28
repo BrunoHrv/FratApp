@@ -123,7 +123,11 @@
                               {% csrf_token %}
                               <ol class="list-unstyled">
                                  <li><label for="supply">Supply</label>
-                                    <input type="supply" name="supply" placeholder="Item to modify" required>
+                                    <select name="supply" multiple required>
+                                       {% for supply in supplylist %}
+                                          <option value="{{supply.name}}">{{supply.name}}</option>
+                                       {% endfor %}
+                                    </select>
                                  </li>
                                  <li><label for="quantity">Quantity to Remove</label>
                                     <input type="number" name="quantity" placeholder="1" required>

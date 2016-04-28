@@ -18,8 +18,8 @@ def index(request):
 			'lastname':user.last_name,
 		}
 		#Recieve information from hypertext protocool
-		if request.method == 'GET':#get specific user
-			if 'user' in request.GET:
+		if request.method == 'GET':
+			if 'user' in request.GET:#get specific user
 				userquery=User.objects.get(username=request.GET['user'])
 				context['userquery']=userquery
 				context['majors']=userquery.extrauserfields.getMajorsString()
@@ -29,7 +29,7 @@ def index(request):
 		if request.method== 'POST' and 'logout' in request.POST:
 			logout(request)
 			return redirect('/')
-		#get list of all users
+		#get sorted list of all users
 		if request.method == 'POST' and 'Search' in request.POST:
 			searchterms = [x.strip() for x in str(request.POST['searchterm']).split(" ")]
 			userlist=[]
