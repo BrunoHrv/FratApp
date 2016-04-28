@@ -106,7 +106,7 @@ def index(request, redirected=False):
 		context['invalidpassword']=True
 		user_created=False
 	if user_created:
-		user = User.objects.create_user(username, None, password)
+		user = User.objects.create_user(username, email, password)
 		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank,bigbrother=bigbrother)
 		user.first_name=firstname
 		user.last_name=lastname
