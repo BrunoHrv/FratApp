@@ -10,7 +10,7 @@ from django.utils import timezone
 class ExtraUserFields(models.Model):
     brother = models.OneToOneField(User, on_delete=models.CASCADE)
     rank = models.CharField(max_length=200)
-    graduation_date = models.DateTimeField()
+    graduation_date = models.DateField()
     rollnumber = models.IntegerField()
     bigbrother = models.CharField(default="None/Unknown", max_length=200)#optional
     hometown = models.CharField(default="Unknown", max_length=200)#optional

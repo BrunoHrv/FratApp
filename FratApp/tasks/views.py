@@ -4,39 +4,41 @@ from django.template import loader
 from django.shortcuts import redirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
+from django.core.mail import send_mail
 from models import *    
 from django.core.mail import send_mail
 
 # Create your views here.
 
-ownergroups=[]
-ownerusers=["kn2ply"]
 
-def isOwner(username):
+def is_owner(username):
+    '''Allows users to limit who can remove supplies from the supply list'''
+    admingroups = ["All"]
+    adminusers = []
+
     user = User.objects.filter(username=username)
     if not user.exists():
         return False
     user = user[0]
-    if username in ownerusers:
+    if username in adminusers:
         return True
-    for group in ownergroups:
-        g = Group.objects.filter(name=group)
-        if g.exists():
-            g = g[0]
-            if g in user.groups.all():
+    for group in admingroups:
+        group_model = Group.objects.filter(name=group)
+        if group_model.exists():
+            group_model = group_model[0]
+            if group_model in user.groups.all():
                 return True
     return False
 
 def index(request):
-    send_mail('New Task', 'You have a new task assigned to you. Please check the organizational website', 'acacia@acacia.com',
-    ['brunohrv@gmail.com'], fail_silently=False)
+    '''Handles the creation, deletion, and modification of tasks and supplies'''
     #check if user is logged in and redirect them to index if they're not
     if request.user.is_authenticated():
         user = request.user
         gentasks = []
         ownedtasks = []
         personaltasks = []
-        #check each task for assignment to either personal task or group task
+        #check each task for ownership
         for task in Task.objects.all():
             if task.incomplete is False and task.creator == user.username:
                 ownedtasks.append(task)
@@ -54,20 +56,21 @@ def index(request):
                     i = i+1
                 if done is False and task.creator == user.username:
                     ownedtasks.append(task)
+        userlist=[x for x in User.objects.all() if x.first_name != "" and x.last_name != ""]
         context = {
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
-            'userlist':User.objects.all(),
+            'userlist':userlist,
             'usergroups':Group.objects.all(),
             'gentasks':gentasks,
             'personaltasks':personaltasks,
             'ownedtasks':ownedtasks,
             'supplylist':Supply.objects.all(),
-            'canEdit':isOwner(user.username)
+            'canEdit':is_owner(user.username)
         }
         if request.method == 'GET' and ('invalidInc' in request.GET or 'invalidDec' in request.GET):
-            context['invalidsup'] = "Quantity needs to be a nonnegative number."
+            context['invalidsup'] = "Quantity needs to be a positive number."
         if request.method == 'GET' and 'InvalidSupplyName' in request.GET:
             context['invalidsupplyname'] = "Supply not in the supply list"
         if request.method == 'GET' and 'noUserTask' in request.GET:
@@ -102,32 +105,39 @@ def index(request):
                 for group in usergroups:
                     if group not in grouplist:
                         grouplist.append(group)
-                        g = Group.objects.get(name=group)
-                        task.userlists.add(g)
+                        group_model = Group.objects.get(name=group)
+                        task.userlists.add(group_model)
                         task.save()
                 for user in usernames:
                     if user not in userlist:
                         userlist.append(user)
-                        u = User.objects.get(username=user)
-                        task.users.add(u)
+                        user_model = User.objects.get(username=user)
+                        send_mail('New Task', 
+                                  'A new task has been assigned to you by a fraternity member.',
+                                  'fratapprpi@gmail.com', [user_model.email], fail_silently=False)
+                        
+                        task.users.add(user_model)
                         task.save()
             #create task if it doesn't already exist
             else:
                 task = Task.objects.create(creator=user.username, text=tasktext)
                 task.save()
                 for group in usergroups:
-                    g = Group.objects.get(name=group)
-                    task.userlists.add(g)
+                    new_group = Group.objects.get(name=group)
+                    task.userlists.add(new_group)
                 for user in usernames:
-                    u = User.objects.get(username=user)
-                    task.users.add(u)
-            #save task
+                    user_model = User.objects.get(username=user)
+                    send_mail('New Task', 
+                              'A new task has been assigned to you by a fraternity member.',
+                              'fratapprpi@gmail.com', [user_model.email], fail_silently=False)
+                    task.users.add(user_model)
+            #save the new or modified task
             task.save()
             return redirect('/Tasks/')
         if request.method == 'POST' and 'submitsupply' in request.POST:
             supplyname = request.POST['supply']
             quantity = request.POST['quantity']
-            if int(quantity) < 0:
+            if int(quantity) <= 0:
                 return redirect('/Tasks/?invalidInc=True')
             supply = None
             slist = Supply.objects.filter(name=supplyname)
@@ -147,7 +157,7 @@ def index(request):
         if request.method == 'POST' and 'removesupply' in request.POST:
             supplyname = request.POST['supply']
             quantity = request.POST['quantity']
-            if quantity < 0:
+            if quantity <= 0:
                 return redirect('/Tasks/?invalidDec=True')
             supply = None
             slist = Supply.objects.filter(name=supplyname)

@@ -29,6 +29,13 @@ def index(request, redirected=False):
         'redirected' : redirected,
         'ranks' : allranks
     }
+    #admins can control whether or not the general public can make their own accounts
+    context['publicusercreation'] = True  
+    context['publicbrotherlist'] = True and context['publicusercreation']
+    if context['publicbrotherlist'] is True:
+        context['brotherlist'] = [x.first_name + " " + x.last_name + "(" + x.username + ")" 
+                                  for x in User.objects.all() 
+                                  if x.first_name != "" and x.last_name != ""]
     if request.method == 'GET':
         if 'redirected' in request.GET:
             #see if user was redirected here for not being logged in
@@ -57,6 +64,7 @@ def index(request, redirected=False):
     username = request.POST['usernamesubmit']
     password = request.POST['passwordsubmit']
     passwordconfirm = request.POST['passwordconfirmation']
+    email = request.POST['email']
     firstname = request.POST['firstname']
     lastname = request.POST['lastname']
     hometown = request.POST['hometown']
@@ -74,6 +82,11 @@ def index(request, redirected=False):
     roll = request.POST['roll']
     rank = request.POST['rank']
     rankother = request.POST['other']
+    bigbrother = ""
+    if 'bigbrotherother' in request.POST:
+        bigbrother = request.POST['bigbrotherother']
+    if bigbrother == "":
+        bigbrother = request.POST['bigbrother']
     if rankother != "":
         rank = rankother
     user_created = True
@@ -98,11 +111,7 @@ def index(request, redirected=False):
         context['invalidpassword'] = True
         user_created = False
     if user_created:
-        user = User.objects.create_user(username, None, password)
-        user.first_name = firstname
-        user.last_name = lastname
-        user.groups = [allgroup]
-        user.save()#save user to database
+        user = User.objects.create_user(username, email, password)
         userextras = ExtraUserFields.objects.create(
             brother=user,
             hometown=hometown,
@@ -113,7 +122,14 @@ def index(request, redirected=False):
             graduation_date=graddate,
             phonenumber=phonenumber,
             rollnumber=roll,
-            rank=rank)
+            rank=rank,
+            bigbrother=bigbrother)
+        user.first_name = firstname
+        user.last_name = lastname
+        user.email = email
+        user.groups = [allgroup]
+        userextras.brother = user
+        user.save()#save user to database
         userextras.save()
     context['usercreated'] = user_created
     return render(request, 'index.html', context)

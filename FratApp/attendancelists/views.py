@@ -9,13 +9,14 @@ from models import *
 # Create your views here.
 
 def index(request):
+    """Handles the creation and modification of Events and attendance lists for said events"""
     if request.user.is_authenticated():
         user = request.user
         context = {
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
-            'event': None,
+            'event':None,  #individual event being viewed
             'event_list':Event.objects.all(),
             'attendee_list':None,
         }
@@ -55,13 +56,13 @@ def index(request):
         if request.method == 'POST' and 'delete_event' in request.POST:
             Event.objects.filter(id=int(request.POST['event_id'])).delete()
             return redirect('/AttendanceLists/')
-        #Rendering a specific Event and it's attendees via POST data
+        #Rendering a specific Event and its list of attendees via POST data
         if request.method == 'GET' and request.GET.get('event_id'):
             event_id = request.GET.get('event_id')
             elist = Event.objects.filter(id=event_id)
             if elist.exists():
                 context['event'] = Event.objects.get(id=event_id)
-                context['attendee_list'] = Attendee.objects.filter(event = context['event'])
+                context['attendee_list'] = Attendee.objects.filter(event=context['event'])
                 context['event_list'] = None
         #Adding an attendee to an Event via POST Data, then redirecting into a GET Request with the event id
         if request.method == 'POST' and 'add_attendee' in request.POST:
@@ -72,7 +73,7 @@ def index(request):
                     name=request.POST['name'],
                     event = Event.objects.get(id=event_id))
                 attendee.save()
-                return redirect('/AttendanceLists/?event_id=%s' % (event_id) ) 
+                return redirect('/AttendanceLists/?event_id=%s' % (event_id)) 
         return render(request, 'AttendanceLists/index.html', context)
     else:
         return redirect('/?redirected=True')

@@ -8,6 +8,7 @@ from django.utils import timezone
 
 #Class for making announcements
 class Bulletin(models.Model):
+    """Bulletin model for storing data about Bulletins"""
     creator = models.CharField(max_length=200)#username of user who created the announcement
     title = models.CharField(max_length=200)
     text = models.TextField(max_length=200)
@@ -18,6 +19,7 @@ class Bulletin(models.Model):
   
 #Orders all queries with the most recently created first
     class Meta:
+        """Defines the ordering of the Bulletins"""
         ordering = ['-postDate']
   
 #Recommended Unicode method
@@ -28,8 +30,9 @@ class Bulletin(models.Model):
     def __str__(self):
         return self.title
 
-#deletes all expired bulletins once a day
+
 class BulletinClearer(models.Model):
+    """Deletes all expired bulletins once a day"""
     #last time bulletins were checked
     last_check = models.DateField(
         default=timezone.make_aware(
@@ -49,5 +52,6 @@ class BulletinClearer(models.Model):
             self.last_check = timezone.now().date()
 
     class Meta:
+        """Defines ordering of the stored Bulletin Clearers"""
         ordering = ['-last_check']
             
