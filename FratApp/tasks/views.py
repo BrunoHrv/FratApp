@@ -119,7 +119,8 @@ def index(request):
                     task.userlists.add(g)
                 for user in usernames:
                     user_model = User.objects.get(username=user)
-                    send_mail('TEST', 'Here is the message.', 
+                    send_mail('New Task', 
+                              'A new task has been assigned to you by a fraternity member.',
                               'fratapprpi@gmail.com', [user_model.email], fail_silently=False)
                     task.users.add(user_model)
             task.save()#save task
