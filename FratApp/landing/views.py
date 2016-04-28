@@ -12,7 +12,7 @@ from FratApp.models import *
 def index(request):
 	if request.user.is_authenticated():#load page if user is logged in, redirect to external landing page if not
 		user = request.user
-		allranks = set([x.rank for x in ExtraUserFields.objects.all()])
+		allranks = set([x.rank for x in ExtraUserFields.objects.all()])#list of all ranks currently assigned to existing users
 		noranks = set(["none","NONE","None"])
 		if allranks - noranks == allranks:
 			allranks.add("None")	
@@ -20,8 +20,9 @@ def index(request):
 			'username':user.username,
 			'firstname':user.first_name,
 			'lastname':user.last_name,
-			'ranks':allranks
+			'ranks':allranks,
 		}
+		context['brotherlist']=[x.first_name+" "+x.last_name+"("+x.username+")" for x in User.objects.all() if x.first_name != "" and x.last_name != ""]
 		if request.method == 'POST':
 			print request.POST
 		if request.method== 'POST' and 'logout' in request.POST:
@@ -48,6 +49,11 @@ def index(request):
 			roll=request.POST['roll']
 			rank=request.POST['rank']
 			rankother=request.POST['other']
+			bigbrother=""
+			if 'bigbrotherother' in request.POST:
+				bigbrother=request.POST['bigbrotherother']
+			if bigbrother=="":
+				bigbrother=request.POST['bigbrother']
 			if rankother != "":
 				rank=rankother
 			user_created=True
@@ -73,7 +79,7 @@ def index(request):
 				user_created=False
 			if user_created:
 				usertmp = User.objects.create_user(username, None, password)
-				userextras=ExtraUserFields.objects.create(brother=usertmp, hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
+				userextras=ExtraUserFields.objects.create(brother=usertmp, hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank,bigbrother=bigbrother)
 				usertmp.first_name=firstname
 				usertmp.last_name=lastname
 				usertmp.groups=[allgroup]

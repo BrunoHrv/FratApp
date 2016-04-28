@@ -15,7 +15,7 @@ def index(request):
 			'username':user.username,
 			'firstname':user.first_name,
 			'lastname':user.last_name,
-			'event': None,
+			'event': None,#individual event being viewed
 			'event_list':Event.objects.all(),
 			'attendee_list':None,
 		}
@@ -46,7 +46,7 @@ def index(request):
 		if request.method == 'POST' and 'delete_event' in request.POST:
 			Event.objects.filter(id=int(request.POST['event_id'])).delete()
 			return redirect('/AttendanceLists/')
-		#Rendering a specific Event and it's attendees via POST data
+		#Rendering a specific Event and its list of attendees via POST data
 		if request.method == 'GET' and request.GET.get('event_id'):
 			event_id = request.GET.get('event_id')
 			elist = Event.objects.filter(id = event_id)
