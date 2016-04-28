@@ -97,11 +97,12 @@ def index(request, redirected=False):
 		user_created=False
 	if user_created:
 		user = User.objects.create_user(username, None, password)
+		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
 		user.first_name=firstname
 		user.last_name=lastname
 		user.groups=[allgroup]
+		userextras.brother=user
 		user.save()#save user to database
-		userextras=ExtraUserFields.objects.create(brother=user,hometown=hometown,primarymajor=primarymajor, secondarymajor=secondarymajor,primaryminor=primaryminor, secondaryminor=secondaryminor,graduation_date=graddate,phonenumber=phonenumber,rollnumber=roll,rank=rank)
 		userextras.save()
 	context['usercreated']=user_created
 	return render(request, 'index.html', context)
