@@ -19,7 +19,8 @@ def index(request):
         }
         #Recieve information from hypertext protocol
         if request.method == 'GET':
-            if 'user' in request.GET:#get specific user
+            #Display a specific user's information
+            if 'user' in request.GET:
                 userquery = User.objects.get(username=request.GET['user'])
                 context['userquery'] = userquery
                 context['majors'] = userquery.extrauserfields.getMajorsString()

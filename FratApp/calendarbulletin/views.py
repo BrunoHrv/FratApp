@@ -46,6 +46,7 @@ def index(request):
         clearer.clear_bulletins()
         bulletin_list = Bulletin.objects.all()
         paginator = Paginator(bulletin_list, 10)
+        #Display bulletins as a paged result
         page = request.GET.get('page')
         try:
             bulletins = paginator.page(page)

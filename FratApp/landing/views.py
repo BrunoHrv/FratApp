@@ -32,6 +32,7 @@ def index(request):
         if request.method == 'POST' and 'logout' in request.POST:
             logout(request)
             return redirect('/')
+        #Triggers if the user is trying to create a new user
         if request.method == 'POST' and 'usernamesubmit' in request.POST:
             context['loginfailed'] = False
             context['accountdisabled'] = False
@@ -64,26 +65,32 @@ def index(request):
             if rankother != "":
                 rank = rankother
             user_created = True
+            #Check to see if the general, default group exists
             allgroups = Group.objects.filter(name="All")
             allexists = allgroups.exists()
             allgroup = None
             if allexists:
                 allgroup = allgroups[0]
-            if not allexists: #create group containing all users
+            #create group containing all users
+            if not allexists:
                 allgroup = Group.objects.create(name="All")
                 allgroup.save()
             if password != passwordconfirm:
                 context['mismatchedpassword'] = True
                 user_created = False
+            #check username validity
             if len(username) < 6:
                 context['invalidusername'] = True
                 user_created = False
-            if User.objects.filter(username=username).exists():#check if user already exists
+            #check if user already exists
+            if User.objects.filter(username=username).exists():
                 context['usernameused'] = True
                 user_created = False
+            #Check for password validity
             if len(password) < 8:
                 context['invalidpassword'] = True
                 user_created = False
+            #If the user input is all valid, actually create the user
             if user_created:
                 user = User.objects.create_user(username, email, password)
                 userextras = ExtraUserFields.objects.create(

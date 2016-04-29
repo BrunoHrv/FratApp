@@ -61,6 +61,7 @@ def index(request, redirected=False):
             return render(request, 'index.html', context)
     context['loginfailed'] = False
     context['accountdisabled'] = False
+    #If the code reaches this far, the user is trying to create a new user
     username = request.POST['usernamesubmit']
     password = request.POST['passwordsubmit']
     passwordconfirm = request.POST['passwordconfirmation']
@@ -72,6 +73,7 @@ def index(request, redirected=False):
     secondarymajor = request.POST['secondarymajor']
     primaryminor = request.POST['primaryminor']
     secondaryminor = request.POST['secondaryminor']
+    #If the user inputted a secondaryminor but not a primary, have primary register as secondary
     if primaryminor == "" and secondaryminor != "":
         primaryminor = secondaryminor
         secondaryminor = ""
@@ -83,6 +85,7 @@ def index(request, redirected=False):
     rank = request.POST['rank']
     rankother = request.POST['other']
     bigbrother = ""
+    #Set the user's big brother
     if 'bigbrotherother' in request.POST:
         bigbrother = request.POST['bigbrotherother']
     if bigbrother == "":
@@ -95,21 +98,27 @@ def index(request, redirected=False):
     allgroup = None
     if allexists:
         allgroup = allgroups[0]
-    if not allexists: #create group containing all users
+    #create group containing all users if it doesn't already exist
+    if not allexists: 
         allgroup = Group.objects.create(name="All")
         allgroup.save()
+    #Check that the inputted passwords match
     if password != passwordconfirm:
         context['mismatchedpassword'] = True
         user_created = False
+    #Check username validity
     if len(username) < 6:
         context['invalidusername'] = True
         user_created = False
-    if User.objects.filter(username=username).exists():#check if user already exists
+    #check if user already exists
+    if User.objects.filter(username=username).exists():
         context['usernameused'] = True
         user_created = False
+    #Check the password validity
     if len(password) < 8:
         context['invalidpassword'] = True
         user_created = False
+    #Actually create and register the user in our database
     if user_created:
         user = User.objects.create_user(username, email, password)
         userextras = ExtraUserFields.objects.create(
