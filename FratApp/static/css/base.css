@@ -1,0 +1,24 @@
+.section-title{
+	padding-bottom: 10px;
+	border-bottom: #cfa600;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+}
+
+.frat-btn{
+	color: #cfa600				!important;
+	background-color: #fff		!important;
+	border-color: #ccc			!important;
+
+}
+
+.frat-btn:hover{
+	background-color: #cfa600	!important;
+	border-color: #cfa600		!important;
+	color: #fff					!important;
+}
+
+#page-title{
+	margin-top: 40px;
+
+}

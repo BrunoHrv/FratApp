@@ -3,6 +3,7 @@
 <HEAD>
    <TITLE>Frat App</TITLE>
    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </HEAD>
       <BODY BGCOLOR="FFFFFF">
          <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -10,7 +11,7 @@
          <div class="container">
             <div class="row">
                <div class="blog-header">
-                  <h1 id="title" class="col-sm-5 col-sm-offset-1 blog-title">ABOUT US</h1>
+                  <h1 id="page-title" class="col-sm-12 blog-title">Banana Fraternity</h1>
                </div>
             </div>
          </div>
@@ -31,97 +32,120 @@
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
                   <div class="sidebar-module sidebar-module-inset">
+                  <h3 class="section-title">Login</h3>
                      <section class="loginform cf">
                         <form name="login" action="/" method="POST" accept-charset="utf-8">
                            {% csrf_token %}
-                           <ol class="list-unstyled">
-                              <li><label for="username">Username</label>
-                                 <input type="username" name="username" placeholder="your username" required>
-                              </li>
-                              <li><label for="password">Password</label>
-                                 <input type="password" name="password" placeholder="password" required>
-                              </li>
-                              <input type="submit" value="Login" name="login">
-                           </ol>
+                           
+                           <div class="form-group">
+                              <label for="username">Username</label>
+                              <input class="form-control" type="text" name="username" placeholder="Your Username" required>
+                           </div>
+                           <div class="form-group">
+                              <label for="password">Password</label>
+                              <input class="form-control" type="password" name="password" placeholder="Password" required>
+                           </div>
+                           <button class="frat-btn btn" type="submit" value="Login" name="login">Submit</button>
+                           
                         </form>
                      </section>
                   </div>
                   <div class="sidebar-module">
                      {% if publicusercreation %}
                         <section class="signupform cf">
+                           <h3 class="section-title">Sign Up</h3>
                            <form name="signup" action="/" method="POST" accept-charset="utf-8">
                               {% csrf_token %}
-                              <ol class="list-unstyled">
-                                 <li><label for="usernamesubmit">Username</label>
-                                    <input type="username" name="usernamesubmit" placeholder="your username" required>
-                                 </li>
-                                 <li><label for="passwordsubmit">Password</label>
-                                    <input type="password" name="passwordsubmit" placeholder="password" required>
-                                 </li>
-                                 <li><label for="passwordconfirmation">Confirm Password</label>
-                                    <input type="password" name="passwordconfirmation" placeholder="password" required>
-                                 </li>
-                                 <li><label for="firstname">Your First Name</label>
-                                    <input type="firstname" name="firstname" placeholder="First Name" required>
-                                 </li>
-                                 <li><label for="lastname">Your Last Name</label>
-                                    <input type="lastname" name="lastname" placeholder="Last Name" required>
-                                 </li>
-                                 <li><label for="email">Email</label>
-                                    <input type="text" name="email" placeholder="Your Email" required>
-                                 </li>
+                              
+                                 <div class="form-group">
+                                    <label for="usernamesubmit">Username</label>
+                                    <input class="form-control" type="text" name="usernamesubmit" placeholder="Username" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="passwordsubmit">Password</label>
+                                    <input class="form-control" type="password" name="passwordsubmit" placeholder="Password" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="passwordconfirmation">Confirm Password</label>
+                                    <input class="form-control" type="password" name="passwordconfirmation" placeholder="Password" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="firstname">Your First Name</label>
+                                    <input class="form-control" type="text" name="firstname" placeholder="First Name" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="lastname">Your Last Name</label>
+                                    <input class="form-control" type="text" name="lastname" placeholder="Last Name" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" type="email" name="email" placeholder="Your Email" required>
+                                 </div>
                                  {% if publicbrotherlist %}
-                                    <li><label for="bigbrother">Your Big Brother</label>
-                                       <select name="bigbrother">
+                                    <div class="form-group">
+                                       <label for="bigbrother">Your Big Brother</label>
+                                       <select class="form-control"  name="bigbrother">
                                           {% for brother in brotherlist %}
                                              <option value="{{brother}}">{{brother}}</option>
                                           {% endfor %}
                                        </select>
-                                       <li><label for="bigbrotherother">Your Big Brother (if unlisted)</label>
-                                          <input type="bigbrotherother" name="bigbrotherother" placeholder="Name and/or Username">
-                                       </li>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="bigbrotherother">Your Big Brother (if unlisted)</label>
+                                       <input class="form-control" type="text" name="bigbrotherother" placeholder="Name and/or Username">
+                                    </div>
                                  {% else %}
-                                    <li><label for="bigbrother">Your Big Brother</label>
-                                       <input type="bigbrother" name="bigbrother" placeholder="Name and/or Username">
-                                    </li>
+                                    <div class="form-group">
+                                       <label for="bigbrother">Your Big Brother</label>
+                                       <input class="form-control" type="text" name="bigbrother" placeholder="Name and/or Username">
+                                    </div>
                                  {% endif %}
-                                 <li><label for="primarymajor">Your Primary Major</label>
-                                    <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
-                                 </li>
-                                 <li><label for="secondarymajor">Your Secondary Major</label>
-                                    <input type="secondarymajor" name="secondarymajor" placeholder="Secondary Major">
-                                 </li>
-                                 <li><label for="primaryminor">Your Primary Minor</label>
-                                    <input type="primaryminor" name="primaryminor" placeholder="Primary Minor">
-                                 </li>
-                                 <li><label for="secondaryminor">Your Secondary Minor</label>
-                                    <input type="secondaryminor" name="secondaryminor" placeholder="Secondary Minor">
-                                 </li>
-                                 <li>
+                                 <div class="form-group">
+                                    <label for="primarymajor">Your Primary Major</label>
+                                    <input class="form-control" type="text" name="primarymajor" placeholder="Primary Major" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="secondarymajor">Your Secondary Major</label>
+                                    <input class="form-control" type="text" name="secondarymajor" placeholder="Secondary Major">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="primaryminor">Your Primary Minor</label>
+                                    <input class="form-control" type="text" name="primaryminor" placeholder="Primary Minor">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="secondaryminor">Your Secondary Minor</label>
+                                    <input class="form-control" type="text" name="secondaryminor" placeholder="Secondary Minor">
+                                 </div>
+                                 <div class="form-group">
                                     <label for="graddate">Expected Graduation Date</label>
-                                       <input type="date" name="graddate" required>
-                                 </li>
-                                 <li><label for="hometown">Your Hometown</label>
-                                       <input type="hometown" name="hometown" placeholder="New York, NY">
-                                 </li>
-                                 <li><label for="phone">Your Phone Number</label>
-                                    <input type="phone" name="phone" placeholder="1 (234)567-8910">
-                                    </li>
-                                 <li><label for="roll">Your Roll Number</label>
-                                    <input type="number" name="roll" placeholder="0" required>
-                                    </li>
-                                 <li><label for="rank">Your Rank</label>
-                                    <select name="rank">
+                                    <input class="form-control" type="date" name="graddate" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="hometown">Your Hometown</label>
+                                    <input class="form-control" type="text" name="hometown" placeholder="New York, NY">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="phone">Your Phone Number</label>
+                                    <input class="form-control" type="text" name="phone" placeholder="1 (888)-888-8888">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="roll">Your Roll Number</label>
+                                    <input class="form-control" type="number" name="roll" placeholder="0" required>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="rank">Your Rank</label>
+                                    <select class="form-control" name="rank">
                                        {% for r in ranks %}
                                           <option value="{{r}}" required>{{r}}</option>
                                        {% endfor %}
                                     </select>
-                                 </li>
-                                 <li><label for="other">Your Rank (if unlisted)</label>
-                                    <input type="other" name="other" placeholder="">
-                                 </li>
-                                    <input type="submit" value="Sign Up">
-                              </ol>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="other">Your Rank (if unlisted)</label>
+                                    <input class="form-control" type="text" name="other" placeholder="">
+                                 </div>
+                                 <button class="btn frat-btn" type="submit" value="Sign Up" name="signup">Sign Up</button>
+                              
                            </form>
                         </section>
                      {% endif %}
