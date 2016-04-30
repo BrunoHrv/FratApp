@@ -22,6 +22,7 @@
                      <input type="submit" value="Search" name="Search">
                   </form>
                   <hr>
+                  {{userdoesnotexist}}
                   <div class="blog-post">
                      {% for user in userlist %}
                         {% if user.first_name %}

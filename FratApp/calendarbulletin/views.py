@@ -18,6 +18,7 @@ def index(request):
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
+            'isAdmin':user.extrauserfields.getAdminPermissions('bulletin')
         }
         if request.method == 'POST' and 'logout' in request.POST:
             logout(request)
@@ -32,6 +33,10 @@ def index(request):
                                                    title=new_title, 
                                                    text=new_description, 
                                                    expiration_date=new_expiration)
+        #Deletion of a bulletin via a POST request
+        if request.method == 'POST' and 'delete_bulletin' in request.POST:
+            bulletin_id = int(request.POST['bulletin_id'])
+            Bulletin.objects.filter(id=bulletin_id).delete()
         checks = BulletinClearer.objects.all()
         clearer = None
         #Code to make certain that there is only one BulletinClearer in the database at once

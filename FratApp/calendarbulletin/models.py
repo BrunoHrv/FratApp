@@ -9,6 +9,7 @@ from django.utils import timezone
 #Class for making announcements
 class Bulletin(models.Model):
     """Bulletin model for storing data about Bulletins"""
+    id = models.AutoField(primary_key=True)
     creator = models.CharField(max_length=200)#username of user who created the announcement
     title = models.CharField(max_length=200)
     text = models.TextField(max_length=200)
@@ -34,6 +35,7 @@ class Bulletin(models.Model):
 class BulletinClearer(models.Model):
     """Deletes all expired bulletins once a day"""
     #last time bulletins were checked
+    id = models.AutoField(primary_key=True)
     last_check = models.DateField(
         default=timezone.make_aware(
             datetime.datetime.now() - datetime.timedelta(days=10)).date())

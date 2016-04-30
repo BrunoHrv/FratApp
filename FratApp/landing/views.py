@@ -24,6 +24,7 @@ def index(request):
             'lastname':user.last_name,
             'ranks':allranks,
         }
+        context['usercreation'] = True or user.extrauserfields.getAdminPermissions('user')
         context['brotherlist'] = [x.first_name + " " + x.last_name + "(" + x.username + ")" 
                                   for x in User.objects.all() 
                                   if x.first_name != "" and x.last_name != ""]

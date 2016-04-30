@@ -24,6 +24,13 @@
                         <p>{{bulletin.creator}} posted at {{bulletin.postDate}}</p>
                         <p>{{bulletin.text}}</p>
                         <p>Expires on {{bulletin.expiration_date}}</p>
+                        {% if isAdmin %}
+                           <form name="delete_bulletin" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="bulletin_id" value="{{bulletin.id}}">
+                              <input type="submit" value="Delete" name="delete_bulletin">
+                           </form>
+                        {% endif %}
                         <hr>
                      </section>
                      {% endfor %}

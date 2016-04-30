@@ -9,26 +9,13 @@ from models import *
 from django.core.mail import send_mail
 
 # Create your views here.
-
-
-def is_owner(username):
-    '''Allows users to limit who can remove supplies from the supply list'''
-    admingroups = ["All"]
-    adminusers = []
-
-    user = User.objects.filter(username=username)
-    if not user.exists():
-        return False
-    user = user[0]
-    if username in adminusers:
-        return True
-    for group in admingroups:
-        group_model = Group.objects.filter(name=group)
-        if group_model.exists():
-            group_model = group_model[0]
-            if group_model in user.groups.all():
-                return True
-    return False
+def assignableGroups(user):
+    if user.extrauserfields.getAdminPermissions('task'):
+        return Group.objects.all()
+    excludegroups=['All']
+    assignablegroups=[g for g in user.groups.all() if g.name not in excludegroups]
+    print assignablegroups
+    return assignablegroups
 
 def index(request):
     '''Handles the creation, deletion, and modification of tasks and supplies'''
@@ -56,18 +43,20 @@ def index(request):
                     i = i+1
                 if done is False and task.creator == user.username:
                     ownedtasks.append(task)
-        userlist=[x for x in User.objects.all() if x.first_name != "" and x.last_name != ""]
+        assignablegroups=assignableGroups(user)
+        assignableset=set(assignablegroups)
+        userlist=[x for x in User.objects.all() if x.first_name != "" and x.last_name != "" and (set(x.groups.all())).intersection(assignableset) != set([])]
         context = {
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
             'userlist':userlist,
-            'usergroups':Group.objects.all(),
+            'usergroups':assignablegroups,
             'gentasks':gentasks,
             'personaltasks':personaltasks,
             'ownedtasks':ownedtasks,
             'supplylist':Supply.objects.all(),
-            'canEdit':is_owner(user.username)
+            'canEdit':user.extrauserfields.getAdminPermissions('supply')
         }
         if request.method == 'GET' and ('invalidInc' in request.GET or 'invalidDec' in request.GET):
             context['invalidsup'] = "Quantity needs to be a positive number."
