@@ -16,19 +16,29 @@ def index(request):
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
+            'isAdmin':user.extrauserfields.getAdminPermissions('user'),
         }
         #Recieve information from hypertext protocol
         if request.method == 'GET':
             if 'user' in request.GET:#get specific user
-                userquery = User.objects.get(username=request.GET['user'])
-                context['userquery'] = userquery
-                context['majors'] = userquery.extrauserfields.getMajorsString()
-                context['minors'] = userquery.extrauserfields.getMinorsString()
-                return render(request, 'Directory/user.html', context)
+                userquery = User.objects.filter(username=request.GET['user'])
+                if userquery.exists():
+                    userquery=userquery[0]
+                    context['userquery'] = userquery
+                    context['majors'] = userquery.extrauserfields.getMajorsString()
+                    context['minors'] = userquery.extrauserfields.getMinorsString()
+                    return render(request, 'Directory/user.html', context)
+                else:
+                    context['userdoesnotexist']="There is no user named "+request.GET['user']
         #Logs out if requested, directs to main page if 'POST'
         if request.method == 'POST' and 'logout' in request.POST:
             logout(request)
             return redirect('/')
+        #Deletion of a bulletin via a POST request
+        if request.method == 'POST' and 'delete_user' in request.POST:
+            username = request.POST['username']
+            User.objects.filter(username=username).delete()
+            return redirect('/Directory')
         #get sorted list of all users matching the searchterms
         if request.method == 'POST' and 'Search' in request.POST:
             searchterms = [x.strip() for x in str(request.POST['searchterm']).split(" ")]

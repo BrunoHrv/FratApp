@@ -27,6 +27,13 @@
                      <p>minor(s): {{minors}}</p>
                      <p>hometown: {{userquery.extrauserfields.hometown}}</p>
                      <p>phone number: {{userquery.extrauserfields.phonenumber}}</p>
+                     {% if isAdmin %}
+                        <form name="delete_user" method="POST">
+                           {% csrf_token %}
+                           <input type="hidden" name="username" value="{{userquery.username}}">
+                           <input type="submit" value="Delete" name="delete_user">
+                        </form>
+                     {% endif %}
                   </div>
                </div>
                <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
