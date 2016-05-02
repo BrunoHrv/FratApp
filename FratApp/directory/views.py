@@ -12,15 +12,19 @@ def index(request):
     #Checks to see if logged. Sends back to index page if not logged in
     if request.user.is_authenticated():
         user = request.user
+        isAdmin = True
+        if hasattr(user,'extrauserfields'):
+            isAdmin = user.extrauserfields.getAdminPermissions('user')
         context = {
             'username':user.username,
             'firstname':user.first_name,
             'lastname':user.last_name,
-            'isAdmin':user.extrauserfields.getAdminPermissions('user'),
+            'isAdmin':isAdmin,
         }
         #Recieve information from hypertext protocol
         if request.method == 'GET':
-            if 'user' in request.GET:#get specific user
+            #get specific user
+            if 'user' in request.GET:
                 userquery = User.objects.filter(username=request.GET['user'])
                 if userquery.exists():
                     userquery=userquery[0]
@@ -53,7 +57,11 @@ def index(request):
                 userlist, 
                 key=lambda user: user.first_name)
         else:
-            context['userlist'] = User.objects.all().order_by('first_name')
+            context['userlist'] = []
+            user_list = User.objects.all().order_by('first_name')
+            for user in user_list:
+                if hasattr(user, 'extrauserfields'):
+                    context['userlist'].append(user)
         return render(request, 'Directory/index.html', context)
     else:
         return redirect('/?redirected=True')
