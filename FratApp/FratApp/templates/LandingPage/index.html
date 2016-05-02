@@ -1,186 +1,142 @@
-{% load staticfiles %}
-<HTML>
-<HEAD>
-   <TITLE>Frat App</TITLE>
-   <link rel="stylesheet" href="{% static 'css/landing.css' %}">
-   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-</HEAD>
-      <BODY BGCOLOR="FFFFFF">
-         <script src="https://apis.google.com/js/platform.js" async defer></script>
-         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-         <nav class="navbar navbar-default">
-            <div class="container-fluid">
-               <div class="collapse navbar-collapse">
-                  <ul class="nav navbar-nav">
+{% extends 'base.html' %}
+{% block content %}
+   <div class="container">
+      <div class="row">
+         <div class="blog-header">
+            <h1 class="col-sm-5 col-sm-offset-1 blog-title">Fruit Frat</h1>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+      <div class="row">
+         <hr>
+         <div class="col-sm-12 blog-main">
+            <div class="blog-post">
+               <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis venenatis mi. Morbi ut quam tempus, accumsan metus eget, imperdiet sem. Nullam dolor justo, dictum quis laoreet a, maximus id purus. Maecenas nunc lorem, tincidunt fringilla metus vitae, porta vehicula quam. Vestibulum elementum ante dapibus dolor ultricies euismod. Praesent ullamcorper erat lacus, nec malesuada lorem suscipit non. Nam blandit felis sit amet consequat efficitur. Vestibulum non erat id nulla pharetra auctor. Quisque viverra elementum dui, sit amet porta dui laoreet nec. Quisque ullamcorper dolor quis vehicula pharetra. Proin tempus elit eu ipsum eleifend, sed efficitur turpis finibus.</p>
+               <p>Donec sit amet vehicula neque. Praesent orci diam, sollicitudin sed sollicitudin eu, mollis eu massa. Vivamus at luctus sem, non iaculis tortor. Nulla facilisi. Donec nibh tortor, fringilla nec aliquet vel, lobortis ac eros. Vivamus convallis diam ornare nunc pulvinar facilisis. Quisque eget tortor ac magna porttitor pretium et gravida massa. Nam aliquam eget erat eu dictum. Sed tristique non turpis eu egestas. Donec pharetra ligula nec sagittis suscipit. Fusce egestas, nisl id vulputate convallis, magna augue tristique mauris, eget porttitor turpis nibh sed libero. Morbi eget pulvinar lorem, non gravida ligula. Fusce convallis, urna consectetur rutrum finibus, purus nisi vestibulum ligula, at maximus metus dolor sit amet lacus. Phasellus porttitor tempus leo in imperdiet. Etiam velit leo, sollicitudin mollis sollicitudin quis, blandit nec dui.</p>
+               <p>Cras tristique, ante ac porta euismod, dolor risus pharetra erat, blandit fermentum nisi sapien vitae ante. In eget rutrum purus. Nam lacus orci, rhoncus non ullamcorper eget, luctus at tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus condimentum lacus eu libero aliquet maximus. Sed tortor arcu, dapibus eu tortor et, tempus dictum sapien. In luctus ex sit amet iaculis fringilla. Suspendisse a lectus ac libero dignissim porta a vel ante. Integer in orci magna. Nunc molestie diam nisl, vitae vehicula sem varius sit amet. Duis in leo vel nisl laoreet feugiat sit amet a nisi. Quisque vel nibh odio. Quisque rhoncus ornare commodo. Phasellus imperdiet interdum neque, et volutpat massa fermentum eget. Donec elementum ultrices urna, quis dapibus ante pulvinar quis.</p>
+               <p>Sed at commodo lectus, eu interdum diam. Proin vulputate quis sapien quis semper. Curabitur ultricies dolor sed odio malesuada laoreet. Praesent at scelerisque diam, eu aliquam dolor. Suspendisse molestie felis at erat elementum pulvinar. Fusce sed gravida risus, quis egestas urna. Vivamus blandit ac lacus at tempus. In iaculis magna nec urna vulputate mattis. Mauris varius lacus id odio luctus, ac placerat nisi hendrerit.</p>
+            </div>
+         </div>
+         <div class="col-md-12">
+            {% if usercreation %}
+               <h4 class="section-title">Create New User</h4>
+               {% if invalidusername %}
+                  <p class="error-msg">Invalid username. Your username must be at least 6 characters long.</p>
+               {% endif %}
+               {% if usernameused %}
+                  <p class="error-msg">That username is already in use.</p>
+               {% endif %}
+               {% if invalidpassword %}
+                  <p class="error-msg">Invalid password. Your password must be at least 8 characters long.</p>
+               {% endif %}
+               {% if mismatchedpassword %}
+                  <p class="error-msg">Your passwords need to match!</p>
+               {% endif %}
+               {% if usercreated %}
+                  <p class="success-msg">Congratulation! You have successfully created a user account. You can now log in.</p>
+               {% endif %}
+               <form class="" name="signup" action="/LandingPage/" method="POST" accept-charset="utf-8">
+                  {% csrf_token %}
+                  <div class="row">
+                     <div class="form-group col-sm-3">
+                        <label for="usernamesubmit">Username</label>
+                        <input class="form-control" type="text" name="usernamesubmit" placeholder="Username" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" name="email" placeholder="Your Email" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="passwordsubmit">Password</label>
+                        <input class="form-control" type="password" name="passwordsubmit" placeholder="Password" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="passwordconfirmation">Confirm Password</label>
+                        <input class="form-control" type="password" name="passwordconfirmation" placeholder="Password" required>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="form-group col-sm-3">
+                        <label for="firstname">Your First Name</label>
+                        <input class="form-control" type="text" name="firstname" placeholder="First Name" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="lastname">Your Last Name</label>
+                        <input class="form-control" type="text" name="lastname" placeholder="Last Name" required>
+                     </div>
                      
-                     <li><a href="/" >Frat App</a></li>
-                     <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                     <li><a href="/Tasks/">Tasks</a></li>
-                     <li><a href="/Directory/">User Directory</a></li>
-                     <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                  </ul>
-
-                  <ul class="nav navbar-nav navbar-right">
-                     <p class="navbar-text">Welcome, {{firstname}}!</p>
-
-                  </ul>
-                  <form class="navbar-form navbar-right" name="Logout" method="POST">
-                        {% csrf_token %}
-                        <button class="btn frat-btn" type="submit" value="Logout" name="logout">Logout</button>
-                     </form>
-               </div>
-            </div>
-         </nav>
-         <div class="container">
-            <div class="row">
-               <div class="blog-header">
-                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">FRAT APP</h1>
-               </div>
-            </div>
-         </div>
-         <div class="container">
-            <div class="row">
-                     <hr>
-               <div class="col-sm-7 blog-main">
-                  <div class="blog-post">
-                     <p>We are a Frat. We do Frat things. We like our Frat. Join us!</p>
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis venenatis mi. Morbi ut quam tempus, accumsan metus eget, imperdiet sem. Nullam dolor justo, dictum quis laoreet a, maximus id purus. Maecenas nunc lorem, tincidunt fringilla metus vitae, porta vehicula quam. Vestibulum elementum ante dapibus dolor ultricies euismod. Praesent ullamcorper erat lacus, nec malesuada lorem suscipit non. Nam blandit felis sit amet consequat efficitur. Vestibulum non erat id nulla pharetra auctor. Quisque viverra elementum dui, sit amet porta dui laoreet nec. Quisque ullamcorper dolor quis vehicula pharetra. Proin tempus elit eu ipsum eleifend, sed efficitur turpis finibus.</p>
-
-                     <p>Donec sit amet vehicula neque. Praesent orci diam, sollicitudin sed sollicitudin eu, mollis eu massa. Vivamus at luctus sem, non iaculis tortor. Nulla facilisi. Donec nibh tortor, fringilla nec aliquet vel, lobortis ac eros. Vivamus convallis diam ornare nunc pulvinar facilisis. Quisque eget tortor ac magna porttitor pretium et gravida massa. Nam aliquam eget erat eu dictum. Sed tristique non turpis eu egestas. Donec pharetra ligula nec sagittis suscipit. Fusce egestas, nisl id vulputate convallis, magna augue tristique mauris, eget porttitor turpis nibh sed libero. Morbi eget pulvinar lorem, non gravida ligula. Fusce convallis, urna consectetur rutrum finibus, purus nisi vestibulum ligula, at maximus metus dolor sit amet lacus. Phasellus porttitor tempus leo in imperdiet. Etiam velit leo, sollicitudin mollis sollicitudin quis, blandit nec dui.</p>
-
-                     <p>Cras tristique, ante ac porta euismod, dolor risus pharetra erat, blandit fermentum nisi sapien vitae ante. In eget rutrum purus. Nam lacus orci, rhoncus non ullamcorper eget, luctus at tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus condimentum lacus eu libero aliquet maximus. Sed tortor arcu, dapibus eu tortor et, tempus dictum sapien. In luctus ex sit amet iaculis fringilla. Suspendisse a lectus ac libero dignissim porta a vel ante. Integer in orci magna. Nunc molestie diam nisl, vitae vehicula sem varius sit amet. Duis in leo vel nisl laoreet feugiat sit amet a nisi. Quisque vel nibh odio. Quisque rhoncus ornare commodo. Phasellus imperdiet interdum neque, et volutpat massa fermentum eget. Donec elementum ultrices urna, quis dapibus ante pulvinar quis.</p>
-
-                     <p>Sed at commodo lectus, eu interdum diam. Proin vulputate quis sapien quis semper. Curabitur ultricies dolor sed odio malesuada laoreet. Praesent at scelerisque diam, eu aliquam dolor. Suspendisse molestie felis at erat elementum pulvinar. Fusce sed gravida risus, quis egestas urna. Vivamus blandit ac lacus at tempus. In iaculis magna nec urna vulputate mattis. Mauris varius lacus id odio luctus, ac placerat nisi hendrerit.</p>
+                     <div class="form-group col-sm-3">
+                        <label for="bigbrother">Your Big Brother</label>
+                        <select class="form-control"  name="bigbrother">
+                           {% for brother in brotherlist %}
+                              <option value="{{brother}}">{{brother}}</option>
+                           {% endfor %}
+                        </select>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="bigbrotherother">Your Big Brother (if unlisted)</label>
+                        <input class="form-control" type="text" name="bigbrotherother" placeholder="Name and/or Username">
+                     </div>
+                     
                   </div>
-               </div>
-               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
-                  <div class="sidebar-module sidebar-module-inset">
-                     <ol class="list-unstyled">
-                        <h2>Welcome, {{firstname}}!</h2> 
-                        <li><a href="/" >Frat App</a></li>
-                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                        <li><a href="/Tasks/">Tasks</a></li>
-                        <li><a href="/Directory/">User Directory</a></li>
-                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                        <form name="Logout" method="POST">
-                           {% csrf_token %}
-                           <input type="submit" value="Logout" name="logout">
-                        </form>
-                     </ol>
-                     <section class="signupform cf">
-                        {% if usercreation %}
-                        <h4>Create New User</h4>
-                           <form name="signup" action="/LandingPage/" method="POST" accept-charset="utf-8">
-                              {% csrf_token %}
-                              <ol class="list-unstyled">
-                                 <li><label for="usernamesubmit">Username</label>
-                                 <input type="username" name="usernamesubmit" placeholder="their username" required>  
-                                 </li>
-                                 <li><label for="passwordsubmit">Password</label>
-                                    <input type="password" name="passwordsubmit" placeholder="password" required>
-                                 </li>
-                                 <li><label for="passwordconfirmation">Confirm Password</label>
-                                    <input type="password" name="passwordconfirmation" placeholder="password" required>
-                                 </li>
-                                 <li><label for="firstname">Their First Name</label>
-                                    <input type="firstname" name="firstname" placeholder="First Name" required>
-                                 </li>
-                                 <li><label for="lastname">Their Last Name</label>
-                                    <input type="lastname" name="lastname" placeholder="Last Name" required>   
-                                 </li>
-                                 <li><label for="email">Email</label>   
-                                    <input type="text" name="email" placeholder="Their Email" required>
-                                 </li>
-                                 <li><label for="bigbrother">Their Big Brother</label>
-                                    <select name="bigbrother">
-                                       {% for brother in brotherlist %}
-                                          <option value="{{brother}}">{{brother}}</option>
-                                       {% endfor %}
-                                    </select>
-                                 </li>
-                                 <li><label for="bigbrotherother">Their Big Brother (if unlisted)</label>
-                                    <input type="bigbrotherother" name="bigbrotherother" placeholder="Name and/or Username">
-                                 </li>
-                                 <li><label for="primarymajor">Their Primary Major</label>
-                                    <input type="primarymajor" name="primarymajor" placeholder="Primary Major" required>
-                                 </li>   
-                                 <li><label for="secondarymajor">Their Secondary Major</label>
-                                    <input type="secondarymajor" name="secondarymajor" placeholder="Secondary Major">
-                                 </li>
-                                 <li><label for="primaryminor">Their Primary Minor</label>
-                                    <input type="primaryminor" name="primaryminor" placeholder="Primary Minor">
-                                 </li>
-                                 <li><label for="secondaryminor">Their Secondary Minor</label>
-                                    <input type="secondaryminor" name="secondaryminor" placeholder="Secondary Minor">
-                                 </li>
-                                 <li>
-                                    <label for="graddate">Expected Graduation Date</label>
-                                    <input type="date" name="graddate" required>
-                                 </li>
-                                 <li><label for="hometown">Their Hometown</label>
-                                    <input type="hometown" name="hometown" placeholder="New York, NY">
-                                 </li>
-                                 <li><label for="phone">Their Phone Number</label>
-                                    <input type="phone" name="phone" placeholder="1 (234)567-8910">
-                                 </li>
-                                 <li><label for="roll">Their Roll Number</label>
-                                    <input type="number" name="roll" placeholder="0" required>
-                                 </li>   
-                                 <li><label for="rank">Their Rank</label>
-                                    <select name="rank">
-                                       {% for r in ranks %}
-                                          <option value="{{r}}" required>{{r}}</option>
-                                       {% endfor %}
-                                    </select>
-                                 </li>
-                                 <li><label for="other">Their Rank (if unlisted)</label>
-                                    <input type="other" name="other" placeholder="">
-                                 </li>
-                                 <input type="submit" value="Create User">
-                              </ol>
-                           </form>
-                           {% if loginfailed %}
-                              <p>Invalid username or password. Please try again.</p>   
-                           {% endif %}
-                           {% if invalidusername %}
-                              <p>Invalid username. Their username must be at least 6 characters long.</p>
-                           {% endif %}
-                           {% if usernameused %}
-                              <p>That username is already in use.</p>   
-                           {% endif %}
-                           {% if invalidpassword %}   
-                              <p>Invalid password. Their password must be at least 8 characters long.</p>
-                           {% endif %}
-                           {% if mismatchedpassword %}
-                              <p>The passwords need to match!</p>
-                           {% endif %}
-                           {% if usercreated %}
-                              <p>Congratulation! You have successfully created a user account. They can now log in.</p>
-                           {% endif %}
-                        {% endif %}
-                     </section>
-                     <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
-                     <a href="#" onclick="signOut();">Sign out</a>!
-                     <script>
-                        function signOut() {
-                           var auth2 = gapi.auth2.getAuthInstance();
-                           auth2.signOut().then(function () {
-                              console.log('User signed out.');
-                           });
-                        }
-                     </script>-->
+                  <div class="row">
+                     <div class="form-group col-sm-3">
+                        <label for="primarymajor">Your Primary Major</label>
+                        <input class="form-control" type="text" name="primarymajor" placeholder="Primary Major" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="secondarymajor">Your Secondary Major</label>
+                        <input class="form-control" type="text" name="secondarymajor" placeholder="Secondary Major">
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="primaryminor">Your Primary Minor</label>
+                        <input class="form-control" type="text" name="primaryminor" placeholder="Primary Minor">
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="secondaryminor">Your Secondary Minor</label>
+                        <input class="form-control" type="text" name="secondaryminor" placeholder="Secondary Minor">
+                     </div>
                   </div>
-               </div>
-            </div>
+                  <div class="row">
+                     <div class="form-group col-sm-3">
+                        <label for="graddate">Expected Graduation Date</label>
+                        <input class="form-control" type="date" name="graddate" required>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="hometown">Your Hometown</label>
+                        <input class="form-control" type="text" name="hometown" placeholder="New York, NY">
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="phone">Your Phone Number</label>
+                        <input class="form-control" type="text" name="phone" placeholder="1 (888)-888-8888">
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="roll">Your Roll Number</label>
+                        <input class="form-control" type="number" name="roll" placeholder="0" required>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="form-group col-sm-3">
+                        <label for="rank">Your Rank</label>
+                        <select class="form-control" name="rank">
+                           {% for r in ranks %}
+                              <option value="{{r}}" required>{{r}}</option>
+                           {% endfor %}
+                        </select>
+                     </div>
+                     <div class="form-group col-sm-3">
+                        <label for="other">Your Rank (if unlisted)</label>
+                        <input class="form-control" type="text" name="other" placeholder="">
+                     </div>
+                     
+                     <button class="btn frat-btn submit-btn" type="submit" value="Sign Up" name="signup">Create</button>
+                     
+                  </div>
+               </form>
+            {% endif %}
          </div>
-      </BODY>
-   </HEAD>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</HTML>
-
-
+      </div>
+   </div>
+{% endblock %}

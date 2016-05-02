@@ -50,7 +50,7 @@ def index(request):
         #BulletinClearer checks to see if any bulletins need to be cleared
         clearer.clear_bulletins()
         bulletin_list = Bulletin.objects.all()
-        paginator = Paginator(bulletin_list, 10)
+        paginator = Paginator(bulletin_list, 5)
         #Display bulletins as a paged result
         page = request.GET.get('page')
         try:

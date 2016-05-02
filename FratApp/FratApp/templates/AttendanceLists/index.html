@@ -1,140 +1,123 @@
-<HTML>
-<HEAD>
-<TITLE>Frat App</TITLE>
-   </HEAD>
-      <BODY BGCOLOR="FFFFFF">
-         <script src="https://apis.google.com/js/platform.js" async defer></script>
-         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-         <div class="container">
-            <div class="row">
-               <div class="blog-header">
-                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">Attendance Lists</h1>
-               </div>
-            </div>
+{% extends 'base.html' %}
+{% block content %}
+   <div class="container">
+      <div class="row">
+         <div class="blog-header">
+            {% if event == None %}
+               <h1 class="col-sm-5 col-sm-offset-1 blog-title">Attendance Lists</h1>
+            {% else %}
+               <h1 class="col-sm-5 col-sm-offset-1 blog-title">{{event.title}}</h1>
+            {% endif %}
          </div>
-         <div class="container">
-            <div class="row">
-                     <hr>
-               <div class="col-sm-7 blog-main">
-                  <div class="blog-post">
-                     {#Displays all events if the event value is not set#}
-                     {% if event == None %}
-                     {% for e in event_list %}
-                     <p class="event_block">
-                        <h3> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
-                        <p> Created by {{e.creator}} </p>
-                        <p> Description: {{e.text}} </p>
-                        {% if e.location %}
-                           <p> Location: {{e.location}} </p>
-                        {% endif %}
-                        {% if e.eventDate %}
-                           <p> Date: {{e.eventDate}} </p>
-                        {% endif %}
+         
+      </div>
+   </div>
+   <div class="container">
+      <div class="row">
+         <hr>
+         <div class="col-sm-7 blog-main">
+            <div class="blog-post">
+               {#Displays all events if the event value is not set#}
+               {% if event == None %}
+                  {% for e in event_list %}
+                     <div class="panel panel-default bulletin-post">
+                        <div class="bulletin-post panel-heading">
+                           <h4 class="section-title"> <a href="/AttendanceLists/?event_id={{e.id}}"> {{e.title}} </a> </h3>
+                        </div>
+                        <div class="panel-body">
+                           <p> Created by {{e.creator}} </p>
+                           <p> Description: {{e.text}} </p>
+                           <form name="delete_event" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="event_id" value="{{e.id}}">
+                              <button class="btn frat-btn delete-btn" type="submit" value="Delete" name="delete_event">Delete</button>
+                           </form>
+                        </div>
+                        <div class="panel-footer">
+                           {% if e.location %}
+                              <p class="small left-footer"> Location: {{e.location}} </p>
+                           {% endif %}
+                           {% if e.eventDate %}
+                              <p class="small text-right right-footer"> Date: {{e.eventDate}} </p>
+                           {% endif %}
+                        </div>
                         {#Form for deleting an event#}
-                        <form name="delete_event" method="POST">
-                           {% csrf_token %}
-                           <input type="hidden" name="event_id" value="{{e.id}}">
-                           <input type="submit" value="Delete" name="delete_event">
-                        </form>
-                     </p>
-                     {% endfor %}
-                     {% else %}
-                     {#If the event value is set, display that specific event and all its attendees#}
-                     <h2> {{event.title}} </h2>
-                     <p> Created by {{event.creator}} </p>
-                     <p> Description: {{event.text}} </p>
-                     {% if event.location %}
-                        <p> Location: {{event.location}} </p>
-                     {% endif %}
-                     {% if event.eventDate %}
-                        <p> Date: {{event.eventDate}} </p>
-                     {% endif %}
-                     <h3> Registered Attendees </h3>
-                     <ul>
+                     </div>
+                  {% endfor %}
+               {% else %}
+                  {#If the event value is set, display that specific event and all its attendees#}
+                  <div class="panel panel-default bulletin-post">
+                     <div class="panel-body">
+                        <p> Created by {{event.creator}} </p>
+                        <p> Description: {{event.text}} </p>
+                     </div>
+                     <div class="panel-footer">
+                        {% if event.location %}
+                           <p class="small left-footer"> Location: {{event.location}} </p>
+                        {% endif %}
+                        {% if event.eventDate %}
+                           <p class="small text-right right-footer"> Date: {{event.eventDate}} </p>
+                        {% endif %}
+                     </div>
+                     {#Form for deleting an event#}
+                  </div>
+                  <h3> Registered Attendees </h3>
+                  <ul class="list-group">
                      <form name="delete_event" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="event_id" value="{{event.id}}">
                         {% for attendee in attendee_list %}
-                           <li> {{attendee.name}} </li>
-                           <button name="delete_attendee" value="{{attendee.id}}" type="submit">Delete</button>
+                           <li class="list-item list-group-item">
+                              <p class="list-item-text">{{attendee.name}}</p>
+                              <button class="btn frat-btn delete-btn" name="delete_attendee" value="{{attendee.id}}" type="submit">Delete</button>
+                           </li>
                         {% endfor %}
                      </ul>
-                     </form>
-                     {% endif %}
-                  </div>
-               </div>
-               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
-                  <div class="sidebar-module sidebar-module-inset">
-                     <section class="attendence_submission">
-                        {#If the user is on the Event directory page, allow for creation of events#}
-                        {% if event == None %}
-                        <form name="create_event" action="/AttendanceLists/" method="POST" accept-charset="utf-8">
-                           {% csrf_token %}
-                           <p>
-                              <label for="title">Event</label>
-                              <input type="text" name="title" placeholder="Name of Event" required>
-                           </p>
-                           <p>
-                              <label for="description">Description</label>
-                              <input type="text" name="text" placeholder="Description of Event" required>
-                           </p>
-                           <p>
-                              <label for="location">Location</label>
-                              <input type="text" name="location" placeholder="Where the Event Took Place">
-                           </p>
-                           <p>
-                              <label for="eventdate">Event Date</label>
-                              <input type="date" name="eventdate">
-                           </p>
-                           <input type="submit" value="Add Event" name="create_event">
-                        </form>
-                        {% else %}
-                        {#Else, allow user to create attendees for a specific event#}
-                        <form name="add_attendee" method="POST">
-                           {% csrf_token %}
-                           <input type="hidden" name="event_id" value="{{event.id}}">
-                           <p>
-                              <label for="title">Attendee Name</label>
-                              <input type="text" name="name" placeholder="Attendee Name" required>
-                           </p>
-                           <input type="submit" value="Add Attendee" name="add_attendee">
-                        </form>
-                        {% endif %}
-                     </section>
-                     <ol class="list-unstyled">
-                        Welcome, {{firstname}}!
-                        <li><a href="/" >Frat App</a></li>
-                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                        <li><a href="/Tasks/">Tasks</a></li>
-                        <li><a href="/Directory/">User Directory</a></li>
-                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                        <form name="Logout" method="POST">
-                           {% csrf_token %}
-                           <input type="submit" value="Logout" name="logout">
-                        </form>
-                     <ol>
-                     <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
-                     <a href="#" onclick="signOut();">Sign out</a>!
-                     <script>
-                        function signOut() {
-                           var auth2 = gapi.auth2.getAuthInstance();
-                           auth2.signOut().then(function () {
-                              console.log('User signed out.');
-                           });
-                        }
-                     </script>-->
-                  </div>
-               </div>
+                  </form>
+               {% endif %}
             </div>
          </div>
-      </BODY>
-   </HEAD>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</HTML>
-
-
+         <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+               <section class="attendence_submission">
+                  {#If the user is on the Event directory page, allow for creation of events#}
+                  {% if event == None %}
+                     <form name="create_event" action="/AttendanceLists/" method="POST" accept-charset="utf-8">
+                        {% csrf_token %}
+                        <div class="form-group">
+                           <label for="title">Event</label>
+                           <input class="form-control" type="text" name="title" placeholder="Name of Event" required>
+                        </div>
+                        <div class="form-group">
+                           <label for="description">Description</label>
+                           <textarea class="form-control" rows="6" type="text" name="text" placeholder="Description of Event" required></textarea>
+                        </div>
+                        <div class="form-group">
+                           <label for="location">Location</label>
+                           <input class="form-control" type="text" name="location" placeholder="Where the Event Took Place">
+                        </div>
+                        <div class="form-group">
+                           <label for="eventdate">Event Date</label>
+                           <input class="form-control" type="date" name="eventdate">
+                        </div>
+                        <button class="btn frat-btn" type="submit" value="Add Event" name="create_event">Create Event</button>
+                     </form>
+                  {% else %}
+                     {#Else, allow user to create attendees for a specific event#}
+                     <form name="add_attendee" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{event.id}}">
+                        <div class="form-group">
+                           <label for="title">Attendee Name</label>
+                           <input class="form-control" type="text" name="name" placeholder="Attendee Name" required>
+                        </div>
+                        <button class="btn frat-btn" type="submit" value="Add Attendee" name="add_attendee">Add Attendee</button>
+                     </form>
+                  {% endif %}
+               </section>
+               
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

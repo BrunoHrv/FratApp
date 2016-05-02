@@ -1,77 +1,37 @@
-<HTML>
-<HEAD>
-<TITLE>Frat App</TITLE>
-   </HEAD>
-      <BODY BGCOLOR="FFFFFF">
-         <script src="https://apis.google.com/js/platform.js" async defer></script>
-         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
+{% extends 'base.html' %}
+{% block content %}
          <div class="container">
             <div class="row">
                <div class="blog-header">
-                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">{{userquery.first_name}} {{userquery.last_name}}</h1>
+                  <h1 class="col-sm-6 col-sm-offset-3 page-title">{{userquery.first_name}} {{userquery.last_name}}</h1>
                </div>
             </div>
          </div>
          <div class="container">
             <div class="row">
                      <hr>
-               <div class="col-sm-7 blog-main">
-                  <div class="blog-post">
-                     <p>username: {{userquery.username}}</p>
-                     <p>email address: {{userquery.email}}</p>
-                     <p>rank: {{userquery.extrauserfields.rank}}</p>
-                     <p>big brother: {{userquery.extrauserfields.bigbrother}}</p>
-                     <p>roll number: {{userquery.extrauserfields.rollnumber}}</p>
-                     <p>big brother: {{userquery.extrauserfields.graduation_date}}</p>
-                     <p>major(s): {{majors}}</p>
-                     <p>minor(s): {{minors}}</p>
-                     <p>hometown: {{userquery.extrauserfields.hometown}}</p>
-                     <p>phone number: {{userquery.extrauserfields.phonenumber}}</p>
+               <div class="col-sm-6 col-sm-offset-3 blog-main">
+                  <div class="user-details">
+                     <p>Username: {{userquery.username}}</p>
+                     <p>Email Address: {{userquery.email}}</p>
+                     <p>Rank: {{userquery.extrauserfields.rank}}</p>
+                     <p>Big Brother: {{userquery.extrauserfields.bigbrother}} </p>
+                     <p>Roll Number: {{userquery.extrauserfields.rollnumber}}</p>
+                     <p>Graudation Date: {{userquery.extrauserfields.graduation_date}}</p>
+                     <p>Major(s): {{majors}}</p>
+                     <p>Minor(s): {{minors}}</p>
+                     <p>Hometown: {{userquery.extrauserfields.hometown}}</p>
+                     <p>Phone Number: {{userquery.extrauserfields.phonenumber}}</p>
                      {% if isAdmin %}
                         <form name="delete_user" method="POST">
                            {% csrf_token %}
                            <input type="hidden" name="username" value="{{userquery.username}}">
-                           <input type="submit" value="Delete" name="delete_user">
+                           <button class="btn frat-btn delete-btn" type="submit" value="Delete" name="delete_user"> Delete</button>
                         </form>
                      {% endif %}
                   </div>
                </div>
-               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
-                  <div class="sidebar-module sidebar-module-inset">
-                     <ol class="list-unstyled">
-                        Welcome, {{firstname}}!
-                        <li><a href="/" >Frat App</a></li>
-                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                        <li><a href="/Tasks/">Tasks</a></li>
-                        <li><a href="/Directory/">User Directory</a></li>
-                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                        <form name="Logout" method="POST">
-                           {% csrf_token %}
-                           <input type="submit" value="Logout" name="logout">
-                        </form>
-                     <ol>
-                     <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
-                     <a href="#" onclick="signOut();">Sign out</a>!
-                     <script>
-                        function signOut() {
-                           var auth2 = gapi.auth2.getAuthInstance();
-                           auth2.signOut().then(function () {
-                              console.log('User signed out.');
-                           });
-                        }
-                     </script>-->
-                  </div>
-               </div>
             </div>
          </div>
-      </BODY>
-   </HEAD>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</HTML>
-
+{% endblock %}
 

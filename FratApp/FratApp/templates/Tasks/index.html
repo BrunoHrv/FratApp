@@ -1,189 +1,153 @@
-<HTML>
-<HEAD>
-<TITLE>Frat App</TITLE>
-   </HEAD>
-      <BODY BGCOLOR="FFFFFF">
-         <script src="https://apis.google.com/js/platform.js" async defer></script>
-         <meta name="google-signin-client_id" content="251178285554-8oeieq4qun8n0dn0tlrlfkpik29nran2.apps.googleusercontent.com">
-         <div class="container">
-            <div class="row">
-               <div class="blog-header">
-                  <h1 class="col-sm-5 col-sm-offset-1 blog-title">Task Lists</h1>
-               </div>
-            </div>
-         </div>
-         <div class="container">
-            <div class="row">
-                     <hr>
-               <div class="col-sm-7 blog-main">
-                  <div class="blog-post">
-                     <ul>
-                        <p>General Tasks</p>
-                        {% for task in gentasks %}
-                           <li>{{task.text}}</li>
-                           {% if task.incomplete %}
-                              <form name="deletetask" method="POST">
-                                 {% csrf_token %}
-                                 <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Mark Complete" name="deletetask">
-                              </form>
-                              {% endif %}
-                        {% endfor %}
-                     </ul>
-                     <ul>
-                        <p>Personal Tasks</p>
-                        {% for task in personaltasks %}
-                           <li>
-                              {{task.text}}
-                              {% if task.incomplete%}
-                              <form name="deletetask" method="POST">
-                                 {% csrf_token %}
-                                 <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Mark Complete" name="deletetask">
-                              </form>
-                              {% endif %}
-                           </li>
-                        {% endfor %}
-                     </ul>
-                     <ul>
-                        <p>Tasks You Created</p>
-                        {% for task in ownedtasks %}
-                           <li>
-                              {{task.text}}
-                              {% if task.incomplete%}
-                              <form name="deletetask" method="POST">
-                                 {% csrf_token %}
-                                 <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Cancel Task" name="deletetask">
-                              </form>
-                              {%else%}
-                              <form name="deletetask" method="POST">
-                                 {% csrf_token %}
-                                 <input type="hidden" name="task_id" value="{{task.id}}">
-                                 <input type="submit" value="Delete" name="deletetask">
-                              </form>
-                              {% endif %}
-                           </li>
-                        {% endfor %}
-                     </ul>
-                     <ul>
-                        <p>Supplies Needed</p>
-                        {% for supply in supplylist %}
-                           <li>
-                              {{supply.name}}:{{supply.quantity}}
-                           </li>
-                        {% endfor %}
-                     </ul>
-                     <hr>
-                     <p>Add a task</p>
-                     <section class="addtaskform">
-                        <form name="addtask" action="/Tasks/" method="POST" accept-charset="utf-8">
+{% extends 'base.html' %}
+{% block content %}
+   <div class="container">
+      <div class="row">
+         <hr>
+         <div class="col-sm-7 blog-main">
+            <div class="blog-post">
+               
+                  <h4 class="section-title">General Tasks</h4>
+                  <ul class="task-section list-group">
+                  {% for task in gentasks %}
+                     <li class="list-item list-group-item">
+                        <p class="list-text">{{task.text}}</p>
+                     {% if task.incomplete %}
+                        <form name="deletetask" method="POST">
                            {% csrf_token %}
-                           <ol class="list-unstyled">
-                              <li><label for="task">Task</label>
-                                 <input type="task" name="task" placeholder="Task to be completed" required>
-                              </li>
-                              <li><label for="usergroups">Groups</label>
-                                 <select name="usergroups" multiple>
-                                    {% for group in usergroups %}
-                                       <option value="{{group.name}}">{{group.name}}</option>
-                                    {% endfor %}
-                                 </select>
-                              </li>
-                              <li><label for="usernames">Individual Users</label>
-                                 <select name="usernames" multiple>
-                                    {% for user in userlist %}
-                                       <option value="{{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</option>
-                                    {% endfor %}
-                                 </select>
-                              </li>
-                              <input type="submit" name="submittask" value="Submit">
-                           </ol>
+                           <input type="hidden" name="task_id" value="{{task.id}}">
+                           <button class="btn frat-btn delete-btn" type="submit" value="Mark Complete" name="deletetask">Mark Complete</button>
                         </form>
-                     </section>
-                     <p>Add to supply list</p>
-                     <section class="addsupplyform">
-                        <form name="addsupply" action="/Tasks/" method="POST" accept-charset="utf-8">
-                           {% csrf_token %}
-                           <ol class="list-unstyled">
-                              <li><label for="supply">Supply</label>
-                                 <input type="supply" name="supply" placeholder="Supply Needed" required>
-                              </li>
-                              <li><label for="quantity">Quantity Needed</label>
-                                 <input type="number" name="quantity" placeholder="1" required>
-                              </li>
-                              <input type="submit" name="submitsupply" value="Submit">
-                           </ol>
-                        </form>
-                     </section>
-                     {% if canEdit %}
-                        <p>Remove from the supply list</p>
-                        <section class="removesupplyform">
-                           <form name="removesupply" action="/Tasks/" method="POST" accept-charset="utf-8">
+                     {% endif %}
+                     </li>
+                  {% endfor %}
+               </ul>
+               
+                  <h4 class="section-title">Personal Tasks</h4>
+                  <ul class="task-section list-group">
+                  {% for task in personaltasks %}
+                     <li class="list-item list-group-item">
+                        <p class="list-text">{{task.text}}</p>
+                        {% if task.incomplete%}
+                           <form name="deletetask" method="POST">
                               {% csrf_token %}
-                              <ol class="list-unstyled">
-                                 <li><label for="supply">Supply</label>
-                                    <select name="supply" multiple required>
-                                       {% for supply in supplylist %}
-                                          <option value="{{supply.name}}">{{supply.name}}</option>
-                                       {% endfor %}
-                                    </select>
-                                 </li>
-                                 <li><label for="quantity">Quantity to Remove</label>
-                                    <input type="number" name="quantity" placeholder="1" required>
-                                 </li>
-                                 <input type="submit" name="removesupply" value="Submit">
-                              </ol>
+                              <input type="hidden" name="task_id" value="{{task.id}}">
+                              <button class="btn frat-btn delete-btn" type="submit" value="Mark Complete" name="deletetask">Mark Complete</button>
                            </form>
-                        </section>
-                     {% endif %}
-                     {% if invalidtaskassignment%}
-                        {{invalidtaskassignment}}
-                     {% endif %}
-                     {% if invalidsup%}
-                        {{invalidsup}}
-                     {% endif %}
-                     {% if invalidsupplyname%}
-                        {{invalidsupplyname}}
-                     {% endif %}
-                  </div>
-               </div>
-               <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
-                  <div class="sidebar-module sidebar-module-inset">
-                     <ol class="list-unstyled">
-                        Welcome, {{firstname}}!
-                        <li><a href="/" >Frat App</a></li>
-                        <li><a href="/Calendar/">Calendar/Bulletin Board</a></li>
-                        <li><a href="/Tasks/">Tasks</a></li>
-                        <li><a href="/Directory/">User Directory</a></li>
-                        <li><a href="/AttendanceLists/">Attendance Lists</a></li>
-                        <form name="Logout" method="POST">
-                           {% csrf_token %}
-                           <input type="submit" value="Logout" name="logout">
-                        </form>
-                     <ol>
-                     <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>
-                     <a href="#" onclick="signOut();">Sign out</a>!
-                     <script>
-                        function signOut() {
-                           var auth2 = gapi.auth2.getAuthInstance();
-                           auth2.signOut().then(function () {
-                              console.log('User signed out.');
-                           });
-                        }
-                     </script>-->
-                  </div>
-               </div>
+                        {% endif %}
+                     </li>
+                  {% endfor %}
+               </ul>
+               
+                  <h4 class="section-title">Completed Tasks</h4>
+                  <ul class="task-section list-group">
+                  {% for task in ownedtasks %}
+                     <li class="list-item list-group-item">
+                        <p class="list-text">{{task.text}}</p>
+                        {% if task.incomplete%}
+                           <form name="deletetask" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="task_id" value="{{task.id}}">
+                              <button class="btn frat-btn delete-btn" type="submit" value="Mark Complete" name="deletetask">Cancel Task</button>
+                           </form>
+                           {%else%}
+                           <form name="deletetask" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="task_id" value="{{task.id}}">
+                              <button class="btn frat-btn" type="submit" value="Mark Complete" name="deletetask">Delete</button>
+                           </form>
+                        {% endif %}
+                     </li>
+                  {% endfor %}
+               </ul>
+               
+                  <h4 class="section-title">Supplies Needed</h4>
+                  <ul class="task-section list-group">
+                  {% for supply in supplylist %}
+                     <li class="list-group-item">
+                        {{supply.name}}: {{supply.quantity}}
+                     </li>
+                  {% endfor %}
+               </ul>
+               <hr>
+               
+               {% if invalidtaskassignment%}
+                  {{invalidtaskassignment}}
+               {% endif %}
+               {% if invalidsup%}
+                  {{invalidsup}}
+               {% endif %}
+               {% if invalidsupplyname%}
+                  {{invalidsupplyname}}
+               {% endif %}
             </div>
          </div>
-      </BODY>
-   </HEAD>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</HTML>
-
-
+         <div class="col-sm-4  col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+               <h4 class="section-title">Add a task</h4>
+               <section class="addtaskform">
+                  <form name="addtask" action="/Tasks/" method="POST" accept-charset="utf-8">
+                     {% csrf_token %}
+                     <div class="form-group">
+                        <label for="task">Task</label>
+                        <input class="form-control" type="task" name="task" placeholder="Task to be completed" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="usergroups">Groups</label>
+                        <select class="form-control" name="usergroups" multiple>
+                           {% for group in usergroups %}
+                              <option value="{{group.name}}">{{group.name}}</option>
+                           {% endfor %}
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label for="usernames">Individual Users</label>
+                        <select class="form-control" name="usernames" multiple>
+                           {% for user in userlist %}
+                              <option value="{{user.username}}">{{user.first_name}} {{user.last_name}} ({{user.username}})</option>
+                           {% endfor %}
+                        </select>
+                     </div>
+                     <button class="btn frat-btn" type="submit" name="submittask" value="Submit">Submit</button>
+                  </form>
+               </section>
+               <h4 class="section-title">Add to supply list</h4>
+               <section class="addsupplyform">
+                  <form name="addsupply" action="/Tasks/" method="POST" accept-charset="utf-8">
+                     {% csrf_token %}
+                     <div class="form-group">
+                        <label for="supply">Supply</label>
+                        <input class="form-control" type="supply" name="supply" placeholder="Supply Needed" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="quantity">Quantity Needed</label>
+                        <input class="form-control" type="number" name="quantity" placeholder="1" required>
+                     </div>
+                     <button class="btn frat-btn" type="submit" name="submitsupply" value="Submit">Submit</button>
+                  </form>
+               </section>
+               {% if canEdit %}
+                  <h4 class="section-title">Remove from the supply list</h4>
+                  <section class="removesupplyform">
+                     <form name="removesupply" action="/Tasks/" method="POST" accept-charset="utf-8">
+                        {% csrf_token %}
+                        <div class="form-group">
+                           <label for="supply">Supply</label>
+                           <select class="form-control" name="supply" multiple required>
+                              {% for supply in supplylist %}
+                                 <option value="{{supply.name}}">{{supply.name}}</option>
+                              {% endfor %}
+                           </select>
+                        </div>
+                        <div class="form-group">
+                           <label for="quantity">Quantity to Remove</label>
+                           <input class="form-control" type="number" name="quantity" placeholder="1" required>
+                        </div>
+                        <button class="btn frat-btn" type="submit" name="removesupply" value="Submit">Submit</button>
+                     </form>
+                  </section>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

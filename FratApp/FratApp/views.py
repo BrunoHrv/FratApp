@@ -30,7 +30,7 @@ def index(request, redirected=False):
         'ranks' : allranks
     }
     #admins can control whether or not the general public can make their own accounts
-    context['publicusercreation'] = True  
+    context['publicusercreation'] = False  
     context['publicbrotherlist'] = True and context['publicusercreation']
     if context['publicbrotherlist'] is True:
         context['brotherlist'] = [x.first_name + " " + x.last_name + "(" + x.username + ")" 
