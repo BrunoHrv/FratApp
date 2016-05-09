@@ -70,6 +70,9 @@
                         {% if mismatchedpassword %}
                            <p class="error-msg">Your passwords need to match!</p>
                         {% endif %}
+                        {% if badDate %}
+                           <p class="success-msg">There was a problem with the graduation date that you entered.</p>
+                        {% endif %}
                         {% if usercreated %}
                            <p class="success-msg">Congratulation! You have successfully created a user account. You can now log in.</p>
                         {% endif %}

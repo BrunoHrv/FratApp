@@ -22,11 +22,59 @@
                      <p>Minor(s): {{minors}}</p>
                      <p>Hometown: {{userquery.extrauserfields.hometown}}</p>
                      <p>Phone Number: {{userquery.extrauserfields.phonenumber}}</p>
+                     {% if viewingSelf %}
+                        <hr>
+                        <p>Would you like to change your account details?</p>
+                        <form name="modify_user" method="POST">
+                           {% csrf_token %}
+                           <input type="hidden" name="username" value="{{userquery.username}}">
+                           <label for="passwordsubmit">Password</label>
+                           <input class="form-control" type="password" name="passwordsubmit" placeholder="Password">
+                           <label for="passwordconfirmation">Confirm Password</label>
+                           <input class="form-control" type="password" name="passwordconfirmation" placeholder="Password">
+                           <label for="email">Email</label>
+                           <input class="form-control" type="email" name="email" placeholder="Your Email">
+                           <label for="primarymajor">Your Primary Major</label>
+                           <input class="form-control" type="text" name="primarymajor" placeholder="Primary Major">
+                           <label for="secondarymajor">Your Secondary Major</label>
+                           <input class="form-control" type="text" name="secondarymajor" placeholder="Secondary Major">
+                           <label for="primaryminor">Your Primary Minor</label>
+                           <input class="form-control" type="text" name="primaryminor" placeholder="Primary Minor">
+                           <label for="secondaryminor">Your Secondary Minor</label>
+                           <input class="form-control" type="text" name="secondaryminor" placeholder="Secondary Minor">
+                           <label for="graddate">Expected Graduation Date</label>
+                           <input class="form-control" type="date" name="graddate">
+                           <label for="hometown">Your Hometown</label>
+                           <input class="form-control" type="text" name="hometown" placeholder="New York, NY">
+                           <label for="phone">Your Phone Number</label>
+                           <input class="form-control" type="text" name="phone" placeholder="1 (888)-888-8888">
+                           <label for="roll">Your Roll Number</label>
+                           <input class="form-control" type="number" name="roll" placeholder="0">
+                           <label for="rank">Your Rank</label>
+                           <select class="form-control" name="rank">
+                           {% for r in ranks %}
+                              <option value="{{r}}">{{r}}</option>
+                           {% endfor %}
+                           </select>
+                           <label for="other">Your Rank (if unlisted)</label>
+                           <input class="form-control" type="text" name="other" placeholder="">
+                           <button class="btn frat-btn change-btn" type="submit" value="Submit Changes" name="modify_user"> Submit Changes</button>
+                        </form>
+                        {% if invalidpassword %}
+                           <p class="error-msg">Invalid password. Your password must be at least 8 characters long.</p>
+                        {% endif %}
+                        {% if mismatchedpassword %}
+                           <p class="error-msg">Your passwords need to match!</p>
+                        {% endif %}
+                        {% if badDate %}
+                           <p class="success-msg">There was a problem with the graduation date that you entered.</p>
+                        {% endif %}
+                     {% endif %}
                      {% if isAdmin %}
                         <form name="delete_user" method="POST">
                            {% csrf_token %}
                            <input type="hidden" name="username" value="{{userquery.username}}">
-                           <button class="btn frat-btn delete-btn" type="submit" value="Delete" name="delete_user"> Delete</button>
+                           <button class="btn frat-btn delete-btn" type="submit" value="Delete" name="delete_user"> Delete User</button>
                         </form>
                      {% endif %}
                   </div>

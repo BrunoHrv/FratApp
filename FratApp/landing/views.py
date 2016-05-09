@@ -53,7 +53,14 @@ def index(request):
                 secondaryminor = ""
             if primaryminor == "":
                 primaryminor = "None"
+            user_created = True
             graddate = request.POST['graddate']
+            try:
+                graddate = datetime.datetime.strptime(graddate,'%Y-%m-%d')
+            except ValueError:
+                print graddate
+                user_created = False
+                context['badDate'] = True
             phonenumber = request.POST['phone']
             roll = request.POST['roll']
             rank = request.POST['rank']
@@ -65,7 +72,6 @@ def index(request):
                 bigbrother = request.POST['bigbrother']
             if rankother != "":
                 rank = rankother
-            user_created = True
             #Check to see if the general, default group exists
             allgroups = Group.objects.filter(name="All")
             allexists = allgroups.exists()
