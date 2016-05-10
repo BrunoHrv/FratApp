@@ -22,6 +22,7 @@
                      <p>Minor(s): {{minors}}</p>
                      <p>Hometown: {{userquery.extrauserfields.hometown}}</p>
                      <p>Phone Number: {{userquery.extrauserfields.phonenumber}}</p>
+                     <!--Commented out because it somehow breaks the user's user model
                      {% if viewingSelf %}
                         <hr>
                         <p>Would you like to change your account details?</p>
@@ -70,6 +71,7 @@
                            <p class="success-msg">There was a problem with the graduation date that you entered.</p>
                         {% endif %}
                      {% endif %}
+                     -->
                      {% if isAdmin %}
                         <form name="delete_user" method="POST">
                            {% csrf_token %}
